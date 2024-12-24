@@ -1,11 +1,13 @@
 'use client';
 import * as React from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Carousel from '../components/carousel';
+import Footer from "../components/footer";
 import Navbar from "../components/navbar";
 import Cards from "../components/cards";
 import CardsGenre from "../components/cardsGenre";
 import CardsBeyond from "../components/cardsBeyond";
+import ModalSell from "../components/modalSell";
 
 import './globals.css';
 
@@ -172,6 +174,19 @@ export default function Home() {
         image: "/images/cards_picture_27.png"
     }];
 
+
+    const [isModalSellOpen, setIsModalSellOpen] = useState(false);
+
+    console.log("status", isModalSellOpen);
+
+    const handleModalSellOpen = () => {
+        setIsModalSellOpen(true);
+    }
+
+    const handleModalSellClose = () => {
+        setIsModalSellOpen(false);
+    }
+
     return (
 
         <div className="flex flex-row min-h-screen bg-[#EFE8DA] text-gray-800">
@@ -204,7 +219,7 @@ export default function Home() {
                     </div>
                 </div>
 
-                {/* Carousel 1 */}
+                {/* Carousel 1 : Payday Sale */}
                 <div className='bg-[#4A2C23] h-[378px] flex items-center m-0 p-0'>
                     <img src="/icons/tikii-banner-1.png" className="mr-10" />
                 </div>
@@ -237,7 +252,7 @@ export default function Home() {
 
                 </div>
 
-                {/* Carousel 2 */}
+                {/* Carousel 2 : Sell Your Book */}
                 <div className="relative h-[384px] bg-red-400 flex flex-col lg:flex-row items-center">
                     {/* Full-Width Banner Image */}
                     <img src="/icons/tikii-banner-2.png" alt="Banner" className="w-full h-full" />
@@ -258,17 +273,20 @@ export default function Home() {
                         </p>
 
                         {/* Button */}
-                        <button className="bg-[#2A230F] w-[330px] h-[44px] text-white py-3 px-6 rounded-md hover:bg-[#3A3118]">
+                        <button
+                            onClick={handleModalSellOpen}
+                            className="bg-[#2A230F] w-[330px] h-[44px] text-white py-3 px-6 rounded-md hover:bg-[#3A3118]">
                             Sell Now
                         </button>
+                        {/* Modal */}
+                        {isModalSellOpen && <ModalSell onClose={handleModalSellClose} />}
                     </div>
                 </div>
-
 
                 {/* Card: New Items*/}
                 <div className='h-[718px] px-20 mt-36'>
                     {/* Title */}
-                    <div className='text-[#4A2c23] font-bold text-[48px]'>Just Arrived</div>
+                    <div className='text-[#4A2c23] league-spartan-bold font-bold text-[48px]'>Just Arrived</div>
 
                     {/* Desc */}
                     <div className='flex'>
@@ -296,7 +314,7 @@ export default function Home() {
                 {/* Card: Classics*/}
                 <div className=' h-[718px] px-20 mt-36'>
                     {/* Title */}
-                    <div className='text-[#4A2c23] font-bold text-[48px]'>Classics</div>
+                    <div className='text-[#4A2c23] league-spartan-bold font-bold text-[48px]'>Classics</div>
 
                     {/* Desc */}
                     <div className='flex'>
@@ -325,7 +343,7 @@ export default function Home() {
                 {/* Card: Budget Reads*/}
                 <div className=' h-[718px] px-20 mt-36'>
                     {/* Title */}
-                    <div className='text-[#4A2c23] font-bold text-[48px]'>Budget Reads</div>
+                    <div className='text-[#4A2c23] league-spartan-bold font-bold text-[48px]'>Budget Reads</div>
 
                     {/* Desc */}
                     <div className='flex'>
@@ -354,7 +372,7 @@ export default function Home() {
                 {/* Card: Fiction*/}
                 <div className=' h-[718px] px-20 mt-36'>
                     {/* Title*/}
-                    <div className='text-[#4A2c23] font-bold text-[48px]'>Fiction Favorites</div>
+                    <div className='text-[#4A2c23] league-spartan-bold font-bold text-[48px]'>Fiction Favorites</div>
 
                     {/* View all */}
                     <div className='flex'>
@@ -383,7 +401,7 @@ export default function Home() {
                 {/* Card: Non Fiction*/}
                 <div className=' h-[718px] px-20 mt-36'>
                     {/* Title */}
-                    <div className='text-[#4A2c23] font-bold text-[48px]'>Non-Fiction Shelves</div>
+                    <div className='text-[#4A2c23] league-spartan-bold font-bold text-[48px]'>Non-Fiction Shelves</div>
 
                     {/* Desc */}
                     <div className='flex'>
@@ -412,7 +430,7 @@ export default function Home() {
                 {/* Card: Discover*/}
                 <div className=' h-[718px] px-20 mt-36'>
                     {/* Title */}
-                    <div className='text-[#4A2c23] font-bold text-[48px]'>Discover Your Favorite Genre</div>
+                    <div className='text-[#4A2c23] league-spartan-bold font-bold text-[48px]'>Discover Your Favorite Genre</div>
 
                     {/* Desc */}
                     <div className='flex'>
@@ -467,11 +485,11 @@ export default function Home() {
                 {/* Card: Beyond Tikii*/}
                 <div className='px-20 mt-36'>
                     {/* Title */}
-                    <div className='text-[#4A2c23] font-bold text-[48px]'>Non-Fiction Shelves</div>
+                    <div className='text-[#4A2c23] league-spartan-bold font-bold text-[48px]'>Beyond Tikii</div>
 
                     {/* Desc */}
                     <div className='flex'>
-                        <div className='w-full justify-start flex items-center text-[18px]'>Learn, grow, and get inspired</div>
+                        <div className='w-full justify-start flex items-center text-[18px]'>See why Tikii stands out as a trusted home for preloved and passionate readers</div>
                         <div className='flex underline items-center font-[18px] text-[#0F172A] underline-offset-4 justify-end w-1/2 pr-4'>
                             View all
                         </div>
@@ -507,9 +525,9 @@ export default function Home() {
 
                         {/* Description */}
                         <p className="text-sm lg:text-lg text-center leading-relaxed mb-9">
-                            Help us spread the joy of reading to underserved communities. 
-                            Your  donations enable Tikii to distribute preloved books, build 
-                            community libraries, and support readers across Indonesia. Donate 
+                            Help us spread the joy of reading to underserved communities.
+                            Your  donations enable Tikii to distribute preloved books, build
+                            community libraries, and support readers across Indonesia. Donate
                             today and create lasting change!
                         </p>
 
@@ -521,54 +539,7 @@ export default function Home() {
                 </div>
 
                 {/* Footer */}
-                <div className="bg-[#4A2C2A] h-[452px] text-white mt-44">
-                    <div className="px-4 flex flex-row gap-24 justify-center items-center h-full">
-
-                        {/* Logo and Contact Section */}
-                        <div className="flex flex-col items-center mb-4">
-                            <img src="icons/tikii-logo-2.svg" alt="Tiki Logo" className="w-[180px] mt-8" />
-                            <div className="flex space-x-4 mt-8 mb-10">
-                                <a href="#" className="text-lg">
-                                    <img src="icons/instagram.svg" alt="Tiki Logo" className="w-[32px]" />
-                                </a>
-                                <a href="tel:+123456789" className="text-lg">
-                                    <img src="icons/phone.svg" alt="Tiki Logo" className="w-[32px]" />
-                                </a>
-                            </div>
-                            <p className="text-sm mt-2 mb-20">2024 Tiki. All rights reserved.</p>
-                        </div>
-
-                        {/* About Tiki Section */}
-                        <div className="items-center justify-center h-full flex flex-row">
-                            <div className='mb-14'>
-                                <div className="font-bold text-[24px]">About Tikii</div>
-                                <div className="border-t border-[#fff] w-[275px] text-[18px] mt-6" />
-                                <div href="#" className="text-sm hover:underline mt-8">
-                                    About Us
-                                </div>
-                                <div href="#" className="text-sm hover:underline mt-8">
-                                    Our Mission
-                                </div>
-                            </div>
-
-
-                        </div>
-
-                        {/* Support Section */}
-                        <div className="flex flex-row justify-center items-center h-full">
-                            <div className='mb-14'>
-                                <div className="font-bold text-[24px]">Support</div>
-                                <div className="border-t border-[#fff] w-[275px] text-[18px] mt-6" />
-                                <div href="#" className="text-sm hover:underline mt-8">
-                                    Sell Book
-                                </div>
-                                <div href="#" className="text-sm hover:underline mt-8">
-                                    Join Community
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <Footer />
             </div>
 
         </div >

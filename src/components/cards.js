@@ -11,7 +11,6 @@ export default function Cards({bookTitle, bookAuthor, bookPrice, bookImage}) {
                         className="object-cover w-full h-full"
                     />
                 </figure>
-                {/* <div className="card-body"> */}
                 <div className="flex flex-col bg-[#F2EEE5] rounded-b-xl h-[200px] justify-between">
                     <div>
                         <div className="w-full text-[20px] mt-4 pl-4 font-bold">{bookTitle}</div>
@@ -22,18 +21,7 @@ export default function Cards({bookTitle, bookAuthor, bookPrice, bookImage}) {
                         <div className="w-full text-[20px] pl-4 mb-4 font-bold">{bookPrice}</div>
                     </div>
                 </div>
-
-                {/* <h2 className="card-title">
-                        Shoes!
-                        <div className="badge badge-secondary">NEW</div>
-                    </h2> */}
-                {/* <p>If a dog chews shoes whose shoes does he choose?</p> */}
-                {/* <div className="card-actions justify-end">
-                        <div className="badge badge-outline">Fashion</div>
-                        <div className="badge badge-outline">Products</div>
-                    </div> */}
             </div>
-            {/* </div> */}
         </>
     )
 }

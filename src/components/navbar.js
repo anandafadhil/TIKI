@@ -3,7 +3,7 @@
 export default function Navbar() {
     return (
         <>
-            <div className="navbar h-[60px] bg-[#F2EEE5] flex justify-center items-center drop-shadow-md rounded-b-lg">
+            <div className="navbar h-[60px] bg-[#F2EEE5] flex justify-center items-center drop-shadow-md rounded-b-lg text-[#0F172A]">
                 <div className="">
                     {/* Dropdown System */}
                     <div className="dropdown">
