@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Footer from "../../components/footer";
 import Navbar from "../../components/navbar";
 import Cards from "../../components/cards";
+import Pagination from "../../components/pagination";
 import CardsGenre from "../../components/cardsGenre";
 import CardsBeyond from "../../components/cardsBeyond";
 import ModalSell from "../../components/modalSell";
@@ -157,6 +158,17 @@ export default function Collections() {
     }
 
     ];
+
+    const [isShowMore, setIsShowMore] = useState(false);
+
+    console.log(isShowMore)
+    const handleShowMore = () => {
+        setIsShowMore(true);
+    }
+
+    const closeShowMore = () => {
+        setIsShowMore(false);
+    }
     return (
         <div className='flex flex-row min-h-screen bg-[#EFE8DA]'>
             <div className='w-full'>
@@ -171,7 +183,7 @@ export default function Collections() {
                             Fiction Books
                         </div>
 
-                        <div className=' w-full bg-red-200 text-[18px] mt-2 text-black'>
+                        <div className=' w-full text-[18px] mt-2 text-black'>
                             Step into worlds where imagination knows no bounds, and every
                             page invites you to dream, wonder, and explore. Our Fiction Collection
                             is a treasure trove of gripping tales, unforgettable characters, and
@@ -207,48 +219,96 @@ export default function Collections() {
                 </div>
 
                 {/* Cards and Genre */}
-                <div className='bg-red-400 w-full flex flex-row mx-16'>
+                <div className='w-full flex flex-row px-16'>
 
                     {/* Genre */}
-                    <div className='bg-blue-100 w-[200px]'>
-                        <div className='bg-yellow-100 p-2 flex flex-col justify-start gap-2'>
+                    <div className='w-[10%]'>
+                        <div className='px-2 flex flex-col justify-start gap-2'>
                             <div className='font-bold text-[18px] text-black'>Genres</div>
                             <div className='text-[18px] text-gray-400 underline'>Romance</div>
                             <div className='text-[18px] text-gray-400 underline'>Comedy</div>
                             <div className='text-[18px] text-gray-400 underline'>Horror</div>
                             <div className='text-[18px] text-gray-400 underline'>Action</div>
                             <div className='text-[18px] text-gray-400 underline'>Fantasy</div>
-                            <div className='flex flex-row'>
-                                <div className='font-bold text-[18px] text-black underline'>See More</div>
-                                <div className='font-bold text-[18px] text-black ml-6'>+</div>
+
+
+                            {/* Rest of the Genre */}
+                            {isShowMore && (
+                                <div className='flex flex-col justify-start gap-2'>
+                                    <div className='text-[18px] text-gray-400 underline'>Thriller</div>
+                                    <div className='text-[18px] text-gray-400 underline'>Drama</div>
+                                    <div className='text-[18px] text-gray-400 underline'>Contemporary</div>
+                                    <div className='text-[18px] text-gray-400 underline'>Mystery</div>
+                                    <div className='text-[18px] text-gray-400 underline'>Sci-Fi</div>
+                                    <div className='text-[18px] text-gray-400 underline'>Family</div>
+                                    <div className='text-[18px] text-gray-400 underline'>Classic</div>
+                                </div>
+                            )}
+
+
+                            {/* Additional Genre */}
+                            {!isShowMore ? (
+                                <div>
+                                    {/* Show More */}
+                                    <div
+                                        className="flex flex-row items-center cursor-pointer"
+                                        onClick={handleShowMore}
+                                    >
+                                        <div className='font-bold text-[18px] text-black underline'>See More</div>
+                                        <div className='font-bold text-[18px] text-black ml-6'>
+                                            <img src="/icons/plus.svg" className=" w-[24px]" />
+                                        </div>
+                                    </div>
+                                </div>
+                            ) :
+                                (
+                                    <div>
+                                        {/* Show Less */}
+                                        <div
+                                            className="flex flex-row items-center cursor-pointer"
+                                            onClick={closeShowMore}
+                                        >
+                                            <div className='font-bold text-[18px] text-black underline'>See Less</div>
+                                            <div className='font-bold text-[18px] text-black ml-6'>
+                                                <img src="/icons/minus.svg" className=" w-[24px]" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+
+                        </div>
+                    </div>
+
+                    {/* Cards */}
+                    <div className='flex flex-col w-[90%]'>
+                        <div className=''>
+                            <div className='text-black text-[18px] italic'>
+                                Showing results for all fiction genres
+                            </div>
+                            <div className='my-8 flex flex-wrap text-black justify-between gap-y-12'>
+                                {booksFiction.map((book, index) => (
+                                    <Cards
+                                        key={index}
+                                        bookTitle={book.bookTitle}
+                                        bookAuthor={book.author}
+                                        bookPrice={book.price}
+                                        bookImage={book.image}
+                                    />
+                                ))}
+                            </div>
+                            <div className='flex flex-row justify-between items-center'>
+                                <div className='text-black text-[18px]'>
+                                    Results 1 - 24 of 89
+                                </div>
+                                <div className='text-black text-[18px]'>
+                                    <Pagination
+                                        currPage={1}
+                                        totPage={4}
+                                    />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div>
 
-                    </div>
-                    <div className='bg-green-100 w-full flex flex-col'>
-                        <div className='bg-green-400 text-black text-[18px] italic'>
-                            Showing results for all fiction genres
-                        </div>
-                        <div className='bg-blue-400 my-8 flex flex-wrap text-black gap-6 gap-y-12'>
-                            {booksFiction.map((book, index) => (
-                                <Cards
-                                    key={index}
-                                    bookTitle={book.bookTitle}
-                                    bookAuthor={book.author}
-                                    bookPrice={book.price}
-                                    bookImage={book.image}
-                                />
-
-                            ))}
-                        </div>
-                        <div>
-                            
-                        </div>
-                        <div className='bg-green-400 text-black text-[18px] italic'>
-                            Showing results for all fiction genres
-                        </div>
                     </div>
                 </div>
 

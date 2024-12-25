@@ -177,7 +177,6 @@ export default function Home() {
 
     const [isModalSellOpen, setIsModalSellOpen] = useState(false);
 
-    console.log("status", isModalSellOpen);
 
     const handleModalSellOpen = () => {
         setIsModalSellOpen(true);
