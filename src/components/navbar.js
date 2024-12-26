@@ -40,23 +40,31 @@ export default function Navbar() {
                         <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
                         </div>
                     </div>
+
                     {/* Horizontal Menu */}
-                    <div className="gap-20 justify-center text-[16px] h-full w-[1500px] menu menu-horizontal">
-                        <li><a className="poppins-bold underline underline-offset-2">Home</a></li>
-                        <li><a>New Arrivals</a></li>
-                        <li ref={fictionRef}>
+                    <div className="gap-20 text-[16px] h-[60px] w-[1600px] flex flex-row items-center justify-center">
+
+                        {/* Logo */}
+                        <a href="/">
+                            <img src="/icons/tikii-logo-1.svg" className="w-[60px]" alt="Tikii Logo" />
+                        </a>
+                        <a className="poppins-bold underline underline-offset-2" href="/">Home</a>
+                        <a>New Arrivals</a>
+
+                        {/* Fiction */}
+                        <div ref={fictionRef}>
                             <div
                                 role="button"
                                 tabIndex={0}
-                                className="relative"
+                                className="relative flex flex-row gap-1"
                                 onClick={() => setFictionOpen(!isFictionOpen)}
                             >
                                 <span>Fiction</span>
                                 <img src="/icons/chevron-down.svg" className={`w-[12px] transform transition-transform duration-200 ${isFictionOpen ? "rotate-180" : ""}`} />
                                 {isFictionOpen && (
                                     <div className="p-4 mt-4 bg-[#F2EEE5] border outline outline-1 outline-gray-300 absolute top-full left-1/2 transform -translate-x-1/2 mt-2 h-[364px] w-[364px]">
-                                        <p className="ml-6 mt-4 text-[24px] text-black font-semibold mb-6">Fiction by Genre</p>
-                                        <ul className="justify-start text-[18px] text-black grid grid-cols-2 gap-2 mt-2 right-4 w-full">
+                                        <a className="ml-6 mt-4 text-[24px] text-black font-semibold mb-6" href='/fiction'>Fiction by Genre</a>
+                                        <ul className="justify-start text-[18px] text-black grid grid-cols-2 gap-2 mt-2 right-4 w-full ml-6">
                                             <li><a>Fantasy</a></li>
                                             <li><a>Horror</a></li>
                                             <li><a>Romance</a></li>
@@ -73,20 +81,22 @@ export default function Navbar() {
                                     </div>
                                 )}
                             </div>
-                        </li>
-                        <li ref={nonFicRef}>
+                        </div>
+
+                        {/* Non Fiction */}
+                        <div ref={nonFicRef}>
                             <div
                                 role="button"
                                 tabIndex={0}
-                                className="relative"
+                                className="relative flex flex-row gap-1"
                                 onClick={() => setNonFictionOpen(!isNonFictionOpen)}
                             >
                                 <span>Non-Fiction</span>
                                 <img src="/icons/chevron-down.svg" className={`w-[12px] transform transition-transform duration-200 ${isNonFictionOpen ? "rotate-180" : ""}`} />
                                 {isNonFictionOpen && (
                                     <div className="p-4 mt-4 bg-[#F2EEE5] border outline outline-1 outline-gray-300 absolute top-full left-1/2 transform -translate-x-1/2 mt-2 h-[364px] w-[364px]">
-                                        <p className="ml-6 mt-4 text-[24px] text-black font-semibold mb-6">Non-Fiction by Genre</p>
-                                        <ul className="justify-start text-[18px] text-black grid grid-cols-2 gap-2 mt-2 right-4 w-full">
+                                        <a className="ml-6 mt-4 text-[24px] text-black font-semibold mb-6" href='/non-fiction'>Non-Fiction by Genre</a>
+                                        <ul className="justify-start text-[18px] text-black grid grid-cols-2 gap-2 mt-2 right-4 w-full ml-6">
                                             <li><a>Fantasy</a></li>
                                             <li><a>Horror</a></li>
                                             <li><a>Romance</a></li>
@@ -103,10 +113,12 @@ export default function Navbar() {
                                     </div>
                                 )}
                             </div>
-                        </li>
-                        <li><a>Sell Your Book</a></li>
-                        <li><a>Join Community</a></li>
-                        <li><a>Donate to Charity</a></li>
+                        </div>
+
+                        <a href='/article'>Beyond Tikii</a>
+                        <a>Sell Your Book</a>
+                        <a>Join Community</a>
+                        <a>Donate to Charity</a>
                     </div>
                 </div>
                 <div className="navbar-center hidden lg:flex">

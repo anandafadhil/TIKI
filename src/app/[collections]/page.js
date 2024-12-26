@@ -10,6 +10,7 @@ import CardsGenre from "../../components/cardsGenre";
 import CardsBeyond from "../../components/cardsBeyond";
 import ModalSell from "../../components/modalSell";
 import "../globals.css"
+import { useParams } from "next/navigation";
 
 export default function Collections() {
     const booksFiction = [{
@@ -296,6 +297,8 @@ export default function Collections() {
                                     />
                                 ))}
                             </div>
+
+                            {/* Pagination */}
                             <div className='flex flex-row justify-between items-center'>
                                 <div className='text-black text-[18px]'>
                                     Results 1 - 24 of 89

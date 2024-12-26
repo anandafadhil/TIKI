@@ -45,7 +45,7 @@ export default function ModalSell({ onClose }) {
                             <div className="flex justify-center bg-[#F2EEE5] mt-12 mb-12">
                                 <button
                                     type="button"
-                                    onClick={onClose}
+                                    onClick={() => window.open("http://bit.ly/consigntikii", "_blank")}
                                     className="bg-[#2A230F] w-[160px] h-[44px] text-white py-3 px-6 rounded-md hover:bg-[#3A3118]">
                                     Sell Your Book
                                 </button>

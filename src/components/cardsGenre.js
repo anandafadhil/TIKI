@@ -3,7 +3,7 @@
 export default function CardsGenre({ bookTitle, bookImage }) {
     return (
         <>
-            <div className="card bg-[#fff] w-[423px] h-[344px] shadow-xl rounded-3xl">
+            <div className="card bg-[#fff] w-[402px] h-[344px] shadow-xl rounded-3xl">
                 <figure className="h-[272px]">
                     <img
                         src={bookImage}

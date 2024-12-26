@@ -8,7 +8,7 @@ import Cards from "../components/cards";
 import CardsGenre from "../components/cardsGenre";
 import CardsBeyond from "../components/cardsBeyond";
 import ModalSell from "../components/modalSell";
-
+import Link from 'next/link';
 import './globals.css';
 
 
@@ -224,7 +224,7 @@ export default function Home() {
                 </div>
 
                 {/* Text 2 */}
-                <div className='bg-[#EFE8DA] h-[620px] items-center justify-center flex'>
+                <div id="mission" className='bg-[#EFE8DA] h-[620px] items-center justify-center flex'>
                     <div className='w-full mx-16 mb-44 mt-48'>
                         <div className=' w-full font-bold text-[#4A2C23] text-[22px]'>
                             Rediscover Stories, Relive Adventures
@@ -283,56 +283,64 @@ export default function Home() {
                 </div>
 
                 {/* Card: New Items*/}
-                <div className='h-[718px] px-20 mt-36'>
+                <div className='h-[718px] px-16 mt-36'>
                     {/* Title */}
-                    <div className='text-[#4A2c23] league-spartan-bold font-bold text-[48px]'>Just Arrived</div>
+                    <div className='text-[#4A2c23] league-spartan-bold font-bold text-[48px] ml-2'>Just Arrived</div>
 
                     {/* Desc */}
                     <div className='flex'>
-                        <div className='w-full justify-start flex items-center text-[18px]'>Freshly added treasures this batch for our curious readers</div>
-                        <div className='flex underline items-center font-[18px] text-[#0F172A] underline-offset-4 justify-end w-1/2 pr-4'>
-                            View all
+                        <div className='w-full justify-start flex items-center text-[18px] ml-2'>Freshly added treasures this batch for our curious readers</div>
+                        <div className='flex underline items-center font-[18px] text-[#0F172A] underline-offset-4 justify-end w-1/2 pr-2'>
+                            <a href='/collections/'>
+                                View all
+                            </a>
                         </div>
                     </div>
 
                     {/* Cards */}
-                    <div className='h-[570px] mt-12 flex justify-center gap-24'>
+                    <div className='flex flex-row h-[570px] mt-12 w-full justify-center gap-[80px]'>
                         {booksNew.map((book, index) => (
-                            <Cards
-                                key={index}
-                                bookTitle={book.bookTitle}
-                                bookAuthor={book.author}
-                                bookPrice={book.price}
-                                bookImage={book.image}
-                            />
+                            <a key={index} className='' href='/books/'>
+                                <Cards
+                                    key={index}
+                                    bookTitle={book.bookTitle}
+                                    bookAuthor={book.author}
+                                    bookPrice={book.price}
+                                    bookImage={book.image}
+                                />
+                            </a>
                         ))}
 
                     </div>
                 </div>
 
                 {/* Card: Classics*/}
-                <div className=' h-[718px] px-20 mt-36'>
+                <div className=' h-[718px] px-16 mt-36'>
                     {/* Title */}
-                    <div className='text-[#4A2c23] league-spartan-bold font-bold text-[48px]'>Classics</div>
+                    <div className='text-[#4A2c23] league-spartan-bold font-bold text-[48px] ml-2'>Classics</div>
 
                     {/* Desc */}
                     <div className='flex'>
-                        <div className='w-full justify-start flex items-center text-[18px]'>Timeless tales that never go out of style</div>
-                        <div className='flex underline items-center font-[18px] text-[#0F172A] underline-offset-4 justify-end w-1/2 pr-4'>
-                            View all
+                        <div className='w-full justify-start flex items-center text-[18px] ml-2'>Timeless tales that never go out of style</div>
+                        <div className='flex underline items-center font-[18px] text-[#0F172A] underline-offset-4 justify-end w-1/2 pr-2'>
+                            <a href='/collections/'>
+                                View all
+                            </a>
                         </div>
                     </div>
 
                     {/* Cards */}
-                    <div className='h-[570px] mt-12 flex w-full justify-center gap-24'>
+                    <div className='flex flex-row h-[570px] mt-12 w-full justify-center gap-[80px]'>
                         {booksClassics.map((book, index) => (
-                            <Cards
-                                key={index}
-                                bookTitle={book.bookTitle}
-                                bookAuthor={book.author}
-                                bookPrice={book.price}
-                                bookImage={book.image}
-                            />
+                            <a key={index} className='' href='/books/'>
+                                <Cards
+                                    key={index}
+                                    bookTitle={book.bookTitle}
+                                    bookAuthor={book.author}
+                                    bookPrice={book.price}
+                                    bookImage={book.image}
+                                />
+                            </a>
                         ))}
                     </div>
 
@@ -340,57 +348,63 @@ export default function Home() {
                 </div>
 
                 {/* Card: Budget Reads*/}
-                <div className=' h-[718px] px-20 mt-36'>
+                <div className=' h-[718px] px-16 mt-36'>
                     {/* Title */}
-                    <div className='text-[#4A2c23] league-spartan-bold font-bold text-[48px]'>Budget Reads</div>
+                    <div className='text-[#4A2c23] league-spartan-bold font-bold text-[48px] ml-2'>Budget Reads</div>
 
                     {/* Desc */}
                     <div className='flex'>
-                        <div className='w-full justify-start flex items-center text-[18px]'>Unbeatable prices under Rp50.000</div>
-                        <div className='flex underline items-center font-[18px] text-[#0F172A] underline-offset-4 justify-end w-1/2 pr-4'>
-                            View all
+                        <div className='w-full justify-start flex items-center text-[18px] ml-2'>Unbeatable prices under Rp50.000</div>
+                        <div className='flex underline items-center font-[18px] text-[#0F172A] underline-offset-4 justify-end w-1/2 pr-2'>
+                            <a href='/collections/'>
+                                View all
+                            </a>
                         </div>
                     </div>
 
                     {/* Cards */}
-                    <div className='h-[570px] mt-12 flex w-full justify-center gap-24'>
+                    <div className='flex flex-row h-[570px] mt-12 w-full justify-center gap-[80px]'>
                         {booksBudget.map((book, index) => (
-                            <Cards
-                                key={index}
-                                bookTitle={book.bookTitle}
-                                bookAuthor={book.author}
-                                bookPrice={book.price}
-                                bookImage={book.image}
-                            />
+                            <a key={index} href='/books/'>
+                                <Cards
+                                    key={index}
+                                    bookTitle={book.bookTitle}
+                                    bookAuthor={book.author}
+                                    bookPrice={book.price}
+                                    bookImage={book.image}
+                                />
+                            </a>
                         ))}
                     </div>
-
-                    {/* Pages */}
                 </div>
 
                 {/* Card: Fiction*/}
-                <div className=' h-[718px] px-20 mt-36'>
+                <div className=' h-[718px] px-16 mt-36'>
                     {/* Title*/}
-                    <div className='text-[#4A2c23] league-spartan-bold font-bold text-[48px]'>Fiction Favorites</div>
+                    <div className='text-[#4A2c23] league-spartan-bold font-bold text-[48px] ml-2'>Fiction Favorites</div>
 
                     {/* View all */}
                     <div className='flex'>
-                        <div className='w-full justify-start flex items-center text-[18px]'>Immerse yourself in captivating stories</div>
-                        <div className='flex underline items-center font-[18px] text-[#0F172A] underline-offset-4 justify-end w-1/2 pr-4'>
-                            View all
+                        <div className='w-full justify-start flex items-center text-[18px] ml-2'>Immerse yourself in captivating stories</div>
+                        <div className='flex underline items-center font-[18px] text-[#0F172A] underline-offset-4 justify-end w-1/2 pr-2'>
+                            <a href='/collections/'>
+                                View all
+                            </a>
                         </div>
                     </div>
 
                     {/* Cards */}
-                    <div className='h-[570px] mt-12 flex w-full justify-center gap-24'>
+                    <div className='flex flex-row h-[570px] mt-12 w-full justify-center gap-[80px]'>
                         {booksFiction.map((book, index) => (
-                            <Cards
-                                key={index}
-                                bookTitle={book.bookTitle}
-                                bookAuthor={book.author}
-                                bookPrice={book.price}
-                                bookImage={book.image}
-                            />
+                            <a key={index} className='' href='/books/'>
+                                <Cards
+                                    key={index}
+                                    bookTitle={book.bookTitle}
+                                    bookAuthor={book.author}
+                                    bookPrice={book.price}
+                                    bookImage={book.image}
+                                />
+                            </a>
                         ))}
                     </div>
 
@@ -398,28 +412,30 @@ export default function Home() {
                 </div>
 
                 {/* Card: Non Fiction*/}
-                <div className=' h-[718px] px-20 mt-36'>
+                <div className=' h-[718px] px-16 mt-36'>
                     {/* Title */}
-                    <div className='text-[#4A2c23] league-spartan-bold font-bold text-[48px]'>Non-Fiction Shelves</div>
+                    <div className='text-[#4A2c23] league-spartan-bold font-bold text-[48px] ml-2'>Non-Fiction Shelves</div>
 
                     {/* Desc */}
                     <div className='flex'>
-                        <div className='w-full justify-start flex items-center text-[18px]'>Learn, grow, and get inspired</div>
-                        <div className='flex underline items-center font-[18px] text-[#0F172A] underline-offset-4 justify-end w-1/2 pr-4'>
+                        <div className='w-full justify-start flex items-center text-[18px] ml-2'>Learn, grow, and get inspired</div>
+                        <div className='flex underline items-center font-[18px] text-[#0F172A] underline-offset-4 justify-end w-1/2 pr-2'>
                             View all
                         </div>
                     </div>
 
                     {/* Cards */}
-                    <div className='h-[570px] mt-12 flex w-full justify-center gap-24'>
+                    <div className='flex flex-row h-[570px] mt-12 w-full justify-center gap-[80px]'>
                         {booksNonFiction.map((book, index) => (
-                            <Cards
-                                key={index}
-                                bookTitle={book.bookTitle}
-                                bookAuthor={book.author}
-                                bookPrice={book.price}
-                                bookImage={book.image}
-                            />
+                            <a key={index} className='' href='/books/'>
+                                <Cards
+                                    key={index}
+                                    bookTitle={book.bookTitle}
+                                    bookAuthor={book.author}
+                                    bookPrice={book.price}
+                                    bookImage={book.image}
+                                />
+                            </a>
                         ))}
                     </div>
 
@@ -427,26 +443,35 @@ export default function Home() {
                 </div>
 
                 {/* Card: Discover*/}
-                <div className=' h-[718px] px-20 mt-36'>
+                <div className=' h-[718px] px-16 mt-36'>
                     {/* Title */}
-                    <div className='text-[#4A2c23] league-spartan-bold font-bold text-[48px]'>Discover Your Favorite Genre</div>
+                    <div className='text-[#4A2c23] league-spartan-bold font-bold text-[48px] ml-2'>Discover Your Favorite Genre</div>
 
                     {/* Desc */}
                     <div className='flex'>
-                        <div className='w-full justify-start flex items-center text-[18px]'>Discover books across genres that fit your every mood</div>
-                        <div className='flex underline items-center font-[18px] text-[#0F172A] underline-offset-4 justify-end w-1/2 pr-4'>
-                            View all
+                        <div className='w-full justify-start flex items-center text-[18px] ml-2'>Discover books across genres that fit your every mood</div>
+                        <div className='flex underline items-center font-[18px] text-[#0F172A] underline-offset-4 justify-end w-1/2 pr-2'>
+                            <a href='/collections/'>
+                                View all
+                            </a>
                         </div>
                     </div>
 
                     {/* Cards */}
-                    <div className='h-[570px] mt-12 flex w-full justify-center gap-20'>
+                    <div className='h-[570px] mt-12 flex w-full justify-center gap-[38px]'>
                         {discoverGenre.map((book, index) => (
-                            <CardsGenre
+                            <Link
                                 key={index}
-                                bookTitle={book.bookTitle}
-                                bookImage={book.image}
-                            />
+                                // href={`/collections/${genre}`}
+                                href='/collections/'
+                                className="block w-[404px] h-full"
+                            >
+                                <CardsGenre
+                                    key={index}
+                                    bookTitle={book.bookTitle}
+                                    bookImage={book.image}
+                                />
+                            </Link>
                         ))}
                     </div>
 
@@ -482,15 +507,17 @@ export default function Home() {
                 </div>
 
                 {/* Card: Beyond Tikii*/}
-                <div className='px-20 mt-36'>
+                <div className='px-16 mt-36'>
                     {/* Title */}
-                    <div className='text-[#4A2c23] league-spartan-bold font-bold text-[48px]'>Beyond Tikii</div>
+                    <div className='text-[#4A2c23] league-spartan-bold font-bold text-[48px] ml-2'>Beyond Tikii</div>
 
                     {/* Desc */}
                     <div className='flex'>
-                        <div className='w-full justify-start flex items-center text-[18px]'>See why Tikii stands out as a trusted home for preloved and passionate readers</div>
-                        <div className='flex underline items-center font-[18px] text-[#0F172A] underline-offset-4 justify-end w-1/2 pr-4'>
-                            View all
+                        <div className='w-full justify-start flex items-center text-[18px] ml-2'>See why Tikii stands out as a trusted home for preloved and passionate readers</div>
+                        <div className='flex underline items-center font-[18px] text-[#0F172A] underline-offset-4 justify-end w-1/2 pr-2'>
+                            <a href='/article/'>
+                                View all
+                            </a>
                         </div>
                     </div>
 

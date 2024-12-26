@@ -6,13 +6,13 @@ export default function Footer() {
 
                     {/* Logo and Contact Section */}
                     <div className="flex flex-col items-center mb-4">
-                        <img src="icons/tikii-logo-2.svg" alt="Tiki Logo" className="w-[180px] mt-8" />
+                        <img src="/icons/tikii-logo-2.svg" alt="Tiki Logo" className="w-[180px] mt-8" />
                         <div className="flex space-x-4 mt-8 mb-10">
-                            <a href="#" className="text-lg">
-                                <img src="icons/instagram.svg" alt="Tiki Logo" className="w-[32px]" />
+                            <a href="https://www.instagram.com/tikii_bookstore/" className="text-lg" target="_blank">
+                                <img src="/icons/instagram.svg" alt="Tiki Logo" className="w-[32px]" />
                             </a>
                             <a href="tel:+123456789" className="text-lg">
-                                <img src="icons/phone.svg" alt="Tiki Logo" className="w-[32px]" />
+                                <img src="/icons/phone.svg" alt="Tiki Logo" className="w-[32px]" />
                             </a>
                         </div>
                         <p className="text-sm mt-2 mb-20">2024 Tiki. All rights reserved.</p>
@@ -26,8 +26,10 @@ export default function Footer() {
                             <div href="#" className="text-sm hover:underline mt-8">
                                 About Us
                             </div>
-                            <div href="#" className="text-sm hover:underline mt-8">
-                                Our Mission
+                            <div className="text-sm hover:underline mt-8">
+                                <a href="/article/" >
+                                    Our Mission
+                                </a>
                             </div>
                         </div>
 
@@ -39,8 +41,10 @@ export default function Footer() {
                         <div className='mb-14'>
                             <div className="font-bold text-[24px]">Support</div>
                             <div className="border-t border-[#fff] w-[275px] text-[18px] mt-6" />
-                            <div href="#" className="text-sm hover:underline mt-8">
-                                Sell Book
+                            <div className="text-sm hover:underline mt-8">
+                                <a href="http://bit.ly/consigntikii" target="_blank">
+                                    Sell Book
+                                </a>
                             </div>
                             <div href="#" className="text-sm hover:underline mt-8">
                                 Join Community
@@ -48,7 +52,7 @@ export default function Footer() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div >
         </>
     )
 }
