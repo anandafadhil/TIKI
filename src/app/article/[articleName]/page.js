@@ -4,8 +4,7 @@ import * as React from 'react';
 import Navbar from "../../../components/navbar";
 import Footer from "../../../components/footer";
 import CardsBeyond from '../../../components/cardsBeyond';
-import CardsArticle from "../../../components/cardsArticle";
-import Pagination from "../../../components/pagination";
+import Image from 'next/image';
 import "../../globals.css";
 
 export default function Article() {
@@ -51,7 +50,7 @@ export default function Article() {
                                 Posted {articleInfo[0].postDate}
                             </div>
                             <div>
-                                <img src="/icons/circle.svg" />
+                            <Image src="/icons/circle.svg" alt="" width={8} height={8}/>
                             </div>
                             <div className="">
                                 {articleInfo[0].readLength}
@@ -70,7 +69,7 @@ export default function Article() {
 
                         {/* Image */}
                         <div className='h-[675px] w-[1185px] flex justify-center items-center'>
-                            <img src="/images/article/tikii-article-heading.png" className=' h-[675px] w-[1185px]'/>
+                            <Image src="/images/article/tikii-article-heading.png" alt="" width={1185} height={675} className=' h-[675px] w-[1185px]'/>
                         </div>
                     </div>
                 </div>

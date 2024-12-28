@@ -1,14 +1,17 @@
 "use client";
+import Image from "next/image";
 
 export default function Cards({bookTitle, bookAuthor, bookPrice, bookImage}) {
     return (
         <>
             <div className="card bg-[#fff] w-[370px] h-[570px] shadow-xl rounded-3xl">
                 <figure className="h-[370px]">
-                    <img
+                    <Image
                         src={bookImage}
                         alt={bookTitle}
                         className="object-cover w-full h-full"
+                        width={370}
+                        height={370}
                     />
                 </figure>
                 <div className="flex flex-col bg-[#F2EEE5] rounded-b-xl h-[200px] justify-between">

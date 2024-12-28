@@ -90,7 +90,7 @@ export default function Article() {
                         </div>
 
                         {/* Cards : Article */}
-                        <div className='w-full flex flex-wrap gap-x-8 gap-y-20'>
+                        <div className='w-full flex flex-wrap justify-center gap-x-8 gap-y-20'>
                             {articleInfo.map((article, index) => (
                                 <CardsArticle
                                     key={index}
