@@ -1,16 +1,12 @@
 'use client';
 import * as React from 'react';
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import Footer from "../../components/footer";
 import Navbar from "../../components/navbar";
 import Cards from "../../components/cards";
 import Pagination from "../../components/pagination";
-import CardsGenre from "../../components/cardsGenre";
-import CardsBeyond from "../../components/cardsBeyond";
-import ModalSell from "../../components/modalSell";
+import Image from "next/image";
 import "../globals.css"
-import { useParams } from "next/navigation";
 
 export default function Collections() {
     const booksFiction = [{
@@ -208,7 +204,7 @@ export default function Collections() {
                             {/* Search */}
                             <div className="form-control flex items-center justify-center h-full ">
                                 <div className='bg-[#F2EEE5] w-[825px] h-[40px] flex items-center rounded-md outline outline-1 outline-[#B8B094]'>
-                                    <img src="/icons/search.svg" className="ml-2 w-[24px]" />
+                                    <Image src="/icons/search.svg" className="ml-2" alt="" width={24} height={24} />
                                     <input type="text" placeholder="Find the title of book" className="ml-3 bg-[#F2EEE5] w-full h-[40px]" />
                                 </div>
                             </div>
@@ -257,7 +253,7 @@ export default function Collections() {
                                     >
                                         <div className='font-bold text-[18px] text-black underline'>See More</div>
                                         <div className='font-bold text-[18px] text-black ml-6'>
-                                            <img src="/icons/plus.svg" className=" w-[24px]" />
+                                            <Image src="/icons/plus.svg" className="" alt="" height={24} width={24} />
                                         </div>
                                     </div>
                                 </div>
@@ -271,7 +267,7 @@ export default function Collections() {
                                         >
                                             <div className='font-bold text-[18px] text-black underline'>See Less</div>
                                             <div className='font-bold text-[18px] text-black ml-6'>
-                                                <img src="/icons/minus.svg" className=" w-[24px]" />
+                                                <Image src="/icons/minus.svg" alt="" width={24} height={24}/>
                                             </div>
                                         </div>
                                     </div>

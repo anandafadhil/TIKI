@@ -1,7 +1,6 @@
 'use client';
 import * as React from 'react';
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import Footer from "../components/footer";
 import Navbar from "../components/navbar";
 import Cards from "../components/cards";
@@ -9,12 +8,11 @@ import CardsGenre from "../components/cardsGenre";
 import CardsBeyond from "../components/cardsBeyond";
 import ModalSell from "../components/modalSell";
 import Link from 'next/link';
+import Image from "next/image";
 import './globals.css';
 
 
 export default function Home() {
-    const router = useRouter();
-
     const booksNew = [{
         bookTitle: "Beautiful World, Where are You",
         author: "Sally Rooney",
@@ -199,13 +197,13 @@ export default function Home() {
                     <div className="flex h-full w-full items-center justify-center">
 
                         {/* Logo */}
-                        <img src="/icons/tikii-logo-1.svg" className="mr-10 w-[113px]" />
+                        <Image src="/icons/tikii-logo-1.svg" className="mr-10" width={113} height={113} alt="" />
 
                         <div className='flex gap-2 mr-10'>
                             {/* Search */}
                             <div className="form-control flex items-center justify-center h-full ">
                                 <div className='bg-[#F2EEE5] w-[825px] h-[40px] flex items-center rounded-md outline outline-1 outline-[#B8B094]'>
-                                    <img src="/icons/search.svg" className="ml-2 w-[24px]" />
+                                    <Image src="/icons/search.svg" className="ml-2" width={24} height={24} alt="" />
                                     <input type="text" placeholder="Find the title of book" className="ml-3 bg-[#F2EEE5] w-full h-[40px]" />
 
                                 </div>
@@ -219,33 +217,21 @@ export default function Home() {
                 </div>
 
                 {/* Carousel 1 : Payday Sale */}
-                <div className='bg-[#4A2C23] h-[378px] flex items-center m-0 p-0'>
-                    <img src="/icons/tikii-banner-1.png" className="mr-10" />
+                <div className='bg-[#4A2C23] flex items-center m-0 p-0'>
+                    <Image src="/icons/tikii-banner-1.png" height={378} width={1860} className="object-contain mr-10" alt="banner" />
                 </div>
 
                 {/* Text 2 */}
-                <div id="mission" className='bg-[#EFE8DA] h-[620px] items-center justify-center flex'>
-                    <div className='w-full mx-16 mb-44 mt-48'>
-                        <div className=' w-full font-bold text-[#4A2C23] text-[22px]'>
+                <div id="mission" className='bg-[#EFE8DA] items-center justify-center flex'>
+                    <div className='w-full mx-16 mb-40 mt-44'>
+                        <div className=' w-full font-semibold text-[#4A2C23] text-[30px] text-center'>
                             Rediscover Stories, Relive Adventures
                         </div>
 
-                        <div className=' w-full text-[18px] mt-2'>
+                        <div className=' w-full text-[18px] mt-2 text-center'>
                             Welcome to Your Next Chapter, where every book has a tale to tell, and every reader finds a story worth cherishing.
                             Unlike traditional bookstores, we believe books are meant to be shared, not shelved. Each preloved book in our collection
                             has traveled its own journey and is ready to spark joy and inspiration in a new home. By rehoming these literary treasures, we’re giving stories a second life and making sustainable reading accessible for everyone.
-                        </div>
-                        <div className=' w-full font-bold text-[#4A2C23] text-[22px] mt-8'>
-                            Endless Choices at Unbeatable Prices
-                        </div>
-
-                        <div className=' w-full text-[18px] mt-2'>
-                            Explore our vast collection today, from page-turning thrillers to heartwarming romance, thought-provoking non-fiction to timeless classics. Whether you’re a devoted bookworm or just looking for your next great read,
-                            you’ll find incredible value here. Plus, enjoy affordable prices and eco-conscious shopping all in one place.
-                        </div>
-
-                        <div className='w-full text-[18px]'>
-                            So, let’s turn the page and embrace a world where stories never end. Your next adventure starts here at Your Next Chapter!
                         </div>
                     </div>
 
@@ -254,7 +240,7 @@ export default function Home() {
                 {/* Carousel 2 : Sell Your Book */}
                 <div className="relative h-[384px] bg-red-400 flex flex-col lg:flex-row items-center">
                     {/* Full-Width Banner Image */}
-                    <img src="/icons/tikii-banner-2.png" alt="Banner" className="w-full h-full" />
+                    <Image src="/icons/tikii-banner-2.png" fill alt="Banner" className="w-full h-full" />
 
 
                     {/* Overlay Text Box */}
@@ -266,8 +252,8 @@ export default function Home() {
 
                         {/* Description */}
                         <p className="text-sm lg:text-lg text-center leading-relaxed mb-9">
-                            Got books gathering dust on your shelves? It's time to give them a second life and share the joy of reading!
-                            At Tiiki, we make it easy to sell your preloved books. Whether they're gripping novels, insightful non-fiction,
+                            Got books gathering dust on your shelves? Its time to give them a second life and share the joy of reading!
+                            At Tiiki, we make it easy to sell your preloved books. Whether theyre gripping novels, insightful non-fiction,
                             or cherished classics, your books deserve to be read and loved again.
                         </p>
 
@@ -291,16 +277,16 @@ export default function Home() {
                     <div className='flex'>
                         <div className='w-full justify-start flex items-center text-[18px] ml-2'>Freshly added treasures this batch for our curious readers</div>
                         <div className='flex underline items-center font-[18px] text-[#0F172A] underline-offset-4 justify-end w-1/2 pr-2'>
-                            <a href='/collections/'>
+                            <Link href='/collections/'>
                                 View all
-                            </a>
+                            </Link>
                         </div>
                     </div>
 
                     {/* Cards */}
                     <div className='flex flex-row h-[570px] mt-12 w-full justify-center gap-[80px]'>
                         {booksNew.map((book, index) => (
-                            <a key={index} className='' href='/books/'>
+                            <Link key={index} className='' href='/books/'>
                                 <Cards
                                     key={index}
                                     bookTitle={book.bookTitle}
@@ -308,7 +294,7 @@ export default function Home() {
                                     bookPrice={book.price}
                                     bookImage={book.image}
                                 />
-                            </a>
+                            </Link>
                         ))}
 
                     </div>
@@ -323,16 +309,16 @@ export default function Home() {
                     <div className='flex'>
                         <div className='w-full justify-start flex items-center text-[18px] ml-2'>Timeless tales that never go out of style</div>
                         <div className='flex underline items-center font-[18px] text-[#0F172A] underline-offset-4 justify-end w-1/2 pr-2'>
-                            <a href='/collections/'>
+                            <Link href='/collections/'>
                                 View all
-                            </a>
+                            </Link>
                         </div>
                     </div>
 
                     {/* Cards */}
                     <div className='flex flex-row h-[570px] mt-12 w-full justify-center gap-[80px]'>
                         {booksClassics.map((book, index) => (
-                            <a key={index} className='' href='/books/'>
+                            <Link key={index} className='' href='/books/'>
                                 <Cards
                                     key={index}
                                     bookTitle={book.bookTitle}
@@ -340,7 +326,7 @@ export default function Home() {
                                     bookPrice={book.price}
                                     bookImage={book.image}
                                 />
-                            </a>
+                            </Link>
                         ))}
                     </div>
 
@@ -356,16 +342,16 @@ export default function Home() {
                     <div className='flex'>
                         <div className='w-full justify-start flex items-center text-[18px] ml-2'>Unbeatable prices under Rp50.000</div>
                         <div className='flex underline items-center font-[18px] text-[#0F172A] underline-offset-4 justify-end w-1/2 pr-2'>
-                            <a href='/collections/'>
+                            <Link href='/collections/'>
                                 View all
-                            </a>
+                            </Link>
                         </div>
                     </div>
 
                     {/* Cards */}
                     <div className='flex flex-row h-[570px] mt-12 w-full justify-center gap-[80px]'>
                         {booksBudget.map((book, index) => (
-                            <a key={index} href='/books/'>
+                            <Link key={index} href='/books/'>
                                 <Cards
                                     key={index}
                                     bookTitle={book.bookTitle}
@@ -373,7 +359,7 @@ export default function Home() {
                                     bookPrice={book.price}
                                     bookImage={book.image}
                                 />
-                            </a>
+                            </Link>
                         ))}
                     </div>
                 </div>
@@ -387,16 +373,16 @@ export default function Home() {
                     <div className='flex'>
                         <div className='w-full justify-start flex items-center text-[18px] ml-2'>Immerse yourself in captivating stories</div>
                         <div className='flex underline items-center font-[18px] text-[#0F172A] underline-offset-4 justify-end w-1/2 pr-2'>
-                            <a href='/collections/'>
+                            <Link href='/collections/'>
                                 View all
-                            </a>
+                            </Link>
                         </div>
                     </div>
 
                     {/* Cards */}
                     <div className='flex flex-row h-[570px] mt-12 w-full justify-center gap-[80px]'>
                         {booksFiction.map((book, index) => (
-                            <a key={index} className='' href='/books/'>
+                            <Link key={index} className='' href='/books/'>
                                 <Cards
                                     key={index}
                                     bookTitle={book.bookTitle}
@@ -404,7 +390,7 @@ export default function Home() {
                                     bookPrice={book.price}
                                     bookImage={book.image}
                                 />
-                            </a>
+                            </Link>
                         ))}
                     </div>
 
@@ -427,7 +413,7 @@ export default function Home() {
                     {/* Cards */}
                     <div className='flex flex-row h-[570px] mt-12 w-full justify-center gap-[80px]'>
                         {booksNonFiction.map((book, index) => (
-                            <a key={index} className='' href='/books/'>
+                            <Link key={index} className='' href='/books/'>
                                 <Cards
                                     key={index}
                                     bookTitle={book.bookTitle}
@@ -435,7 +421,7 @@ export default function Home() {
                                     bookPrice={book.price}
                                     bookImage={book.image}
                                 />
-                            </a>
+                            </Link>
                         ))}
                     </div>
 
@@ -451,9 +437,9 @@ export default function Home() {
                     <div className='flex'>
                         <div className='w-full justify-start flex items-center text-[18px] ml-2'>Discover books across genres that fit your every mood</div>
                         <div className='flex underline items-center font-[18px] text-[#0F172A] underline-offset-4 justify-end w-1/2 pr-2'>
-                            <a href='/collections/'>
+                            <Link href='/collections/'>
                                 View all
-                            </a>
+                            </Link>
                         </div>
                     </div>
 
@@ -482,7 +468,7 @@ export default function Home() {
                 {/* Carousel 3 */}
                 <div className="relative h-[384px] bg-red-400 flex flex-col lg:flex-row items-center">
                     {/* Full-Width Banner Image */}
-                    <img src="/icons/tikii-banner-2.png" alt="Banner" className="w-full h-full" />
+                    <Image src="/icons/tikii-banner-2.png" fill alt="Banner" className="w-full h-full" />
 
 
                     {/* Overlay Text Box */}
@@ -515,9 +501,9 @@ export default function Home() {
                     <div className='flex'>
                         <div className='w-full justify-start flex items-center text-[18px] ml-2'>See why Tikii stands out as a trusted home for preloved and passionate readers</div>
                         <div className='flex underline items-center font-[18px] text-[#0F172A] underline-offset-4 justify-end w-1/2 pr-2'>
-                            <a href='/article/'>
+                            <Link href='/article/'>
                                 View all
-                            </a>
+                            </Link>
                         </div>
                     </div>
 
@@ -539,7 +525,7 @@ export default function Home() {
                 {/* Carousel 4 */}
                 <div className="mt-40 relative h-[384px] bg-red-400 flex flex-col lg:flex-row items-center">
                     {/* Full-Width Banner Image */}
-                    <img src="/icons/tikii-banner-3.png" alt="Banner" className="w-full h-full" />
+                    <Image src="/icons/tikii-banner-3.png" fill alt="Banner" className="w-full h-full" />
 
 
                     {/* Overlay Text Box */}

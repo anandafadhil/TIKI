@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 
 export default function ModalPayment({ onClose }) {
     return (
@@ -37,11 +38,11 @@ export default function ModalPayment({ onClose }) {
                                         </div>
                                         <div className="text-[18px] text-black flex flex-col justify-center items-center gap-12">
                                             <div className="w-[135px] flex flex-row border border-black rounded-md gap-2 p-1 items-center justify-center font-medium">
-                                                <img src="icons/shopping-bag.svg" alt="Shopping Bag" className="w-[24px]" />
+                                                <Image src="icons/shopping-bag.svg" alt="Shopping Bag" width={24} height={24} />
                                                 <a>Shopee</a>
                                             </div>
                                             <div className="w-[195px] flex flex-row border border-black rounded-md gap-2 p-1 items-center justify-center font-medium">
-                                                <img src="icons/instagram-2.svg" alt="Instagram" className="w-[24px]" />
+                                                <Image src="icons/instagram-2.svg" alt="Instagram" width={24} height={24} />
                                                 <a>DM Instagram</a>
                                             </div>
                                         </div>

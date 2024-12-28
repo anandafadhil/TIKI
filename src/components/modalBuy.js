@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 
 export default function ModalBuy({ onBuy, onClose }) {
     return (
@@ -31,10 +32,12 @@ export default function ModalBuy({ onBuy, onClose }) {
                                     {/* Selling Walktrough */}
                                     <div className="text-center justify-center items-center flex">
                                         <figure className="h-[877px] w-[877px]">
-                                            <img
+                                            <Image
                                                 src="/modals/buy-walktrough.png"
                                                 alt="buy-walktrough"
                                                 className="object-cover w-full h-full"
+                                                width={877}
+                                                height={877}
                                             />
                                         </figure>
                                     </div>

@@ -1,15 +1,12 @@
 'use client';
 import * as React from 'react';
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import Footer from "../../components/footer";
 import Navbar from "../../components/navbar";
 import Cards from "../../components/cards";
-import Pagination from "../../components/pagination";
-import CardsGenre from "../../components/cardsGenre";
-import ModalSell from "../../components/modalSell";
 import ModalBuy from "../../components/modalBuy";
-import "../globals.css"
+import "../globals.css";
+import Image from "next/image";
 import ModalPayment from '@/components/modalPayment';
 
 export default function Books() {
@@ -72,10 +69,12 @@ export default function Books() {
 
                         {/* Image */}
                         <div className='z-10 absolute left-0 mt-8 mx-16'>
-                            <img
+                            <Image
                                 src="/images/book_photo_1.png"
                                 alt="background"
                                 className="w-[304px] h-full"
+                                width={304}
+                                height={304}
                             />
                         </div>
 
@@ -112,13 +111,13 @@ export default function Books() {
                                         About The Song of Achilles
                                     </div>
                                     <div>
-                                        Achilles, "the best of all the Greeks," son of the cruel
+                                        Achilles, the best of all the Greeks, son of the cruel
                                         sea goddess Thetis and the legendary king Peleus, is
                                         strong, swift, and beautiful, irresistible to all who
                                         meet him. Patroclus is an awkward young prince, exiled
                                         from his homeland after an act of shocking violence.
                                         Brought together by chance, they forge an inseparable
-                                        bond, despite risking the gods' wrath.
+                                        bond, despite risking the gods wrath.
                                     </div>
                                     <div>
                                         They are trained by the centaur Chiron in the arts of war

@@ -1,14 +1,17 @@
 "use client";
+import Image from "next/image";
 
 export default function CardsGenre({ bookTitle, bookImage }) {
     return (
         <>
             <div className="card bg-[#fff] w-[402px] h-[344px] shadow-xl rounded-3xl">
                 <figure className="h-[272px]">
-                    <img
+                    <Image
                         src={bookImage}
                         alt={bookTitle}
                         className="object-cover w-full h-full"
+                        width={272}
+                        height={272}
                     />
                 </figure>
                 {/* <div className="card-body"> */}

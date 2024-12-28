@@ -1,3 +1,7 @@
+'use client';
+import Image from "next/image";
+import Link from 'next/link';
+
 export default function Footer() {
     return (
         <>
@@ -6,13 +10,13 @@ export default function Footer() {
 
                     {/* Logo and Contact Section */}
                     <div className="flex flex-col items-center mb-4">
-                        <img src="/icons/tikii-logo-2.svg" alt="Tiki Logo" className="w-[180px] mt-8" />
+                        <Image src="/icons/tikii-logo-2.svg" alt="Tiki Logo" className="mt-8" width={180} height={180}/>
                         <div className="flex space-x-4 mt-8 mb-10">
                             <a href="https://www.instagram.com/tikii_bookstore/" className="text-lg" target="_blank">
-                                <img src="/icons/instagram.svg" alt="Tiki Logo" className="w-[32px]" />
+                                <Image src="/icons/instagram.svg" alt="Instagram Logo" width={32} height={32} />
                             </a>
                             <a href="tel:+123456789" className="text-lg">
-                                <img src="/icons/phone.svg" alt="Tiki Logo" className="w-[32px]" />
+                                <Image src="/icons/phone.svg" alt="Telephone Logo" width={32} height={32} />
                             </a>
                         </div>
                         <p className="text-sm mt-2 mb-20">2024 Tiki. All rights reserved.</p>
@@ -27,9 +31,9 @@ export default function Footer() {
                                 About Us
                             </div>
                             <div className="text-sm hover:underline mt-8">
-                                <a href="/article/" >
+                                <Link href="/article/" >
                                     Our Mission
-                                </a>
+                                </Link>
                             </div>
                         </div>
 

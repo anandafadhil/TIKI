@@ -1,4 +1,5 @@
 'use client';
+import Image from "next/image";
 
 export default function CardsArticle({ articleTitle, articleImage, datePosted, readLength }) {
     return (
@@ -18,7 +19,7 @@ export default function CardsArticle({ articleTitle, articleImage, datePosted, r
                                 Posted {datePosted}
                             </div>
                             <div>
-                                <img src="/icons/circle.svg" />
+                                <Image src="/icons/circle.svg" alt="" width={4} height={4}/>
                             </div>
                             <div className="">
                                 {readLength}
