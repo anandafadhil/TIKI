@@ -6,15 +6,24 @@ import Footer from "../../../components/footer";
 import CardsBeyond from '../../../components/cardsBeyond';
 import Image from 'next/image';
 import "../../globals.css";
+import { usePathname } from "next/navigation";
+import { ArticleData } from '@/app/data/bookData';
 
 export default function Article() {
-    const articleInfo = [{
-        articleTitle: "Building Bridges Through Books: Tikii's Mission to Unite Readers Across Indonesia",
-        articleSub: "At Tikii, we believe that books have the power to connect, inspire, and transform lives. That’s why we’re committed to creating a community of readers that spans every corner of Indonesia—from bustling cities to remote villages in Papua",
-        articleImage: "/images/cards_picture_28.png",
-        postDate: "5 Dec 2024",
-        readLength: "2 min read"
-    }];
+    // const articleInfo = [{
+    //     articleTitle: "Building Bridges Through Books: Tikii's Mission to Unite Readers Across Indonesia",
+    //     articleSub: "At Tikii, we believe that books have the power to connect, inspire, and transform lives. That’s why we’re committed to creating a community of readers that spans every corner of Indonesia—from bustling cities to remote villages in Papua",
+    //     articleImage: "/images/cards_picture_28.png",
+    //     postDate: "5 Dec 2024",
+    //     readLength: "2 min read"
+    // }];
+    const router = usePathname();
+    const articleId = router.replace('/article/', '');
+    console.log(typeof articleId)
+    // console.log(typeof ArticleData.id)
+
+    const article = ArticleData.find((item) => String(item.id) === articleId)
+    console.log(article.contentDetails);
 
     const byondTikii = [{
         title: "Wide Selection",
@@ -47,36 +56,62 @@ export default function Article() {
                         {/* Date and Read Length */}
                         <div className=' flex flex-row gap-6 items-center text-[#EFE8DA] text-[18px] justify-center mb-6'>
                             <div className="">
-                                Posted {articleInfo[0].postDate}
+                                Posted {article.postDate}
                             </div>
                             <div>
-                            <Image src="/icons/circle.svg" alt="" width={8} height={8}/>
+                                <Image src="/icons/circle.svg" alt="" width={8} height={8} />
                             </div>
                             <div className="">
-                                {articleInfo[0].readLength}
+                                {article.readLength}
                             </div>
                         </div>
 
                         {/* Title */}
                         <div className='text-[#F2EEE5] text-[48px] league-spartan-bold text-center leading-[48px] mb-6'>
-                            {articleInfo[0].articleTitle}
+                            {article.articleTitle}
                         </div>
 
                         {/* Sub Title */}
                         <div className='text-[#F2EEE5] text-[18px] italic text-center mb-20'>
-                            {articleInfo[0].articleSub}
+                            {article.articleSub}
                         </div>
 
                         {/* Image */}
                         <div className='h-[675px] w-[1185px] flex justify-center items-center'>
-                            <Image src="/images/article/tikii-article-heading.png" alt="" width={1185} height={675} className=' h-[675px] w-[1185px]'/>
+                            <Image src="/images/article/tikii-article-heading.png" alt="" width={1185} height={675} className=' h-[675px] w-[1185px]' />
                         </div>
                     </div>
                 </div>
 
+                {/* Article Text */}
+                <div className="article-content text-black w-full flex justify-center">
+                    <div className='w-[1184px]'>
+                        {article.contentDetails.map((content, index) => (
+                            <div key={index} className="content-category mt-8">
+
+                                {/* Heading */}
+                                <h2 className="content-heading text-[24px] font-semibold">{content.categoryContent.heading}</h2>
+
+                                {/* Paragraph */}
+                                <p className="content-paragraph text-[18px] mt-2">{content.categoryContent.paragraph}</p>
+
+                                {/* Images */}
+                                {content.categoryContent.images && content.categoryContent.images !== "" && (
+                                    <img
+                                        className="content-image mt-4"
+                                        src={content.categoryContent.images}
+                                        alt={content.categoryContent.heading}
+                                    />
+                                )}
+                            </div>
+                        ))}
+                    </div>
+
+                </div>
+
                 {/* Border */}
                 <div className='flex justify-center items-center'>
-                    <div className="border-t border-[#B8B094] text-[18px] w-full mt-10 mb-2" />
+                    <div className="border-t border-[#B8B094] text-[18px] w-full mt-20 mb-2" />
                 </div>
 
                 {/* Card: Beyond Tikii*/}

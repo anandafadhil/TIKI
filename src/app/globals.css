@@ -31,6 +31,71 @@ body {
   width: 100%;
 }
 
+.image-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 113px;
+  aspect-ratio: 75/45;
+}
+
+@media (min-width: 640px) {
+  .image-wrapper {
+    max-width: 112px; /* For screens >= 640px */
+  }
+}
+
+.swiper {
+  padding: 10px 0px 7px 0px !important;
+  width: 100%;
+}
+
+
+.swiper-button-next,
+.swiper-button-prev {
+  display: none !important;
+}
+
+.custom-button-next,
+.custom-button-prev {
+  position: absolute;
+  top: var(--swiper-navigation-top-offset, 50%);
+  z-index: 10;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: calc(0px - (var(--swiper-navigation-size)/ 2));
+}
+
+.custom-button-next-image,
+.custom-button-prev-image {
+  position: absolute;
+  top: var(--swiper-navigation-top-offset, 35%);
+  z-index: 10;
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: middle;
+  align-items: center;
+  /* transform: translateX(-20%); */
+}
+
+
+.custom-button-next {
+  right: -20px;
+}
+
+.custom-button-prev {
+  left: -20px;
+}
+
+.custom-button-next-image {
+  right: 70px;
+}
+
+.custom-button-prev-image {
+  left: 70px;
+}
+
 .poppins-thin {
   font-family: "Poppins", sans-serif;
   font-weight: 100;
