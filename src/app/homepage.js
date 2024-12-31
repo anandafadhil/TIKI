@@ -1,0 +1,1095 @@
+'use client';
+import React from 'react';
+import Select from 'react-select';
+import { useState } from 'react';
+import Footer from "../components/footer";
+import Navbar from "../components/navbar";
+import Cards from "../components/cards";
+import CardsGenre from "../components/cardsGenre";
+import CardsBeyond from "../components/cardsBeyond";
+import ModalSell from "../components/modalSell";
+import ModalBuy from "../components/modalBuy";
+import ModalPayment from '@/components/modalPayment';
+import Link from 'next/link';
+import Image from "next/image";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from 'swiper/modules'
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import './globals.css';
+import { useRouter } from 'next/navigation'
+import { WholeBook } from './data/bookData';
+
+export default function HomePage({ data }) {
+    // console.log("dat", data[0].submission.title)
+    const router = useRouter();
+
+    const booksNew = [{
+        id: "978-1-101-98391-0",
+        bookTitle: "Beautiful World, Where are You",
+        author: "Sally Rooney",
+        price: "Rp 120.000",
+        image: "/images/cards_picture_1.png"
+    },
+    {
+        id: "978-0-385-53926-8",
+        bookTitle: "A Little Life",
+        author: "Hanya Yanagihara",
+        price: "Rp 190.000",
+        image: "/images/cards_picture_2.png"
+    },
+    {
+        id: "978-602-03-4216-5",
+        bookTitle: "Laut Bercerita",
+        author: "Leila S. Chudori",
+        price: "Rp 90.000",
+        image: "/images/cards_picture_3.png"
+    },
+    {
+        id: "978-1-567-12345-9",
+        bookTitle: "Aister Lake",
+        author: "Auryn Vientania",
+        price: "Rp 95.000",
+        image: "/images/cards_picture_4.png"
+    },
+    {
+        id: "978-1-101-98391-0",
+        bookTitle: "Beautiful World, Where are You",
+        author: "Sally Rooney",
+        price: "Rp 120.000",
+        image: "/images/cards_picture_1.png"
+    },
+    {
+        id: "978-0-385-53926-8",
+        bookTitle: "A Little Life",
+        author: "Hanya Yanagihara",
+        price: "Rp 190.000",
+        image: "/images/cards_picture_2.png"
+    },
+    {
+        id: "978-602-03-4216-5",
+        bookTitle: "Laut Bercerita",
+        author: "Leila S. Chudori",
+        price: "Rp 90.000",
+        image: "/images/cards_picture_3.png"
+    },
+    {
+        id: "978-1-567-12345-9",
+        bookTitle: "Aister Lake",
+        author: "Auryn Vientania",
+        price: "Rp 95.000",
+        image: "/images/cards_picture_4.png"
+    }];
+
+    const booksClassics = [{
+        id: "978-1-567-12345-11",
+        bookTitle: "Pride and Prejudice",
+        author: "Jane Austen",
+        price: "Rp 140.000",
+        image: "/images/cards_picture_5.png"
+    },
+    {
+        id: "978-1-567-12345-12",
+        bookTitle: "1984",
+        author: "George Orwell",
+        price: "Rp 127.000",
+        image: "/images/cards_picture_6.png"
+    },
+    {
+        id: "978-1-567-12345-13",
+        bookTitle: "The Great Gatsby",
+        author: "F. Scott Fitzgerald",
+        price: "Rp 150.000",
+        image: "/images/cards_picture_7.png"
+    },
+    {
+        id: "978-1-567-12345-14",
+        bookTitle: "Moby Dick",
+        author: "Herman Melville",
+        price: "Rp 90.000",
+        image: "/images/cards_picture_8.png"
+    },
+    {
+        bookTitle: "Beautiful World, Where are You",
+        author: "Sally Rooney",
+        price: "Rp 120.000",
+        image: "/images/cards_picture_1.png"
+    },
+    {
+        bookTitle: "A Little Life",
+        author: "Hanya Yanagihara",
+        price: "Rp 190.000",
+        image: "/images/cards_picture_2.png"
+    },
+    {
+        bookTitle: "Laut Bercerita",
+        author: "Leila S. Chudori",
+        price: "Rp 90.000",
+        image: "/images/cards_picture_3.png"
+    },
+    {
+        bookTitle: "Aister Lake",
+        author: "Auryn Vientania",
+        price: "Rp 95.000",
+        image: "/images/cards_picture_4.png"
+    },
+    ];
+
+    const booksBudget = [{
+        bookTitle: "Garis Waktu",
+        author: "Fiersa Besari",
+        price: "Rp 44.000",
+        image: "/images/cards_picture_9.png"
+    },
+    {
+        bookTitle: "All Our Yesterdays",
+        author: "Christin Terrill",
+        price: "Rp 39.000",
+        image: "/images/cards_picture_10.png"
+    },
+    {
+        bookTitle: "Rich People Problems",
+        author: "Kevin Kwan",
+        price: "Rp 49.000",
+        image: "/images/cards_picture_11.png"
+    },
+    {
+        bookTitle: "Hujan Bulan Juni",
+        author: "Sapardi Djoko Damono",
+        price: "Rp 44.000",
+        image: "/images/cards_picture_12.png"
+    },
+    {
+        bookTitle: "Beautiful World, Where are You",
+        author: "Sally Rooney",
+        price: "Rp 120.000",
+        image: "/images/cards_picture_1.png"
+    },
+    {
+        bookTitle: "A Little Life",
+        author: "Hanya Yanagihara",
+        price: "Rp 190.000",
+        image: "/images/cards_picture_2.png"
+    },
+    {
+        bookTitle: "Laut Bercerita",
+        author: "Leila S. Chudori",
+        price: "Rp 90.000",
+        image: "/images/cards_picture_3.png"
+    },
+    {
+        bookTitle: "Aister Lake",
+        author: "Auryn Vientania",
+        price: "Rp 95.000",
+        image: "/images/cards_picture_4.png"
+    }];
+
+    const booksFiction = [{
+        bookTitle: "Dune",
+        author: "Frank Herbert",
+        price: "Rp 120.000",
+        image: "/images/cards_picture_13.png"
+    },
+    {
+        bookTitle: "Norwegian Wood",
+        author: "Murakami",
+        price: "Rp 145.000",
+        image: "/images/cards_picture_14.png"
+    },
+    {
+        bookTitle: "Crazy Rich Asians",
+        author: "Kevin Kwan",
+        price: "Rp 72.000",
+        image: "/images/cards_picture_15.png"
+    },
+    {
+        bookTitle: "The Song of Achilles",
+        author: "Madeline Miller",
+        price: "Rp 125.000",
+        image: "/images/cards_picture_16.png"
+    },
+    {
+        bookTitle: "Beautiful World, Where are You",
+        author: "Sally Rooney",
+        price: "Rp 120.000",
+        image: "/images/cards_picture_1.png"
+    },
+    {
+        bookTitle: "A Little Life",
+        author: "Hanya Yanagihara",
+        price: "Rp 190.000",
+        image: "/images/cards_picture_2.png"
+    },
+    {
+        bookTitle: "Laut Bercerita",
+        author: "Leila S. Chudori",
+        price: "Rp 90.000",
+        image: "/images/cards_picture_3.png"
+    },
+    {
+        bookTitle: "Aister Lake",
+        author: "Auryn Vientania",
+        price: "Rp 95.000",
+        image: "/images/cards_picture_4.png"
+    }];
+
+    const booksNonFiction = [{
+        bookTitle: "Atomic Habits",
+        author: "James Clear",
+        price: "Rp 52.000",
+        image: "/images/cards_picture_17.png"
+    },
+    {
+        bookTitle: "The Alpah Girl's Guide",
+        author: "Henry Manamprining",
+        price: "Rp 55.000",
+        image: "/images/cards_picture_18.png"
+    },
+    {
+        bookTitle: "Becoming",
+        author: "Michelle Obama",
+        price: "Rp 135.000",
+        image: "/images/cards_picture_19.png"
+    },
+    {
+        bookTitle: "The Psychology of Money",
+        author: "Morgan Housel",
+        price: "Rp 55.000",
+        image: "/images/cards_picture_20.png"
+    },
+    {
+        bookTitle: "Beautiful World, Where are You",
+        author: "Sally Rooney",
+        price: "Rp 120.000",
+        image: "/images/cards_picture_1.png"
+    },
+    {
+        bookTitle: "A Little Life",
+        author: "Hanya Yanagihara",
+        price: "Rp 190.000",
+        image: "/images/cards_picture_2.png"
+    },
+    {
+        bookTitle: "Laut Bercerita",
+        author: "Leila S. Chudori",
+        price: "Rp 90.000",
+        image: "/images/cards_picture_3.png"
+    },
+    {
+        bookTitle: "Aister Lake",
+        author: "Auryn Vientania",
+        price: "Rp 95.000",
+        image: "/images/cards_picture_4.png"
+    }];
+
+    const discoverGenre = [{
+        bookTitle: "Fantasy",
+        image: "/images/cards_picture_21.png"
+    },
+    {
+        bookTitle: "Self-Development",
+        image: "/images/cards_picture_22.png"
+    },
+    {
+        bookTitle: "Romance",
+        image: "/images/cards_picture_23.png"
+    },
+    {
+        bookTitle: "Mystery",
+        image: "/images/cards_picture_24.png"
+
+    }];
+
+    const byondTikii = [{
+        title: "Wide Selection",
+        paragraph: "Tikii offers an incredible selection of books across all genres, catering to every taste and preference. Rare and sought-after titles are easy to find, all at unbeatable prices and in excellent condition—perfectly ready for their next reader to enjoy.",
+        image: "/images/cards_picture_25.png"
+    },
+    {
+        title: "Sustainability",
+        paragraph: "What sets Tikii apart is its dedication to sustainability and the joy of rehoming books. Customers appreciate the positive environmental impact while enjoying the thrill of discovering hidden treasures. The process is simple, and the customer support team is always friendly and responsive, making every experience enjoyable.",
+        image: "/images/cards_picture_26.png"
+    },
+    {
+        title: "Build Community",
+        paragraph: "Through Tikii, readers find a platform where books are just the beginning. It’s a space to celebrate literature, share insights, and inspire one another. The vibrant community built around Tikii is filled with people eager to exchange stories, give life to preloved books, and create lasting memories through shared experiences.",
+        image: "/images/cards_picture_27.png"
+    }];
+
+
+    // Slider Function
+    const [sliderState, setSliderState] = useState({
+        New: { isBeginning: true, isLast: false },
+        Classic: { isBeginning: true, isLast: false },
+        Budget: { isBeginning: true, isLast: false },
+        Fiction: { isBeginning: true, isLast: false },
+        NonFiction: { isBeginning: true, isLast: false },
+    });
+
+    const handleSlideChange = (category) => (swiper) => {
+        setSliderState((prevState) => ({
+            ...prevState,
+            [category]: {
+                isBeginning: swiper.isBeginning,
+                isLast: swiper.isEnd,
+            },
+        }));
+    };
+
+    // Sell Modal
+    const [isModalSellOpen, setIsModalSellOpen] = useState(false);
+
+    const handleModalSellOpen = () => {
+        setIsModalSellOpen(true);
+    }
+
+    const handleModalSellClose = () => {
+        setIsModalSellOpen(false);
+    }
+
+    // Buy Modal
+    const [isModalBuyOpen, setIsModalBuyOpen] = useState(false);
+    const [isModalPaymentOpen, setIsModalPaymentOpen] = useState(false);
+
+    const handleModalBuyOpen = () => {
+        setIsModalBuyOpen(true);
+    }
+
+    const handleModalBuyClose = () => {
+        setIsModalBuyOpen(false);
+    }
+
+    const handleModalPaymentOpen = () => {
+        setIsModalBuyOpen(false);
+        setIsModalPaymentOpen(true);
+    }
+
+    const handleModalPaymentClose = () => {
+        setIsModalPaymentOpen(false);
+    }
+
+    // Search Function
+    const [selectedBooks, setSelectedBooks] = useState(null);
+
+    const optionsBooks = WholeBook.map((book) => ({
+        value: book.id,
+        label: book.bookTitle.toLowerCase()
+    }));
+
+    const handleSearchBooks = async (event) => {
+        const selectedBookId = event.target.value;
+        console.log(event.target)
+        console.log(selectedBookId)
+        const selectedBook = WholeBook.find((book) => book.id === selectedBookId);
+        setSelectedBooks(selectedBook);
+    };
+
+    const handleSearchClick = async () => {
+        if (selectedBooks) {
+            router.push(`/books/${selectedBooks.id}`);
+        } else {
+            console.error('No book selected');
+        }
+    }
+
+    // Real API
+    // const optionsBooks = data.map((book) => ({
+    //     value: book.id,
+    //     label: book.submission.title
+    // }));
+
+    // const handleSearchBooks = async (event) => {
+    //     console.log("masuk", event.target.value)
+    //     const selectedBookId = parseInt(event.target.value);
+    //     const selectedBook = data.find((book) => book.id === selectedBookId);
+    //     setSelectedBooks(selectedBook);
+    // };
+
+    // const handleSearchClick = async () => {
+    //     if (selectedBooks) {
+    //         router.push(`/books/${selectedBooks.id}`);
+    //     } else {
+    //         console.error('No book selected');
+    //     }
+    // }
+    const [isMobile, setIsMobile] = useState(true)
+    return (
+
+        <div className="flex flex-row min-h-screen bg-[#EFE8DA] text-gray-800">
+            {/* <div className="flex-1 p-6">abc</div> */}
+            <div className='w-full'>
+                {/* Navbar */}
+                <Navbar />
+
+                {/* Search and Logo */}
+                <div className='h-[187px] lg:h-[118px] bg-[#EFE8DA]'>
+                    <div className="flex w-full items-center justify-center flex-col lg:flex-row">
+
+                        {/* Logo */}
+                        <Image src="/icons/tikii-logo-1.svg" className="mr-0 lg:mr-10" width={113} height={113} alt="" />
+
+
+                        {/* Search Function */}
+                        <div className='flex gap-2 mr-0 lg:mr-10'>
+                            {/* Search Bar */}
+                            <div className="form-control flex items-center justify-center h-full ">
+                                <div className='bg-[#F2EEE5] w-[300px] lg:w-[825px] h-[40px] flex items-center rounded-md outline outline-1 outline-[#B8B094]'>
+                                    <Image src="/icons/search.svg" className="ml-2" width={24} height={24} alt="" />
+                                    <select
+                                        className="ml-2 w-[93%] bg-[#F2EEE5] text-gray-800"
+                                        name=""
+                                        onChange={handleSearchBooks}
+                                        placeholder="Find the title of the book"
+                                    >
+                                        {optionsBooks.map((option) => (
+                                            <option key={option.value} value={option.value}>
+                                                {option.label}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                            </div>
+
+                            {/* Search Button */}
+                            <button
+                                className='bg-black text-white w-[83px] lg:w-[96px] h-[40px] rounded-md'
+                                onClick={handleSearchClick}
+                            >
+                                Search
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Carousel 1 : Payday Sale */}
+                <div className='bg-[#4A2C23] flex items-center m-0 p-0'>
+                    <img src="/icons/tikii-banner-1.png" className="object-contain mr-10 h-[200px] lg:h-full" alt="banner" />
+                </div>
+
+                {/* Text 1 */}
+                <div id="mission" className='bg-[#EFE8DA] items-center justify-center flex'>
+                    <div className="w-full mx-4 mt-20 mb-20 lg:mx-16 lg:mt-44 lg:mb-40">
+                        <div className=' w-full font-semibold text-[#4A2C23] text-[20px] lg:text-[30px] text-center'>
+                            Rediscover Stories, Relive Adventures
+                        </div>
+
+                        <div className=' w-full text-[18px] mt-2 text-center'>
+                            Welcome to Your Next Chapter, where every book has a tale to tell, and every reader finds a story worth cherishing.
+                            Unlike traditional bookstores, we believe books are meant to be shared, not shelved. Each preloved book in our collection
+                            has traveled its own journey and is ready to spark joy and inspiration in a new home. By rehoming these literary treasures, we’re giving stories a second life and making sustainable reading accessible for everyone.
+                        </div>
+                    </div>
+
+                </div>
+
+                {/* Carousel 2 : Sell Your Book */}
+                <div id="sell" className="relative h-[384px] bg-red-400 flex flex-col lg:flex-row items-center">
+                    {/* Full-Width Banner Image */}
+                    <Image src="/icons/tikii-banner-2.png" fill alt="Banner" className="w-full h-full" />
+
+
+                    {/* Overlay Text Box */}
+                    <div className="bg-red-100 h-full justify-center bg-opacity-20 absolute right-0 lg:w-[1120px] w-full px-12 lg:px-20 py-6 lg:py-12 flex flex-col items-center text-[#4A2C23]">
+                        {/* Main Heading */}
+                        <h1 className="text-2xl lg:text-4xl font-bold mt-1 mb-3">
+                            Sell Your Book Now!
+                        </h1>
+
+                        {/* Description */}
+                        <p className="text-sm lg:text-lg text-center leading-relaxed mb-9">
+                            Got books gathering dust on your shelves? Its time to give them a second life and share the joy of reading!
+                            At Tiiki, we make it easy to sell your preloved books. Whether theyre gripping novels, insightful non-fiction,
+                            or cherished classics, your books deserve to be read and loved again.
+                        </p>
+
+                        {/* Button */}
+                        <button
+                            onClick={handleModalSellOpen}
+                            className="bg-[#2A230F] w-[330px] h-[44px] text-white py-3 px-6 rounded-md hover:bg-[#3A3118]">
+                            Sell Now
+                        </button>
+                        {/* Modal */}
+                        {isModalSellOpen && <ModalSell onClose={handleModalSellClose} />}
+                    </div>
+                </div>
+
+                {/* Card: New Items*/}
+                <div className='h-[718px] px-16 mt-36'>
+                    {/* Title */}
+                    <div className='text-[#4A2c23] league-spartan-bold font-bold text-[48px] ml-2'>Just Arrived</div>
+
+                    {/* Desc */}
+                    <div className='flex'>
+                        <div className='w-full justify-start flex items-center text-[18px] ml-2'>Freshly added treasures this batch for our curious readers</div>
+                        <div className='flex underline items-center font-[18px] text-[#0F172A] underline-offset-4 justify-end w-1/2 pr-2'>
+                            <Link href='/new/'>
+                                View all
+                            </Link>
+                        </div>
+                    </div>
+
+                    {/* Cards */}
+                    <div className='h-[570px] mt-12 relative flex items-center'>
+                        {/* Custom Navigation Buttons */}
+                        <button
+                            className={`custom-button-prev ${sliderState.New.isBeginning ? "opacity-0 pointer-events-none" : ""}`}
+                            id="custom-prev-1"
+                            disabled={sliderState.New.isBeginning}
+                        >
+                            <Image src="/icons/chevron-left.svg" alt="arrow-right" width={60} height={60} />
+                        </button>
+                        <button
+                            className={`custom-button-next ${sliderState.New.isLast ? "opacity-0 pointer-events-none" : ""}`}
+                            id="custom-next-1"
+                            disabled={sliderState.New.isLast}
+                        >
+                            <Image src="/icons/chevron-right.svg" alt="arrow-right" width={60} height={60} />
+                        </button>
+
+                        <Swiper
+                            modules={[Navigation]}
+                            slidesPerView={6}
+                            spaceBetween={20}
+                            freeMode={true}
+                            centeredSlides={false}
+                            preventClicks={false} // Allow click events
+                            preventClicksPropagation={false} // Allow event propagation
+                            navigation={{
+                                nextEl: "#custom-next-1",
+                                prevEl: "#custom-prev-1",
+                            }}
+                            onSlideChange={handleSlideChange('New')}
+                            // breakpoints={{
+                            //     992: {
+                            //         slidesPerView: 2, // 3 slides per view for screens larger than 992px
+                            //     },
+                            //     768: {
+                            //         slidesPerView: 2, // 2 slides per view for screens larger than 768px
+                            //     },
+                            //     480: {
+                            //         slidesPerView: 1, // 1 slide per view for screens smaller than 480px
+                            //     },
+                            // }}
+                            // navigation={true} // Optional navigation arrows
+                            loop={false} // Optional loop
+                            className="swiper-container"
+                        >
+                            {
+                                booksNew.map((book, index) => (
+                                    <SwiperSlide key={index} className="flex justify-center">
+                                        <Link key={book.id} className="" href={`/books/${book.id}`}>
+                                            <Cards
+                                                bookTitle={book.bookTitle}
+                                                bookAuthor={book.author}
+                                                bookPrice={book.price}
+                                                bookImage={book.image}
+                                            />
+                                        </Link>
+                                    </SwiperSlide>
+                                ))
+                            }
+                        </Swiper>
+                    </div>
+                </div>
+
+                {/* Card: Classics*/}
+                <div className=' h-[718px] px-16 mt-36'>
+                    {/* Title */}
+                    <div className='text-[#4A2c23] league-spartan-bold font-bold text-[48px] ml-2'>Classic in Fiction</div>
+
+                    {/* Desc */}
+                    <div className='flex'>
+                        <div className='w-full justify-start flex items-center text-[18px] ml-2'>Timeless tales that never go out of style</div>
+                        <div className='flex underline items-center font-[18px] text-[#0F172A] underline-offset-4 justify-end w-1/2 pr-2'>
+                            <Link href='/classic/'>
+                                View all
+                            </Link>
+                        </div>
+                    </div>
+
+                    {/* Cards */}
+                    <div className='h-[570px] mt-12 relative flex items-center'>
+                        {/* Custom Navigation Buttons */}
+                        <button
+                            className={`custom-button-prev ${sliderState.Classic.isBeginning ? "opacity-0 pointer-events-none" : ""}`}
+                            id="custom-prev-2"
+                            disabled={sliderState.Classic.isBeginning}
+                        >
+                            <Image src="/icons/chevron-left.svg" alt="arrow-right" width={60} height={60} />
+                        </button>
+                        <button
+                            className={`custom-button-next ${sliderState.Classic.isLast ? "opacity-0 pointer-events-none" : ""}`}
+                            id="custom-next-2"
+                            disabled={sliderState.Classic.isLast}
+                        >
+                            <Image src="/icons/chevron-right.svg" alt="arrow-right" width={60} height={60} />
+                        </button>
+                        <Swiper
+                            modules={[Navigation]}
+                            slidesPerView={6}
+                            spaceBetween={20}
+                            freeMode={true}
+                            centeredSlides={false}
+                            preventClicks={false} // Allow click events
+                            preventClicksPropagation={false} // Allow event propagation
+                            navigation={{
+                                nextEl: "#custom-next-2",
+                                prevEl: "#custom-prev-2",
+                            }}
+                            // onSwiper={(swiper) => setIsBeginning(swiper.isBeginning)}
+                            onSlideChange={handleSlideChange('Classic')}
+                            // breakpoints={{
+                            //     992: {
+                            //         slidesPerView: 2, // 3 slides per view for screens larger than 992px
+                            //     },
+                            //     768: {
+                            //         slidesPerView: 2, // 2 slides per view for screens larger than 768px
+                            //     },
+                            //     480: {
+                            //         slidesPerView: 1, // 1 slide per view for screens smaller than 480px
+                            //     },
+                            // }}
+                            // navigation={true} // Optional navigation arrows
+                            loop={false} // Optional loop
+                            className="swiper-container"
+                        >
+                            {
+                                booksClassics.map((book, index) => (
+                                    <SwiperSlide key={index} className="flex justify-center">
+                                        <Link key={book.id} className="" href={`/books/${book.id}`}>
+                                            <Cards
+                                                bookTitle={book.bookTitle}
+                                                bookAuthor={book.author}
+                                                bookPrice={book.price}
+                                                bookImage={book.image}
+                                            />
+                                        </Link>
+                                    </SwiperSlide>
+                                ))
+                            }
+                        </Swiper>
+                    </div>
+
+                    {/* Pages */}
+                </div>
+
+                {/* Card: Budget Reads*/}
+                <div className=' h-[718px] px-16 mt-36 mb-40 '>
+                    {/* Title */}
+                    <div className='text-[#4A2c23] league-spartan-bold font-bold text-[48px] ml-2'>Budget Reads</div>
+
+                    {/* Desc */}
+                    <div className='flex'>
+                        <div className='w-full justify-start flex items-center text-[18px] ml-2'>Unbeatable prices under Rp50.000</div>
+                        <div className='flex underline items-center font-[18px] text-[#0F172A] underline-offset-4 justify-end w-1/2 pr-2'>
+                            <Link href='/budget'>
+                                View all
+                            </Link>
+                        </div>
+                    </div>
+
+                    {/* Cards */}
+                    <div className='h-[570px] mt-12 relative flex items-center'>
+                        {/* Custom Navigation Buttons */}
+                        <button
+                            className={`custom-button-prev ${sliderState.Budget.isBeginning ? "opacity-0 pointer-events-none" : ""}`}
+                            id="custom-prev-3"
+                            disabled={sliderState.Budget.isBeginning}
+                        >
+                            <Image src="/icons/chevron-left.svg" alt="arrow-right" width={60} height={60} />
+                        </button>
+                        <button
+                            className={`custom-button-next ${sliderState.Budget.isLast ? "opacity-0 pointer-events-none" : ""}`}
+                            id="custom-next-3"
+                            disabled={sliderState.Budget.isLast}
+                        >
+                            <Image src="/icons/chevron-right.svg" alt="arrow-right" width={60} height={60} />
+                        </button>
+                        <Swiper
+                            modules={[Navigation]}
+                            slidesPerView={6}
+                            spaceBetween={20}
+                            freeMode={true}
+                            centeredSlides={false}
+                            preventClicks={false} // Allow click events
+                            preventClicksPropagation={false} // Allow event propagation
+                            navigation={{
+                                nextEl: "#custom-next-3",
+                                prevEl: "#custom-prev-3",
+                            }}
+                            // onSwiper={(swiper) => setIsBeginning(swiper.isBeginning)}
+                            onSlideChange={handleSlideChange('Budget')}
+                            // breakpoints={{
+                            //     992: {
+                            //         slidesPerView: 2, // 3 slides per view for screens larger than 992px
+                            //     },
+                            //     768: {
+                            //         slidesPerView: 2, // 2 slides per view for screens larger than 768px
+                            //     },
+                            //     480: {
+                            //         slidesPerView: 1, // 1 slide per view for screens smaller than 480px
+                            //     },
+                            // }}
+                            // navigation={true} // Optional navigation arrows
+                            loop={false} // Optional loop
+                            className="swiper-container"
+                        >
+                            {booksBudget.map((book, index) => (
+                                <SwiperSlide key={index} className="flex justify-center">
+                                    <Link key={index} className="" href='/books/'>
+                                        <Cards
+                                            bookTitle={book.bookTitle}
+                                            bookAuthor={book.author}
+                                            bookPrice={book.price}
+                                            bookImage={book.image}
+                                        />
+                                    </Link>
+                                </SwiperSlide>
+                            ))}
+                        </Swiper>
+                    </div>
+                </div>
+
+                {/* Carousel 3 : Buy a Book */}
+                <div className="relative h-[384px] bg-red-400 flex flex-col lg:flex-row items-center">
+                    {/* Full-Width Banner Image */}
+                    <Image src="/icons/tikii-banner-3.png" fill alt="Banner" className="w-full h-full" />
+
+
+                    {/* Overlay Text Box */}
+                    <div className="bg-red-100 h-full justify-center bg-opacity-20 absolute right-0 lg:w-[1120px] w-full px-12 lg:px-20 py-6 lg:py-12 flex flex-col items-center text-[#4A2C23]">
+                        {/* Main Heading */}
+                        <h1 className="text-2xl lg:text-4xl font-bold mt-1 mb-3">
+                            Own Your Next Great Read for Less!
+                        </h1>
+
+                        {/* Description */}
+                        <p className="text-sm lg:text-lg text-center leading-relaxed mb-9">
+                            Discover hidden treasures in our preloved book collection and give stories a second home.
+                            From timeless classics to modern must-reads, our consignment bookstore has something for
+                            every book lover. Shop now and let the next chapter of these books unfold with you!
+                        </p>
+
+                        {/* Button */}
+                        <button
+                            onClick={handleModalBuyOpen}
+                            className="bg-[#2A230F] w-[330px] h-[44px] text-white py-3 px-6 rounded-md hover:bg-[#3A3118]">
+                            Buy Now
+                        </button>
+                        {/* Modal */}
+                        {isModalBuyOpen && <ModalBuy onBuy={handleModalPaymentOpen} onClose={handleModalBuyClose} />}
+
+                        {isModalPaymentOpen && <ModalPayment onClose={handleModalPaymentClose} />}
+
+                    </div>
+                </div>
+
+                {/* Card: Fiction*/}
+                <div className=' h-[718px] px-16 mt-36'>
+                    {/* Title*/}
+                    <div className='text-[#4A2c23] league-spartan-bold font-bold text-[48px] ml-2'>Fiction Favorites</div>
+
+                    {/* View all */}
+                    <div className='flex'>
+                        <div className='w-full justify-start flex items-center text-[18px] ml-2'>Immerse yourself in captivating stories</div>
+                        <div className='flex underline items-center font-[18px] text-[#0F172A] underline-offset-4 justify-end w-1/2 pr-2'>
+                            <Link href='/fiction/'>
+                                View all
+                            </Link>
+                        </div>
+                    </div>
+
+                    {/* Cards */}
+                    <div className='h-[570px] mt-12 relative flex items-center'>
+                        {/* Custom Navigation Buttons */}
+                        <button
+                            className={`custom-button-prev ${sliderState.Fiction.isBeginning ? "opacity-0 pointer-events-none" : ""}`}
+                            id="custom-prev-4"
+                            disabled={sliderState.Fiction.isBeginning}
+                        >
+                            <Image src="/icons/chevron-left.svg" alt="arrow-right" width={60} height={60} />
+                        </button>
+                        <button
+                            className={`custom-button-next ${sliderState.Fiction.isLast ? "opacity-0 pointer-events-none" : ""}`}
+                            id="custom-next-4"
+                            disabled={sliderState.Fiction.isLast}
+                        >
+                            <Image src="/icons/chevron-right.svg" alt="arrow-right" width={60} height={60} />
+                        </button>
+                        <Swiper
+                            modules={[Navigation]}
+                            slidesPerView={6}
+                            spaceBetween={20}
+                            freeMode={true}
+                            centeredSlides={false}
+                            preventClicks={false} // Allow click events
+                            preventClicksPropagation={false} // Allow event propagation
+                            navigation={{
+                                nextEl: "#custom-next-4",
+                                prevEl: "#custom-prev-4",
+                            }}
+                            // onSwiper={(swiper) => setIsBeginning(swiper.isBeginning)}
+                            onSlideChange={handleSlideChange('Fiction')}
+                            // breakpoints={{
+                            //     992: {
+                            //         slidesPerView: 2, // 3 slides per view for screens larger than 992px
+                            //     },
+                            //     768: {
+                            //         slidesPerView: 2, // 2 slides per view for screens larger than 768px
+                            //     },
+                            //     480: {
+                            //         slidesPerView: 1, // 1 slide per view for screens smaller than 480px
+                            //     },
+                            // }}
+                            // navigation={true} // Optional navigation arrows
+                            loop={false} // Optional loop
+                            className="swiper-container"
+                        >
+                            {booksFiction.map((book, index) => (
+                                <SwiperSlide key={index} className="flex justify-center">
+
+                                    <Link key={index} className='' href='/books/'>
+                                        <Cards
+                                            key={index}
+                                            bookTitle={book.bookTitle}
+                                            bookAuthor={book.author}
+                                            bookPrice={book.price}
+                                            bookImage={book.image}
+                                        />
+                                    </Link>
+                                </SwiperSlide>
+                            ))}
+                        </Swiper>
+                    </div>
+
+                    {/* Pages */}
+                </div>
+
+                {/* Card: Non Fiction*/}
+                <div className=' h-[718px] px-16 mt-36'>
+                    {/* Title */}
+                    <div className='text-[#4A2c23] league-spartan-bold font-bold text-[48px] ml-2'>Non-Fiction Shelves</div>
+
+                    {/* Desc */}
+                    <div className='flex'>
+                        <div className='w-full justify-start flex items-center text-[18px] ml-2'>Learn, grow, and get inspired</div>
+                        <div className='flex underline items-center font-[18px] text-[#0F172A] underline-offset-4 justify-end w-1/2 pr-2'>
+                            <Link href='/non-fiction/'>
+                                View all
+                            </Link>
+                        </div>
+                    </div>
+
+                    {/* Cards */}
+                    <div className='h-[570px] mt-12 relative flex items-center'>
+                        {/* Custom Navigation Buttons */}
+                        <button
+                            className={`custom-button-prev ${sliderState.NonFiction.isBeginning ? "opacity-0 pointer-events-none" : ""}`}
+                            id="custom-prev-5"
+                            disabled={sliderState.NonFiction.isBeginning}
+                        >
+                            <Image src="/icons/chevron-left.svg" alt="arrow-right" width={60} height={60} />
+                        </button>
+                        <button
+                            className={`custom-button-next ${sliderState.NonFiction.isLast ? "opacity-0 pointer-events-none" : ""}`}
+                            id="custom-next-5"
+                            disabled={sliderState.NonFiction.isLast}
+                        >
+                            <Image src="/icons/chevron-right.svg" alt="arrow-right" width={60} height={60} />
+                        </button>
+                        <Swiper
+                            modules={[Navigation]}
+                            slidesPerView={6}
+                            spaceBetween={20}
+                            freeMode={true}
+                            centeredSlides={false}
+                            preventClicks={false}
+                            preventClicksPropagation={false}
+                            navigation={{
+                                nextEl: "#custom-next-5",
+                                prevEl: "#custom-prev-5",
+                            }}
+                            onSlideChange={handleSlideChange('NonFiction')}
+                            // breakpoints={{
+                            //     992: {
+                            //         slidesPerView: 2, // 3 slides per view for screens larger than 992px
+                            //     },
+                            //     768: {
+                            //         slidesPerView: 2, // 2 slides per view for screens larger than 768px
+                            //     },
+                            //     480: {
+                            //         slidesPerView: 1, // 1 slide per view for screens smaller than 480px
+                            //     },
+                            // }}
+                            // navigation={true} // Optional navigation arrows
+                            loop={false} // Optional loop
+                            className="swiper-container"
+                        >
+                            {booksNonFiction.map((book, index) => (
+                                <SwiperSlide key={index} className="flex justify-center">
+                                    <Link key={index} className='' href='/books/'>
+                                        <Cards
+                                            key={index}
+                                            bookTitle={book.bookTitle}
+                                            bookAuthor={book.author}
+                                            bookPrice={book.price}
+                                            bookImage={book.image}
+                                        />
+                                    </Link>
+                                </SwiperSlide>
+                            ))}
+                        </Swiper>
+                    </div>
+
+                    {/* Pages */}
+                </div>
+
+                {/* Card: Discover*/}
+                <div className='h-[718px] px-16 mt-36'>
+                    {/* Title */}
+                    <div className='text-[#4A2c23] league-spartan-bold font-bold text-[48px] ml-2'>Discover Your Favorite Genre</div>
+
+                    {/* Desc */}
+                    <div className='flex'>
+                        <div className='w-full justify-start flex items-center text-[18px] ml-2'>Discover books across genres that fit your every mood</div>
+                        <div className='flex underline items-center font-[18px] text-[#0F172A] underline-offset-4 justify-end w-1/2 pr-2'>
+                            <Link href='/all/'>
+                                View all
+                            </Link>
+                        </div>
+                    </div>
+
+                    {/* Cards */}
+                    <div className='h-[570px] mt-12 flex w-full justify-center gap-[38px]'>
+                        {discoverGenre.map((book, index) => (
+                            <Link
+                                key={index}
+                                // href={`/collections/${genre}`}
+                                href='/collections/'
+                                className="block w-[404px] h-full"
+                            >
+                                <CardsGenre
+                                    key={index}
+                                    bookTitle={book.bookTitle}
+                                    bookImage={book.image}
+                                />
+                            </Link>
+                        ))}
+                    </div>
+
+                    {/* Pages */}
+
+                </div>
+
+                {/* Carousel 4 : Join Our Community */}
+                <div className="relative h-[384px] bg-red-400 flex flex-col lg:flex-row items-center">
+                    {/* Full-Width Banner Image */}
+                    <Image src="/icons/tikii-banner-2.png" fill alt="Banner" className="w-full h-full" />
+
+
+                    {/* Overlay Text Box */}
+                    <div className="bg-red-100 h-full justify-center bg-opacity-20 absolute right-0 lg:w-[1120px] w-full px-12 lg:px-20 py-6 lg:py-12 flex flex-col items-center text-[#4A2C23]">
+                        {/* Main Heading */}
+                        <h1 className="text-2xl lg:text-4xl font-bold mt-1 mb-3">
+                            Join Our Community of Readers!
+                        </h1>
+
+                        {/* Description */}
+                        <p className="text-sm lg:text-lg text-center leading-relaxed mb-9">
+                            By joining us, you will connect with people who share your passion for books
+                            and sustainability. Together, we’re creating a world where every story gets a
+                            second chance to inspire and every reader finds their next favorite tale.
+                        </p>
+
+                        {/* Button */}
+                        <button className="bg-[#2A230F] w-[330px] h-[44px] text-white py-3 px-6 rounded-md hover:bg-[#3A3118]">
+                            Join Now
+                        </button>
+                    </div>
+                </div>
+
+                {/* Card: Beyond Tikii*/}
+                <div className='px-16 mt-36'>
+                    {/* Title */}
+                    <div className='text-[#4A2c23] league-spartan-bold font-bold text-[48px] ml-2'>Beyond Tikii</div>
+
+                    {/* Desc */}
+                    <div className='flex'>
+                        <div className='w-full justify-start flex items-center text-[18px] ml-2'>See why Tikii stands out as a trusted home for preloved and passionate readers</div>
+                        <div className='flex underline items-center font-[18px] text-[#0F172A] underline-offset-4 justify-end w-1/2 pr-2'>
+                            <Link href='/article/'>
+                                View all
+                            </Link>
+                        </div>
+                    </div>
+
+                    {/* Cards */}
+                    <div className='h-[620px] mt-12 flex w-full justify-center gap-8'>
+                        {byondTikii.map((info, index) => (
+                            <CardsBeyond
+                                key={index}
+                                title={info.title}
+                                paragraph={info.paragraph}
+                                image={info.image}
+                            />
+                        ))}
+                    </div>
+
+                    {/* Pages */}
+                </div>
+
+                {/* Carousel 5 : Donate */}
+                <div className="mt-40 relative h-[384px] bg-red-400 flex flex-col lg:flex-row items-center">
+                    {/* Full-Width Banner Image */}
+                    <Image src="/icons/tikii-banner-4.png" fill alt="Banner" className="w-full h-full" />
+
+
+                    {/* Overlay Text Box */}
+                    <div className="h-full justify-center bg-opacity-20 absolute right-0 lg:w-[1120px] w-full px-12 lg:px-20 py-6 lg:py-12 flex flex-col items-center text-[#4A2C23]">
+                        {/* Main Heading */}
+                        <h1 className="text-2xl lg:text-4xl font-bold mt-1 mb-3">
+                            Donate to Our Charity!
+                        </h1>
+
+                        {/* Description */}
+                        <p className="text-sm lg:text-lg text-center leading-relaxed mb-9">
+                            Help us spread the joy of reading to underserved communities.
+                            Your  donations enable Tikii to distribute preloved books, build
+                            community libraries, and support readers across Indonesia. Donate
+                            today and create lasting change!
+                        </p>
+
+                        {/* Button */}
+                        <button className="bg-[#2A230F] w-[330px] h-[44px] text-white py-3 px-6 rounded-md hover:bg-[#3A3118]">
+                            Donate Now
+                        </button>
+                    </div>
+                </div>
+
+                {/* Text 2 */}
+                <div className='bg-[#EFE8DA] items-center justify-center flex'>
+                    <div className='w-full mx-16 mt-40'>
+                        <div className=' w-full font-semibold text-[#4A2C23] text-[30px] text-center'>
+                            Endless Choices at Unbeatable Prices
+                        </div>
+
+                        <div className=' w-full text-[18px] mt-2 text-center'>
+                            Explore our vast collection today, from page-turning thrillers to heartwarming romance,
+                            thought-provoking non-fiction to timeless classics. Whether you’re a devoted bookworm or
+                            just looking for your next great read, you’ll find incredible value here. Plus, enjoy
+                            affordable prices and eco-conscious shopping all in one place.<br />
+                            So, let’s turn the page and embrace a world where stories never end. Your next adventure
+                            starts here at Your Next Chapter!
+                        </div>
+                    </div>
+
+                </div>
+
+                {/* Footer */}
+                <Footer />
+            </div>
+
+        </div >
+    );
+}

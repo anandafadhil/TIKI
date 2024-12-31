@@ -27,7 +27,7 @@ export default function Footer() {
                         <div className='mb-14'>
                             <div className="font-bold text-[24px]">About Tikii</div>
                             <div className="border-t border-[#fff] w-[275px] text-[18px] mt-6" />
-                            <div href="#" className="text-sm hover:underline mt-8">
+                            <div href="/#mission" className="text-sm hover:underline mt-8">
                                 About Us
                             </div>
                             <div className="text-sm hover:underline mt-8">

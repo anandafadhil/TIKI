@@ -16,7 +16,7 @@ export default function Cards({ bookTitle, bookAuthor, bookPrice, bookImage }) {
                     <Image
                         src={bookImage}
                         alt={bookTitle}
-                        className="object-cover w-full h-full"
+                        className="object-cover h-full"
                         width={370}
                         height={370}
                     />
