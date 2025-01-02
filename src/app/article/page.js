@@ -9,7 +9,7 @@ export default async function Page() {
     const totalPages = Math.ceil(ArticleData.length / ITEMS_PER_PAGE);
 
     // const data = await fetchData('/books');
-    const data = []
+    const data = ArticleData    
     return (
         <>
             <Article data={data} currentPage={currentPage} initialPage={initialPage} itp = {ITEMS_PER_PAGE} totalPages = {totalPages} />

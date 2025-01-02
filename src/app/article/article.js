@@ -7,7 +7,6 @@ import Footer from "../../components/footer";
 import CardsArticle from "../../components/cardsArticle";
 import Pagination from "../../components/pagination";
 import "../globals.css";
-import { ArticleData } from "../data/bookData";
 import Link from "next/link";
 
 export default function Article({ data, currentPage: initialPage, itp, totalPages }) {
@@ -69,11 +68,11 @@ export default function Article({ data, currentPage: initialPage, itp, totalPage
         postDate: "5 Dec 2024",
         readLength: "2 min read"
     }];
-
-    const paginatedData = ArticleData.slice(startIndex, endIndex);
+    const paginatedData = data.slice(startIndex, endIndex);
     const handlePageChange = (newPage) => {
         setCurrentPage(newPage); // Update the current page
     };
+    
     return (
         <div className='flex flex-row min-h-screen bg-[#EFE8DA]'>
             <div className='w-full'>
@@ -122,7 +121,7 @@ export default function Article({ data, currentPage: initialPage, itp, totalPage
                 {/* Pagination */}
                 <div className='flex flex-row justify-between items-center px-16'>
                     <div className='text-black text-[18px]'>
-                        Results {(currentPage - 1) * itemPerPage + 1} - {Math.min(currentPage * itemPerPage, ArticleData.length)} of {ArticleData.length}
+                        Results {(currentPage - 1) * itemPerPage + 1} - {Math.min(currentPage * itemPerPage, data.length)} of {data.length}
                     </div>
                     <div className='text-black text-[18px]'>
                         <Pagination

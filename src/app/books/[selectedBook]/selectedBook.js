@@ -14,7 +14,6 @@ import 'swiper/css/navigation';
 import "../../globals.css";
 import Image from "next/image";
 import ModalPayment from '@/components/modalPayment';
-import { WholeBook } from "../../data/bookData";
 
 export default function SelectedBook({ data }) {
     const [isModalBuyOpen, setIsModalBuyOpen] = useState(false);
@@ -56,12 +55,25 @@ export default function SelectedBook({ data }) {
     // const [mainImage, setMainImage] = useState(book.submission.coverUrl);
 
 
-    const book = WholeBook.find((item) => item.id === id)
-    if (!book) {
-        console.log("Book Not Found");
-    }
+    // const book = data.find((item) => item.id === id)
+    // if (!book) {
+    //     console.log("Book Not Found");
+    // }
 
-    const [mainImage, setMainImage] = useState(book.images[0]);
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+
+        // Get the day, month, and year from the Date object
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+        const year = date.getFullYear();
+
+        return `${day}/${month}/${year}`;
+    }
+    const formattedDate = formatDate(data.postedDate);
+
+
+    const [mainImage, setMainImage] = useState(data.images[0]);
 
     const handleModalPaymentOpen = () => {
         setIsModalBuyOpen(false);
@@ -106,7 +118,7 @@ export default function SelectedBook({ data }) {
                         <Image
                             src={mainImage}
                             alt="background"
-                            className="h-full translate-y-32"
+                            className="h-full translate-y-32 z-0"
                             width={478}
                             height={478}
                         />
@@ -139,13 +151,13 @@ export default function SelectedBook({ data }) {
 
                                 <div className='flex flex-col gap-2 text-[#F2EEE5] text-[18px]'>
                                     <div className='text-[48px] league-spartan-bold mb-2'>
-                                        {book.bookTitle}
+                                        {data.bookTitle}
                                     </div>
                                     <div className=''>
-                                        Author: {book.author}
+                                        Author: {data.author}
                                     </div>
                                     <div className=''>
-                                        Condition: {book.condition}
+                                        Condition: {data.condition}
                                     </div>
                                     <div className='flex flex-row gap-2'>
                                         <Image src="/icons/circle-red.svg" alt="Instagram Logo" width={12} height={12} />
@@ -154,7 +166,7 @@ export default function SelectedBook({ data }) {
                                         </div>
                                     </div>
                                     <div className='mt-1 text-[24px] '>
-                                        {book.price}
+                                        {data.price}
                                     </div>
                                 </div>
                             </div>
@@ -175,11 +187,11 @@ export default function SelectedBook({ data }) {
                                 <Image src="/icons/star.svg" alt="Instagram Logo" width={24} height={24} />
 
                                 <div>
-                                    Goodreads Rating: {book.sellerReviewNum}/5
+                                    Goodreads Rating: {data.sellerReviewNum}/5
                                 </div>
                             </div>
                             <div>
-                                {book.sellerReviewText}
+                                {data.sellerReviewText}
                             </div>
                         </div>
                     </div>
@@ -205,7 +217,7 @@ export default function SelectedBook({ data }) {
                             >
                                 {/* Real API */}
                                 {/* {book.submission.images.map((image, index) => ( */}
-                                {book.images.map((image, index) => (
+                                {data.images.map((image, index) => (
                                     <SwiperSlide key={index}>
                                         <button onClick={() => setMainImage(image)}>
                                             <img
@@ -249,9 +261,9 @@ export default function SelectedBook({ data }) {
                             {book.submission.category}
                         </div> */}
 
-                        {book.category.genre.map((genre, index) => (
+                        {data.genre.map((genre, index) => (
                             <div key={index} className='border border-[#B8B094] rounded-md px-2 py-1'>
-                                {genre}
+                                {genre.name}
                             </div>
                         ))}
                     </div>
@@ -293,7 +305,7 @@ export default function SelectedBook({ data }) {
                                             Date Posted
                                         </div>
                                         <div>
-                                            {book.postedDate}
+                                            {formattedDate}
                                         </div>
                                     </div>
                                     {/* Border */}
@@ -307,7 +319,7 @@ export default function SelectedBook({ data }) {
                                             Seller Domicile
                                         </div>
                                         <div>
-                                            {book.sellerDomicile}
+                                            {data.sellerDomicile}
                                         </div>
                                     </div>
                                     {/* Border */}
@@ -321,7 +333,7 @@ export default function SelectedBook({ data }) {
                                             ISBN
                                         </div>
                                         <div>
-                                            {book.id}
+                                            {data.id}
                                         </div>
                                     </div>
                                     {/* Border */}
@@ -335,7 +347,7 @@ export default function SelectedBook({ data }) {
                                             Title
                                         </div>
                                         <div>
-                                            {book.bookTitle}
+                                            {data.bookTitle}
                                         </div>
                                     </div>
                                     {/* Border */}
@@ -349,7 +361,7 @@ export default function SelectedBook({ data }) {
                                             Author
                                         </div>
                                         <div>
-                                            {book.author}
+                                            {data.author}
                                         </div>
                                     </div>
                                     {/* Border */}
@@ -363,7 +375,7 @@ export default function SelectedBook({ data }) {
                                             Condition
                                         </div>
                                         <div>
-                                            {book.condition}
+                                            {data.condition}
                                         </div>
                                     </div>
                                     {/* Border */}
@@ -377,7 +389,7 @@ export default function SelectedBook({ data }) {
                                             Language
                                         </div>
                                         <div>
-                                            {book.language}
+                                            {data.language}
                                         </div>
                                     </div>
                                     {/* Border */}
@@ -391,7 +403,7 @@ export default function SelectedBook({ data }) {
                                             Binding Type
                                         </div>
                                         <div>
-                                            {book.bindingType}
+                                            {data.bindingType}
                                         </div>
                                     </div>
                                     {/* Border */}
@@ -405,7 +417,7 @@ export default function SelectedBook({ data }) {
                                             Publisher
                                         </div>
                                         <div>
-                                            {book.publisher}
+                                            {data.publisher}
                                         </div>
                                     </div>
                                     {/* Border */}
@@ -419,7 +431,7 @@ export default function SelectedBook({ data }) {
                                             Year Published
                                         </div>
                                         <div>
-                                            {book.yearPublished}
+                                            {data.yearPublished}
                                         </div>
                                     </div>
                                     {/* Border */}
@@ -433,7 +445,7 @@ export default function SelectedBook({ data }) {
                                             Number of Pages
                                         </div>
                                         <div>
-                                            {book.numberOfPage}
+                                            {data.numberOfPage}
                                         </div>
                                     </div>
                                     {/* Border */}
@@ -464,6 +476,7 @@ export default function SelectedBook({ data }) {
                                 bookAuthor={book.author}
                                 bookPrice={book.price}
                                 bookImage={book.image}
+                                bookPostedDate={book.postedDate}
                             />
                         ))}
                     </div>

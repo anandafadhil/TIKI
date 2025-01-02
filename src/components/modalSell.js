@@ -15,7 +15,6 @@ export default function ModalSell({ onClose }) {
                             <div className="bg-[#F2EEE5] w-[944px]">
                                 <div className="bg-[#F2EEE5]">
 
-                                    {/* <div className="bg-[#fff]"> */}
                                     {/* Close Button */}
                                     <div className='flex justify-end py-4 px-10'>
                                         <button
@@ -48,7 +47,7 @@ export default function ModalSell({ onClose }) {
                             <div className="flex justify-center bg-[#F2EEE5] mt-12 mb-12">
                                 <button
                                     type="button"
-                                    onClick={() => window.open("http://bit.ly/consigntikii", "_blank")}
+                                    onClick={() => window.open("https://titip.tikiibookstore.com/titip", "_blank")}
                                     className="bg-[#2A230F] w-[160px] h-[44px] text-white py-3 px-6 rounded-md hover:bg-[#3A3118]">
                                     Sell Your Book
                                 </button>

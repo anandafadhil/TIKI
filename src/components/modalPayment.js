@@ -39,11 +39,11 @@ export default function ModalPayment({ onClose }) {
                                         <div className="text-[18px] text-black flex flex-col justify-center items-center gap-12">
                                             <div className="w-[135px] flex flex-row border border-black rounded-md gap-2 p-1 items-center justify-center font-medium">
                                                 <Image src="icons/shopping-bag.svg" alt="Shopping Bag" width={24} height={24} />
-                                                <a>Shopee</a>
+                                                <a href="https://shopee.co.id/tikii_consign" className="text-lg" target="_blank">Shopee</a>
                                             </div>
                                             <div className="w-[195px] flex flex-row border border-black rounded-md gap-2 p-1 items-center justify-center font-medium">
                                                 <Image src="icons/instagram-2.svg" alt="Instagram" width={24} height={24} />
-                                                <a>DM Instagram</a>
+                                                <a href="https://www.instagram.com/tikii_bookstore/" className="text-lg" target="_blank">DM Instagram</a>
                                             </div>
                                         </div>
                                     </div>

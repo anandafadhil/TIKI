@@ -6,7 +6,6 @@ import { useState, useRef, useEffect } from 'react';
 
 export default function Navbar() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
-    console.log(sidebarOpen)
     const [isFictionOpen, setFictionOpen] = useState(false);
     const [isNonFictionOpen, setNonFictionOpen] = useState(false);
     const [isSidebarFictionOpen, setSidebarFictionOpen] = useState(false);
@@ -68,22 +67,24 @@ export default function Navbar() {
                                 <span>Fiction</span>
                                 <Image src="/icons/chevron-down.svg" width={12} alt="" height={12} className={`transform transition-transform duration-200 ${isFictionOpen ? "rotate-180" : ""}`} />
                                 {isFictionOpen && (
-                                    <div className="p-4 mt-4 bg-[#F2EEE5] border outline outline-1 outline-gray-300 absolute top-full left-1/2 transform -translate-x-1/2 mt-2 h-[364px] w-[364px]">
-                                        <Link className="ml-6 mt-4 text-[24px] text-black font-semibold mb-6" href='/fiction'>Fiction by Genre</Link>
-                                        <ul className="justify-start text-[18px] text-black grid grid-cols-2 gap-2 mt-2 right-4 w-full ml-6">
-                                            <li><a>Fantasy</a></li>
-                                            <li><a>Horror</a></li>
-                                            <li><a>Romance</a></li>
-                                            <li><a>Drama</a></li>
-                                            <li><a>Comedy</a></li>
-                                            <li><a>Contemporary</a></li>
-                                            <li><a>Thriller</a></li>
-                                            <li><a>Mystery</a></li>
-                                            <li><a>Action</a></li>
-                                            <li><a>Sci-fi</a></li>
-                                            <li><a>Classic</a></li>
-                                            <li><a>Family</a></li>
-                                        </ul>
+                                    <div className="bg-red-400">
+                                    <div className="px-4 py-8 mt-4 bg-[#F2EEE5] border outline outline-1 outline-gray-300 absolute top-[30px] left-1/2 transform -translate-x-1/2 mt-2 h-[364px] w-[364px] rounded-xl">
+                                    <Link className="ml-6 text-[24px] text-black font-semibold" href='/fiction'>Fiction by Genre</Link>
+                                            <ul className="justify-start text-[18px] text-black grid grid-cols-2 gap-y-3 mt-6 right-4 w-full ml-6">
+                                                <li><Link href='/action/'>Action</Link></li>
+                                                <li><Link href='/classic/'>Classic</Link></li>
+                                                <li><Link href='/comedy/'>Comedy</Link></li>
+                                                <li><Link href='/contemporary/'>Contemporary</Link></li>
+                                                <li><Link href='/drama/'>Drama</Link></li>
+                                                <li><Link href='/family/'>Family</Link></li>
+                                                <li><Link href='/fantasy/'>Fantasy</Link></li>
+                                                <li><Link href='/horror/'>Horror</Link></li>
+                                                <li><Link href='/mystery/'>Mystery</Link></li>
+                                                <li><Link href='/romance/'>Romance</Link></li>
+                                                <li><Link href='/sci-fi/'>Sci-fi</Link></li>
+                                                <li><Link href='/thriller/'>Thriller</Link></li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 )}
                             </div>
@@ -98,23 +99,23 @@ export default function Navbar() {
                                 onClick={() => setNonFictionOpen(!isNonFictionOpen)}
                             >
                                 <span>Non-Fiction</span>
-                                <Image src="/icons/chevron-down.svg" width={12} height={12} alt="" className={`transform transition-transform duration-200 ${isFictionOpen ? "rotate-180" : ""}`} />
+                                <Image src="/icons/chevron-down.svg" width={12} height={12} alt="" className={`transform transition-transform duration-200 ${isNonFictionOpen ? "rotate-180" : ""}`} />
                                 {isNonFictionOpen && (
-                                    <div className="p-4 mt-4 bg-[#F2EEE5] border outline outline-1 outline-gray-300 absolute top-full left-1/2 transform -translate-x-1/2 mt-2 h-[364px] w-[364px]">
-                                        <Link className="ml-6 mt-4 text-[24px] text-black font-semibold mb-6" href='/non-fiction'>Non-Fiction by Genre</Link>
-                                        <ul className="justify-start text-[18px] text-black grid grid-cols-2 gap-2 mt-2 right-4 w-full ml-6">
-                                            <li><a>Fantasy</a></li>
-                                            <li><a>Horror</a></li>
-                                            <li><a>Romance</a></li>
-                                            <li><a>Drama</a></li>
-                                            <li><a>Comedy</a></li>
-                                            <li><a>Contemporary</a></li>
-                                            <li><a>Thriller</a></li>
-                                            <li><a>Mystery</a></li>
-                                            <li><a>Action</a></li>
-                                            <li><a>Sci-fi</a></li>
-                                            <li><a>Classic</a></li>
-                                            <li><a>Family</a></li>
+                                    <div className="px-4 py-8 mt-4 bg-[#F2EEE5] border outline outline-1 outline-gray-300 absolute top-[30px] left-1/2 transform -translate-x-1/2 mt-2 h-[364px] w-[364px] rounded-xl">
+                                        <Link className="ml-6 text-[24px] text-black font-semibold" href='/non-fiction'>Non-Fiction by Genre</Link>
+                                        <ul className="justify-start text-[18px] text-black grid grid-cols-2 gap-y-3 mt-6 right-4 w-full ml-6">
+                                            <li><Link href='/action/'>Action</Link></li>
+                                            <li><Link href='/classic/'>Classic</Link></li>
+                                            <li><Link href='/comedy/'>Comedy</Link></li>
+                                            <li><Link href='/contemporary/'>Contemporary</Link></li>
+                                            <li><Link href='/drama/'>Drama</Link></li>
+                                            <li><Link href='/family/'>Family</Link></li>
+                                            <li><Link href='/fantasy/'>Fantasy</Link></li>
+                                            <li><Link href='/horror/'>Horror</Link></li>
+                                            <li><Link href='/mystery/'>Mystery</Link></li>
+                                            <li><Link href='/romance/'>Romance</Link></li>
+                                            <li><Link href='/sci-fi/'>Sci-fi</Link></li>
+                                            <li><Link href='/thriller/'>Thriller</Link></li>
                                         </ul>
                                     </div>
                                 )}
@@ -123,8 +124,8 @@ export default function Navbar() {
 
                         <Link href='/article'>Beyond Tikii</Link>
                         <a href="/#sell">Sell Your Book</a>
-                        <a>Join Community</a>
-                        <a>Donate to Charity</a>
+                        <Link href="https://chat.whatsapp.com/J6QIhUqIlHT1ELmtT8FFKb" target="_blank">Join Community</Link>
+                        <Link href="https://bit.ly/DonasiTIKII" target="_blank">Donate to Charity</Link>
                     </div>
                 </div>
 
@@ -170,8 +171,8 @@ export default function Navbar() {
                                     </li>
                                     <li className="font-medium text-[14px] mt-6"><Link href="/article">Beyond Tikii</Link></li>
                                     <li className="font-medium text-[14px] mt-6"><a href="/#sell">Sell Your Book</a></li>
-                                    <li className="font-medium text-[14px] mt-6"><a>Join Community</a></li>
-                                    <li className="font-medium text-[14px] mt-6"><a>Donate to Charity</a></li>
+                                    <li className="font-medium text-[14px] mt-6"><Link href="https://chat.whatsapp.com/J6QIhUqIlHT1ELmtT8FFKb" target="_blank">Join Community</Link>                                    </li>
+                                    <li className="font-medium text-[14px] mt-6"><Link href="https://bit.ly/DonasiTIKII" target="_blank">Donate to Charity</Link></li>
                                 </ul>
                             </div>
                         </div>
