@@ -10,7 +10,7 @@ export default function Footer() {
 
                     {/* Logo and Contact Section */}
                     <div className="flex flex-col items-center mb-4">
-                        <Image src="/icons/tikii-logo-2.svg" alt="Tiki Logo" className="mt-8" width={180} height={180}/>
+                        <Image src="/icons/tikii-logo-2.svg" alt="Tiki Logo" className="mt-8" width={180} height={180} />
                         <div className="flex space-x-4 mt-8 mb-10">
                             <a href="https://www.instagram.com/tikii_bookstore/" className="text-lg" target="_blank">
                                 <Image src="/icons/instagram.svg" alt="Instagram Logo" width={32} height={32} />
@@ -27,10 +27,10 @@ export default function Footer() {
                         <div className='mb-14'>
                             <div className="font-bold text-[24px]">About Tikii</div>
                             <div className="border-t border-[#fff] w-[275px] text-[18px] mt-6" />
-                            <div href="/#mission" className="text-sm hover:underline mt-8">
+                            <div href="/#mission" className="text-sm hover:underline underline-offset-4 mt-8">
                                 About Us
                             </div>
-                            <div className="text-sm hover:underline mt-8">
+                            <div className="text-sm hover:underline underline-offset-4 mt-8">
                                 <Link href="/article/" >
                                     Our Mission
                                 </Link>
@@ -45,13 +45,15 @@ export default function Footer() {
                         <div className='mb-14'>
                             <div className="font-bold text-[24px]">Support</div>
                             <div className="border-t border-[#fff] w-[275px] text-[18px] mt-6" />
-                            <div className="text-sm hover:underline mt-8">
-                                <a href="http://bit.ly/consigntikii" target="_blank">
+                            <div className="text-sm hover:underline underline-offset-4 mt-8">
+                                <a href="https://titip.tikiibookstore.com/titip" target="_blank">
                                     Sell Book
                                 </a>
                             </div>
-                            <div href="#" className="text-sm hover:underline mt-8">
-                                Join Community
+                            <div className="text-sm hover:underline underline-offset-4 mt-8">
+                                <a href="https://chat.whatsapp.com/J6QIhUqIlHT1ELmtT8FFKb" target="_blank">
+                                    Join Community
+                                </a>
                             </div>
                         </div>
                     </div>

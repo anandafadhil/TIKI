@@ -11,131 +11,35 @@ import { usePathname } from "next/navigation";
 import { WholeBook } from "../data/bookData";
 import Link from 'next/link';
 import { useRouter } from 'next/navigation'
+import { useSearchParams } from 'next/navigation';
 
-export default function Collections({ data, currentPage: initialPage, itemsPerPage, totalPages }) {
-    const [currentPage, setCurrentPage] = useState(initialPage);
+export default function Search({ data, query, currentPage: initialPage, itemsPerPage, totalPages }) {
     const ruter = useRouter();
     const dropdownRef = useRef(null);
     const inputRef = useRef(null);
+
+    const { pathname } = ruter;
     const router = usePathname();
+    
+    // const searchParams = useSearchParams();
+    // const query = searchParams.get('query');
     const collectionsType = router.replace('/', '');
-    const pathname = collectionsType
-    const [genreSelected, setGenreSelected] = useState()
+    const [currentPage, setCurrentPage] = useState(initialPage);
     const [isShowMore, setIsShowMore] = useState(false);
-    const [isNew, setIsNew] = useState(false);
-    const [isClassic, setIsClassic] = useState(false);
-    const [isBudget, setIsBudget] = useState(false);
-    const [isFiction, setIsFiction] = useState(false);
-    const [isNonFiction, setIsNonFiction] = useState(false);
-    const [isAll, setIsAll] = useState(false);
-    const [isOther, setIsOther] = useState(false);
+
 
     // Pagination
     const itemPerPage = itemsPerPage;
     const startIndex = (currentPage - 1) * itemPerPage;
     const endIndex = startIndex + itemPerPage;
 
-
     const handlePageChange = (newPage) => {
         setCurrentPage(newPage); // Update the current page
-    };
+    };  
 
-    useEffect(() => {
-        if (collectionsType === 'budget') {
-            setGenreSelected('Budget');
-            setIsBudget(true);
-        } else if (collectionsType === 'new') {
-            setGenreSelected('New');
-            setIsNew(true);
-        } else if (collectionsType === 'non-fiction') {
-            setGenreSelected('Non-Fiction');
-            setIsNonFiction(true);
-        } else if (collectionsType === 'all') {
-            setGenreSelected('All');
-            setIsAll(true);
-        } else if (collectionsType === 'fiction') {
-            setGenreSelected('Fiction');
-            setIsFiction(true);
-        } else {
-            setGenreSelected(`${collectionsType.charAt(0).toUpperCase()}${collectionsType.slice(1)}`);
-            setIsOther(true);
-        }
+    
+    const paginatedData = data.slice(startIndex, endIndex);    
 
-    }, [collectionsType]);
-
-    // New Book Function
-    const days = 10
-    const top = 10
-    const latestBooks = data
-        .filter((book) => {
-            const bookDate = new Date(book.postedDate);
-            const currentDate = new Date();
-            return (currentDate - bookDate) <= days * 24 * 60 * 60 * 1000;
-        })
-        .sort((a, b) => new Date(b.postedDate) - new Date(a.postedDate))
-        .slice(0, top)
-
-    // Other Function
-    // const otherGenres = data.filter((item) =>
-    //     item.category.genre.some((genre) => genre.name === genreSelected)
-    // );
-    const otherGenres = data;
-    if (!otherGenres) {
-        return console.log("Book Not Found");
-    }
-
-    // Classic Function
-    // const classicBooks = data.filter((item) => item.category.genre.includes(genreSelected));
-    // if (!classicBooks) {
-    //     return console.log("Book Not Found");
-    // }
-
-    // Budget Function
-    const budgetBooks = data.filter((item) => {
-        return item.price < 50000;
-    });
-
-    if (!budgetBooks) {
-        return console.log("Book Not Found");
-    }
-
-    // Fiction Function
-    const fictionBooks = data.filter((item) => item.category.name === genreSelected);
-    if (!fictionBooks) {
-        return console.log("Book Not Found");
-    }
-
-    // Non-Fiction Function
-    const nonFictionBooks = data.filter((item) => item.category.name === genreSelected);
-    if (!nonFictionBooks) {
-        return console.log("Book Not Found");
-    }
-
-    // All Books Function
-    const allBooks = data
-
-    if (!allBooks) {
-        return console.log("Book Not Found");
-    }
-
-    // Mapping Function
-    const mapping = isBudget && budgetBooks.length > 0
-        ? budgetBooks
-        : isClassic && classicBooks.length > 0
-            ? classicBooks
-            : isNew && latestBooks.length > 0
-                ? latestBooks
-                : isFiction && fictionBooks.length > 0
-                    ? fictionBooks
-                    : isNonFiction && nonFictionBooks.length > 0
-                        ? nonFictionBooks
-                        : isAll && allBooks.length > 0
-                            ? allBooks
-                            : isOther && otherGenres.length > 0
-                                ? otherGenres
-                                : [];
-
-    const paginatedData = mapping.slice(startIndex, endIndex);
     // Search Functionality
     const [inputValue, setInputValue] = useState('');
     const [filteredOptions, setFilteredOptions] = useState([]);
@@ -161,7 +65,6 @@ export default function Collections({ data, currentPage: initialPage, itemsPerPa
                 );
             }).filter((book) => {
                 const label = `${book.bookTitle} by ${book.author}`;
-                // Only add the book if the label is not already in the set
                 if (!uniqueLabels.has(label)) {
                     uniqueLabels.add(label);
                     return true;
@@ -200,6 +103,10 @@ export default function Collections({ data, currentPage: initialPage, itemsPerPa
     const handleSearchClick = () => {
         if (inputValue.length >= 3) {
             ruter.push(`/search?query=${inputValue}`);
+            
+            setTimeout(() => {
+                window.location.reload();
+            }, 100);
         } else {
             console.error("Please type at least 3 characters to search.");
         }
@@ -212,9 +119,6 @@ export default function Collections({ data, currentPage: initialPage, itemsPerPa
     const closeShowMore = () => {
         setIsShowMore(false);
     }
-
-    // Search Function
-    const [selectedBooks, setSelectedBooks] = useState(null);
 
     // Real API
     // const optionsBooks = data.map((book) => ({
@@ -231,13 +135,13 @@ export default function Collections({ data, currentPage: initialPage, itemsPerPa
 
     // const handleSearchClick = async () => {
     //     if (selectedBooks) {
-    //         router.push(`/books/${selectedBooks.id}`);
+    //         ruter.push(`/books/${selectedBooks.id}`);
     //     } else {
     //         console.error('No book selected');
     //     }
     // }
 
-    // Genre
+    // Genre 
     const alwaysVisibleGenres = [
         { name: 'Action', path: '/action/' },
         { name: 'Classic', path: '/classic/' },
@@ -256,27 +160,6 @@ export default function Collections({ data, currentPage: initialPage, itemsPerPa
         { name: 'Thriller', path: '/thriller/' },
     ];
 
-    const alwaysVisibleGenresNon = [
-        { name: 'Art', path: '/art/' },
-        { name: 'Biography', path: '/biography-non/' },
-        { name: 'Business, Finance, & Economics', path: '/business-finance-economics-non/' },
-        { name: 'Culinary', path: '/culinary-non/' },
-        { name: 'Education', path: '/education-non/' },
-        { name: 'Essay', path: '/essay-non/' },
-    ];
-
-    const additionalGenresNon = [
-        { name: 'Health & Welness', path: '/health-and-wellness-non/' },
-        { name: 'History', path: '/history-non/' },
-        { name: 'Parenting & Family', path: '/parenting-and-family-non/' },
-        { name: 'Philosophy', path: '/philosophy-non/' },
-        { name: 'Religion & Spirituality', path: '/religion-and-spirituality-non/' },
-        { name: 'Science', path: '/science-non/' },
-        { name: 'Self-Help', path: '/self-help-non/' },
-        { name: 'Travel', path: '/travel-non/' },
-    ];
-
-
     return (
         <div className='flex flex-row min-h-screen bg-[#EFE8DA]'>
             <div className='w-full'>
@@ -288,33 +171,25 @@ export default function Collections({ data, currentPage: initialPage, itemsPerPa
                 <div className='bg-[#EFE8DA] items-center justify-center flex'>
                     <div className='w-full mx-16 mt-16 mb-10'>
                         <div className=' w-full league-spartan-bold text-[#4A2C23] text-[48px]'>
-                            {`${genreSelected} Books`}
+                            Discover Your Books
                         </div>
 
-                        <div className=' w-full text-[18px] mt-2 text-black'>
-                            Step into worlds where imagination knows no bounds, and every
-                            page invites you to dream, wonder, and explore. Our Fiction Collection
-                            is a treasure trove of gripping tales, unforgettable characters, and
-                            boundless creativity. Whether you crave heart-racing adventures,
-                            soul-stirring dramas, or magical realms beyond your wildest dreams,
-                            we’ve got the stories that will keep you turning pages late into the night.
-                        </div>
                     </div>
                 </div>
 
                 {/* Border */}
-                <div className='flex justify-center items-center'>
+                <div className='flex justify-center items-center mb-16'>
                     <div className="border-t border-[#B8B094] text-[18px] w-[93%]" />
                 </div>
 
                 {/* Search */}
-                <div className='h-[152px] bg-[#EFE8DA]'>
+                <div className='mb-14 bg-[#EFE8DA]'>
                     {/* Search and Logo */}
                     <div className="items-center justify-center flex flex-row h-full gap-4">
 
                         {/* Search Bar and Dropdown */}
                         <div>
-                            <div className=" bg-[#F2EEE5] w-[300px] lg:w-[825px] h-[40px] flex items-center rounded-md outline outline-1 outline-[#B8B094] ">
+                            <div className="z-1 bg-[#F2EEE5] w-[300px] lg:w-[825px] h-[40px] flex items-center rounded-md outline outline-1 outline-[#B8B094]">
                                 {/* Search Bar */}
                                 <Image src="/icons/search.svg" className="ml-2" width={24} height={24} alt="" />
                                 <input
@@ -330,14 +205,14 @@ export default function Collections({ data, currentPage: initialPage, itemsPerPa
 
                                 {/* Dropdown Alert */}
                                 {showOptions && (
-                                    <div className="bg-[#F2EEE5] text-gray-400 h-[50px] items-center flex justify-center absolute top-[430px] border border-gray-300 shadow-lg rounded-md w-[300px] lg:w-[825px] max-h-[200px] overflow-auto">
+                                    <div className="bg-[#F2EEE5] text-gray-400 h-[50px] items-center flex justify-center absolute top-[350px] border border-gray-300 shadow-lg rounded-md w-[300px] lg:w-[825px] max-h-[200px] overflow-auto">
                                         Type at least 3 characters to search
                                     </div>
                                 )}
 
                                 {/* Dropdown Ttem */}
                                 {showDrop && (
-                                    <div ref={dropdownRef} className="z-30 bg-[#F2EEE5] ml-10 flex flex-col absolute top-[430px] border border-gray-300 shadow-lg rounded-md w-[300px] lg:w-[790px] max-h-[300px] overflow-auto">
+                                    <div ref={dropdownRef} className="bg-[#F2EEE5] z-40 ml-10 flex flex-col absolute top-[350px] border border-gray-300 shadow-lg rounded-md w-[300px] lg:w-[790px] max-h-[300px] overflow-auto">
                                         {filteredOptions.map((book, index) => (
                                             <button
                                                 key={index}
@@ -367,50 +242,32 @@ export default function Collections({ data, currentPage: initialPage, itemsPerPa
                     <div className='w-[12%]'>
                         <div className='px-2 flex flex-col justify-start gap-2'>
                             <div className='font-bold text-[18px] text-black'>Genres</div>
-                            {!isNonFiction ? (
-                                [
-                                    ...alwaysVisibleGenres.filter(genre => pathname === genre.name.toLowerCase()),
-                                    ...additionalGenres.filter(genre => pathname === genre.name.toLowerCase()),
-                                    ...alwaysVisibleGenres.filter(genre => pathname !== genre.name.toLowerCase()),
-                                ].map((genre) => (
-                                    <Link key={genre.path} href={genre.path}>
-                                        <div
-                                            className={`text-[18px] underline ${pathname === genre.name.toLowerCase() ? 'font-bold text-black' : 'text-gray-400'}`}
-                                        >
-                                            {genre.name}
-                                        </div>
-                                    </Link>
-                                ))
-                            ) : (
-                                [
-                                    ...alwaysVisibleGenresNon.filter(genre => pathname === genre.name.toLowerCase()),
-                                    ...additionalGenresNon.filter(genre => pathname === genre.name.toLowerCase()),
-                                    ...alwaysVisibleGenresNon.filter(genre => pathname !== genre.name.toLowerCase()),
-                                ].map((genre) => (
-                                    <Link key={genre.path} href={genre.path}>
-                                        <div
-                                            className={`text-[18px] underline ${pathname === genre.name.toLowerCase() ? 'font-bold text-black' : 'text-gray-400'}`}
-                                        >
-                                            {genre.name}
-                                        </div>
-                                    </Link>
-                                ))
-                            )}
+                            {alwaysVisibleGenres.map((genre) => (
+                                <Link key={genre.path} href={genre.path}>
+                                    <div
+                                        className={`text-[18px] underline ${pathname === genre.path ? 'font-bold text-black' : 'text-gray-400'
+                                            }`}
+                                    >
+                                        {genre.name}
+                                    </div>
+                                </Link>
+                            ))}
 
-                            {/* Additional Genres */}
+
+
+                            {/* Rest of the Genre */}
                             {isShowMore && (
                                 <div className="flex flex-col gap-2">
-                                    {(isNonFiction ? additionalGenresNon : additionalGenres)
-                                        .filter(genre => pathname !== genre.name.toLowerCase())
-                                        .map((genre) => (
-                                            <Link key={genre.path} href={genre.path}>
-                                                <div
-                                                    className={`text-[18px] underline ${pathname === genre.name.toLowerCase() ? 'font-bold text-black' : 'text-gray-400'}`}
-                                                >
-                                                    {genre.name}
-                                                </div>
-                                            </Link>
-                                        ))}
+                                    {additionalGenres.map((genre) => (
+                                        <Link key={genre.path} href={genre.path}>
+                                            <div
+                                                className={`text-[18px] underline ${pathname === genre.path ? 'font-bold text-black' : 'text-gray-400'
+                                                    }`}
+                                            >
+                                                {genre.name}
+                                            </div>
+                                        </Link>
+                                    ))}
                                 </div>
                             )}
 
@@ -429,20 +286,21 @@ export default function Collections({ data, currentPage: initialPage, itemsPerPa
                                         </div>
                                     </div>
                                 </div>
-                            ) : (
-                                <div>
-                                    {/* Show Less */}
-                                    <div
-                                        className="flex flex-row items-center cursor-pointer"
-                                        onClick={closeShowMore}
-                                    >
-                                        <div className='font-bold text-[18px] text-black underline'>See Less</div>
-                                        <div className='font-bold text-[18px] text-black ml-6'>
-                                            <Image src="/icons/minus.svg" alt="" width={24} height={24} />
+                            ) :
+                                (
+                                    <div>
+                                        {/* Show Less */}
+                                        <div
+                                            className="flex flex-row items-center cursor-pointer"
+                                            onClick={closeShowMore}
+                                        >
+                                            <div className='font-bold text-[18px] text-black underline'>See Less</div>
+                                            <div className='font-bold text-[18px] text-black ml-6'>
+                                                <Image src="/icons/minus.svg" alt="" width={24} height={24} />
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            )}
+                                )}
 
                         </div>
                     </div>
@@ -451,7 +309,7 @@ export default function Collections({ data, currentPage: initialPage, itemsPerPa
                     <div className='flex flex-col w-[88%]'>
                         <div className=''>
                             <div className='text-black text-[18px] italic'>
-                                {`${isAll ? `Showing results for ${genreSelected} book(s)` : `Showing results for all ${genreSelected} book(s)`}`}
+                                Showing results for '{query}'
                             </div>
                             <div className='my-8 flex flex-wrap text-black justify-start gap-x-[23px] gap-y-20'>
                                 {paginatedData.map((book, index) => (
@@ -471,7 +329,7 @@ export default function Collections({ data, currentPage: initialPage, itemsPerPa
                             {/* Pagination */}
                             < div className='flex flex-row justify-between items-center' >
                                 <div className='text-black text-[18px]'>
-                                    Results {(currentPage - 1) * itemPerPage + 1} - {Math.min(currentPage * itemPerPage, mapping.length)} of {mapping.length}
+                                    Results {(currentPage - 1) * itemPerPage + 1} - {Math.min(currentPage * itemPerPage, data.length)} of {data.length}
                                 </div>
                                 <div className='text-black text-[18px]'>
                                     <Pagination

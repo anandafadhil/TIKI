@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import Select from 'react-select';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Footer from "../components/footer";
 import Navbar from "../components/navbar";
 import Cards from "../components/cards";
@@ -19,304 +19,20 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import './globals.css';
 import { useRouter } from 'next/navigation'
-import { WholeBook } from './data/bookData';
 
-export default function HomePage({ data }) {
-    // console.log("dat", data[0].submission.title)
+export default function HomePage({
+    allBookData,
+    booksNew,
+    booksClassics,
+    booksBudget,
+    booksFiction,
+    booksNonFiction,
+    discoverGenre,
+    beyondTikii
+}) {
     const router = useRouter();
-
-    const booksNew = [{
-        id: "978-1-101-98391-0",
-        bookTitle: "Beautiful World, Where are You",
-        author: "Sally Rooney",
-        price: "Rp 120.000",
-        image: "/images/cards_picture_1.png"
-    },
-    {
-        id: "978-0-385-53926-8",
-        bookTitle: "A Little Life",
-        author: "Hanya Yanagihara",
-        price: "Rp 190.000",
-        image: "/images/cards_picture_2.png"
-    },
-    {
-        id: "978-602-03-4216-5",
-        bookTitle: "Laut Bercerita",
-        author: "Leila S. Chudori",
-        price: "Rp 90.000",
-        image: "/images/cards_picture_3.png"
-    },
-    {
-        id: "978-1-567-12345-9",
-        bookTitle: "Aister Lake",
-        author: "Auryn Vientania",
-        price: "Rp 95.000",
-        image: "/images/cards_picture_4.png"
-    },
-    {
-        id: "978-1-101-98391-0",
-        bookTitle: "Beautiful World, Where are You",
-        author: "Sally Rooney",
-        price: "Rp 120.000",
-        image: "/images/cards_picture_1.png"
-    },
-    {
-        id: "978-0-385-53926-8",
-        bookTitle: "A Little Life",
-        author: "Hanya Yanagihara",
-        price: "Rp 190.000",
-        image: "/images/cards_picture_2.png"
-    },
-    {
-        id: "978-602-03-4216-5",
-        bookTitle: "Laut Bercerita",
-        author: "Leila S. Chudori",
-        price: "Rp 90.000",
-        image: "/images/cards_picture_3.png"
-    },
-    {
-        id: "978-1-567-12345-9",
-        bookTitle: "Aister Lake",
-        author: "Auryn Vientania",
-        price: "Rp 95.000",
-        image: "/images/cards_picture_4.png"
-    }];
-
-    const booksClassics = [{
-        id: "978-1-567-12345-11",
-        bookTitle: "Pride and Prejudice",
-        author: "Jane Austen",
-        price: "Rp 140.000",
-        image: "/images/cards_picture_5.png"
-    },
-    {
-        id: "978-1-567-12345-12",
-        bookTitle: "1984",
-        author: "George Orwell",
-        price: "Rp 127.000",
-        image: "/images/cards_picture_6.png"
-    },
-    {
-        id: "978-1-567-12345-13",
-        bookTitle: "The Great Gatsby",
-        author: "F. Scott Fitzgerald",
-        price: "Rp 150.000",
-        image: "/images/cards_picture_7.png"
-    },
-    {
-        id: "978-1-567-12345-14",
-        bookTitle: "Moby Dick",
-        author: "Herman Melville",
-        price: "Rp 90.000",
-        image: "/images/cards_picture_8.png"
-    },
-    {
-        bookTitle: "Beautiful World, Where are You",
-        author: "Sally Rooney",
-        price: "Rp 120.000",
-        image: "/images/cards_picture_1.png"
-    },
-    {
-        bookTitle: "A Little Life",
-        author: "Hanya Yanagihara",
-        price: "Rp 190.000",
-        image: "/images/cards_picture_2.png"
-    },
-    {
-        bookTitle: "Laut Bercerita",
-        author: "Leila S. Chudori",
-        price: "Rp 90.000",
-        image: "/images/cards_picture_3.png"
-    },
-    {
-        bookTitle: "Aister Lake",
-        author: "Auryn Vientania",
-        price: "Rp 95.000",
-        image: "/images/cards_picture_4.png"
-    },
-    ];
-
-    const booksBudget = [{
-        bookTitle: "Garis Waktu",
-        author: "Fiersa Besari",
-        price: "Rp 44.000",
-        image: "/images/cards_picture_9.png"
-    },
-    {
-        bookTitle: "All Our Yesterdays",
-        author: "Christin Terrill",
-        price: "Rp 39.000",
-        image: "/images/cards_picture_10.png"
-    },
-    {
-        bookTitle: "Rich People Problems",
-        author: "Kevin Kwan",
-        price: "Rp 49.000",
-        image: "/images/cards_picture_11.png"
-    },
-    {
-        bookTitle: "Hujan Bulan Juni",
-        author: "Sapardi Djoko Damono",
-        price: "Rp 44.000",
-        image: "/images/cards_picture_12.png"
-    },
-    {
-        bookTitle: "Beautiful World, Where are You",
-        author: "Sally Rooney",
-        price: "Rp 120.000",
-        image: "/images/cards_picture_1.png"
-    },
-    {
-        bookTitle: "A Little Life",
-        author: "Hanya Yanagihara",
-        price: "Rp 190.000",
-        image: "/images/cards_picture_2.png"
-    },
-    {
-        bookTitle: "Laut Bercerita",
-        author: "Leila S. Chudori",
-        price: "Rp 90.000",
-        image: "/images/cards_picture_3.png"
-    },
-    {
-        bookTitle: "Aister Lake",
-        author: "Auryn Vientania",
-        price: "Rp 95.000",
-        image: "/images/cards_picture_4.png"
-    }];
-
-    const booksFiction = [{
-        bookTitle: "Dune",
-        author: "Frank Herbert",
-        price: "Rp 120.000",
-        image: "/images/cards_picture_13.png"
-    },
-    {
-        bookTitle: "Norwegian Wood",
-        author: "Murakami",
-        price: "Rp 145.000",
-        image: "/images/cards_picture_14.png"
-    },
-    {
-        bookTitle: "Crazy Rich Asians",
-        author: "Kevin Kwan",
-        price: "Rp 72.000",
-        image: "/images/cards_picture_15.png"
-    },
-    {
-        bookTitle: "The Song of Achilles",
-        author: "Madeline Miller",
-        price: "Rp 125.000",
-        image: "/images/cards_picture_16.png"
-    },
-    {
-        bookTitle: "Beautiful World, Where are You",
-        author: "Sally Rooney",
-        price: "Rp 120.000",
-        image: "/images/cards_picture_1.png"
-    },
-    {
-        bookTitle: "A Little Life",
-        author: "Hanya Yanagihara",
-        price: "Rp 190.000",
-        image: "/images/cards_picture_2.png"
-    },
-    {
-        bookTitle: "Laut Bercerita",
-        author: "Leila S. Chudori",
-        price: "Rp 90.000",
-        image: "/images/cards_picture_3.png"
-    },
-    {
-        bookTitle: "Aister Lake",
-        author: "Auryn Vientania",
-        price: "Rp 95.000",
-        image: "/images/cards_picture_4.png"
-    }];
-
-    const booksNonFiction = [{
-        bookTitle: "Atomic Habits",
-        author: "James Clear",
-        price: "Rp 52.000",
-        image: "/images/cards_picture_17.png"
-    },
-    {
-        bookTitle: "The Alpah Girl's Guide",
-        author: "Henry Manamprining",
-        price: "Rp 55.000",
-        image: "/images/cards_picture_18.png"
-    },
-    {
-        bookTitle: "Becoming",
-        author: "Michelle Obama",
-        price: "Rp 135.000",
-        image: "/images/cards_picture_19.png"
-    },
-    {
-        bookTitle: "The Psychology of Money",
-        author: "Morgan Housel",
-        price: "Rp 55.000",
-        image: "/images/cards_picture_20.png"
-    },
-    {
-        bookTitle: "Beautiful World, Where are You",
-        author: "Sally Rooney",
-        price: "Rp 120.000",
-        image: "/images/cards_picture_1.png"
-    },
-    {
-        bookTitle: "A Little Life",
-        author: "Hanya Yanagihara",
-        price: "Rp 190.000",
-        image: "/images/cards_picture_2.png"
-    },
-    {
-        bookTitle: "Laut Bercerita",
-        author: "Leila S. Chudori",
-        price: "Rp 90.000",
-        image: "/images/cards_picture_3.png"
-    },
-    {
-        bookTitle: "Aister Lake",
-        author: "Auryn Vientania",
-        price: "Rp 95.000",
-        image: "/images/cards_picture_4.png"
-    }];
-
-    const discoverGenre = [{
-        bookTitle: "Fantasy",
-        image: "/images/cards_picture_21.png"
-    },
-    {
-        bookTitle: "Self-Development",
-        image: "/images/cards_picture_22.png"
-    },
-    {
-        bookTitle: "Romance",
-        image: "/images/cards_picture_23.png"
-    },
-    {
-        bookTitle: "Mystery",
-        image: "/images/cards_picture_24.png"
-
-    }];
-
-    const byondTikii = [{
-        title: "Wide Selection",
-        paragraph: "Tikii offers an incredible selection of books across all genres, catering to every taste and preference. Rare and sought-after titles are easy to find, all at unbeatable prices and in excellent condition—perfectly ready for their next reader to enjoy.",
-        image: "/images/cards_picture_25.png"
-    },
-    {
-        title: "Sustainability",
-        paragraph: "What sets Tikii apart is its dedication to sustainability and the joy of rehoming books. Customers appreciate the positive environmental impact while enjoying the thrill of discovering hidden treasures. The process is simple, and the customer support team is always friendly and responsive, making every experience enjoyable.",
-        image: "/images/cards_picture_26.png"
-    },
-    {
-        title: "Build Community",
-        paragraph: "Through Tikii, readers find a platform where books are just the beginning. It’s a space to celebrate literature, share insights, and inspire one another. The vibrant community built around Tikii is filled with people eager to exchange stories, give life to preloved books, and create lasting memories through shared experiences.",
-        image: "/images/cards_picture_27.png"
-    }];
-
+    const dropdownRef = useRef(null);
+    const inputRef = useRef(null);
 
     // Slider Function
     const [sliderState, setSliderState] = useState({
@@ -369,27 +85,72 @@ export default function HomePage({ data }) {
         setIsModalPaymentOpen(false);
     }
 
-    // Search Function
-    const [selectedBooks, setSelectedBooks] = useState(null);
+    // Search Functionality
+    const [inputValue, setInputValue] = useState('');
+    const [filteredOptions, setFilteredOptions] = useState([]);
+    const [showOptions, setIsSHowOptions] = useState(false)
+    const [showDrop, setIsShowDrop] = useState(false);
+    const [selectedLabel, setSelectedLabel] = useState();
 
-    const optionsBooks = WholeBook.map((book) => ({
-        value: book.id,
-        label: book.bookTitle.toLowerCase()
-    }));
+    const handleInputChange = (e) => {
+        const inputValue = e.target.value;
+        setInputValue(inputValue);
+        setIsSHowOptions(false);
 
-    const handleSearchBooks = async (event) => {
-        const selectedBookId = event.target.value;
-        console.log(event.target)
-        console.log(selectedBookId)
-        const selectedBook = WholeBook.find((book) => book.id === selectedBookId);
-        setSelectedBooks(selectedBook);
+        if (inputValue.length >= 3) {
+            setIsShowDrop(true);
+
+            const uniqueLabels = new Set();
+            const filteredBooks = allBookData.filter((book) => {
+                const lowerCaseInput = inputValue.toLowerCase();
+                return (
+                    book.bookTitle.toLowerCase().includes(lowerCaseInput) ||
+                    book.id.toLowerCase().includes(lowerCaseInput) ||
+                    book.author.toLowerCase().includes(lowerCaseInput)
+                );
+            }).filter((book) => {
+                const label = `${book.bookTitle} by ${book.author}`;
+                // Only add the book if the label is not already in the set
+                if (!uniqueLabels.has(label)) {
+                    uniqueLabels.add(label);
+                    return true;
+                }
+                return false;
+            }).map((book) => ({
+                value: book.id,
+                label: `${book.bookTitle} by ${book.author}`,
+            }));
+            setFilteredOptions(filteredBooks);
+
+        } else {
+            setIsShowDrop(false);
+        }
+    }
+
+    const handleInputFocus = () => {
+        setIsSHowOptions(true);
+    }
+
+    const handleInputBlur = () => {
+        setIsSHowOptions(false);
+        setTimeout(() => {
+            if (!dropdownRef.current || !dropdownRef.current.contains(document.activeElement)) {
+                setIsShowDrop(false);
+            }
+        }, 100);
     };
 
-    const handleSearchClick = async () => {
-        if (selectedBooks) {
-            router.push(`/books/${selectedBooks.id}`);
+    const handleBookClick = (book) => {
+        setInputValue(book.label.split(" by ")[0]);
+        setSelectedLabel(book.label);
+        setIsShowDrop(false);
+    }
+
+    const handleSearchClick = () => {
+        if (inputValue.length >= 3) {
+            router.push(`/search?query=${inputValue}`);
         } else {
-            console.error('No book selected');
+            console.error("Please type at least 3 characters to search.");
         }
     }
 
@@ -413,52 +174,68 @@ export default function HomePage({ data }) {
     //         console.error('No book selected');
     //     }
     // }
-    const [isMobile, setIsMobile] = useState(true)
+    // const [isMobile, setIsMobile] = useState(true)
     return (
 
         <div className="flex flex-row min-h-screen bg-[#EFE8DA] text-gray-800">
+
             {/* <div className="flex-1 p-6">abc</div> */}
-            <div className='w-full'>
+            <div className='relative w-full'>
                 {/* Navbar */}
                 <Navbar />
 
                 {/* Search and Logo */}
-                <div className='h-[187px] lg:h-[118px] bg-[#EFE8DA]'>
-                    <div className="flex w-full items-center justify-center flex-col lg:flex-row">
+                <div className="h-[118px] bg-[#EFE8DA]">
 
-                        {/* Logo */}
-                        <Image src="/icons/tikii-logo-1.svg" className="mr-0 lg:mr-10" width={113} height={113} alt="" />
+                    {/* Search and Logo */}
+                    <div className="items-center justify-center flex flex-row h-full gap-4">
+                        <Image src="/icons/tikii-logo-1.svg" className="mr-12" width={113} height={113} alt="" />
 
+                        {/* Search Bar and Dropdown */}
+                        <div>
+                            <div className=" z-0 bg-[#F2EEE5] w-[300px] lg:w-[825px] h-[40px] flex items-center rounded-md outline outline-1 outline-[#B8B094]">
+                                {/* Search Bar */}
+                                <Image src="/icons/search.svg" className="ml-2" width={24} height={24} alt="" />
+                                <input
+                                    ref={inputRef}
+                                    type="text"
+                                    value={inputValue}
+                                    onChange={handleInputChange}
+                                    onFocus={handleInputFocus}
+                                    onBlur={handleInputBlur}
+                                    placeholder={selectedLabel || 'Find the title, ISBN, or author of the book'}
+                                    className="text-black w-full p-2 ml-2 bg-[#F2EEE5] rounded-md"
+                                />
 
-                        {/* Search Function */}
-                        <div className='flex gap-2 mr-0 lg:mr-10'>
-                            {/* Search Bar */}
-                            <div className="form-control flex items-center justify-center h-full ">
-                                <div className='bg-[#F2EEE5] w-[300px] lg:w-[825px] h-[40px] flex items-center rounded-md outline outline-1 outline-[#B8B094]'>
-                                    <Image src="/icons/search.svg" className="ml-2" width={24} height={24} alt="" />
-                                    <select
-                                        className="ml-2 w-[93%] bg-[#F2EEE5] text-gray-800"
-                                        name=""
-                                        onChange={handleSearchBooks}
-                                        placeholder="Find the title of the book"
-                                    >
-                                        {optionsBooks.map((option) => (
-                                            <option key={option.value} value={option.value}>
-                                                {option.label}
-                                            </option>
+                                {/* Dropdown Alert */}
+                                {showOptions && (
+                                    <div className="bg-[#F2EEE5] text-gray-400 h-[50px] items-center flex justify-center absolute top-[150px] border border-gray-300 shadow-lg rounded-md w-[300px] lg:w-[825px] max-h-[200px] overflow-auto">
+                                        Type at least 3 characters to search
+                                    </div>
+                                )}
+
+                                {/* Dropdown Ttem */}
+                                {showDrop && (
+                                    <div ref={dropdownRef} className="bg-[#F2EEE5] flex flex-col absolute top-[150px] border border-gray-300 shadow-lg rounded-md w-[300px] lg:w-[790px] max-h-[300px] overflow-auto">
+                                        {filteredOptions.map((book, index) => (
+                                            <button
+                                                key={index}
+                                                className="text-black text-[18px] px-6 py-2 text-left hover:bg-gray-200 transition-colors"
+                                                onClick={() => handleBookClick(book)}
+                                            >
+                                                {book.label}
+                                            </button>
                                         ))}
-                                    </select>
-                                </div>
+                                    </div>
+                                )}
                             </div>
-
-                            {/* Search Button */}
-                            <button
-                                className='bg-black text-white w-[83px] lg:w-[96px] h-[40px] rounded-md'
-                                onClick={handleSearchClick}
-                            >
-                                Search
-                            </button>
                         </div>
+
+                        <button
+                            onClick={handleSearchClick}
+                            className='bg-black text-white w-[96px] h-[40px] rounded-md'>
+                            Search
+                        </button>
                     </div>
                 </div>
 
@@ -484,13 +261,13 @@ export default function HomePage({ data }) {
                 </div>
 
                 {/* Carousel 2 : Sell Your Book */}
-                <div id="sell" className="relative h-[384px] bg-red-400 flex flex-col lg:flex-row items-center">
+                <div id="sell" className="relative h-[384px] flex flex-col lg:flex-row items-center">
                     {/* Full-Width Banner Image */}
                     <Image src="/icons/tikii-banner-2.png" fill alt="Banner" className="w-full h-full" />
 
 
                     {/* Overlay Text Box */}
-                    <div className="bg-red-100 h-full justify-center bg-opacity-20 absolute right-0 lg:w-[1120px] w-full px-12 lg:px-20 py-6 lg:py-12 flex flex-col items-center text-[#4A2C23]">
+                    <div className="h-full justify-center bg-opacity-20 absolute right-0 lg:w-[1120px] w-full px-12 lg:px-20 py-6 lg:py-12 flex flex-col items-center text-[#4A2C23]">
                         {/* Main Heading */}
                         <h1 className="text-2xl lg:text-4xl font-bold mt-1 mb-3">
                             Sell Your Book Now!
@@ -583,7 +360,8 @@ export default function HomePage({ data }) {
                                                 bookTitle={book.bookTitle}
                                                 bookAuthor={book.author}
                                                 bookPrice={book.price}
-                                                bookImage={book.image}
+                                                bookImage={book.images[0]}
+                                                bookPostedDate={book.postedDate}
                                             />
                                         </Link>
                                     </SwiperSlide>
@@ -654,19 +432,19 @@ export default function HomePage({ data }) {
                             loop={false} // Optional loop
                             className="swiper-container"
                         >
-                            {
-                                booksClassics.map((book, index) => (
-                                    <SwiperSlide key={index} className="flex justify-center">
-                                        <Link key={book.id} className="" href={`/books/${book.id}`}>
-                                            <Cards
-                                                bookTitle={book.bookTitle}
-                                                bookAuthor={book.author}
-                                                bookPrice={book.price}
-                                                bookImage={book.image}
-                                            />
-                                        </Link>
-                                    </SwiperSlide>
-                                ))
+                            {booksClassics.map((book, index) => (
+                                <SwiperSlide key={index} className="flex justify-center">
+                                    <Link key={book.id} className="" href={`/books/${book.id}`}>
+                                        <Cards
+                                            bookTitle={book.bookTitle}
+                                            bookAuthor={book.author}
+                                            bookPrice={book.price}
+                                            bookImage={book.images[0]}
+                                            bookPostedDate={book.postedDate}
+                                        />
+                                    </Link>
+                                </SwiperSlide>
+                            ))
                             }
                         </Swiper>
                     </div>
@@ -742,7 +520,8 @@ export default function HomePage({ data }) {
                                             bookTitle={book.bookTitle}
                                             bookAuthor={book.author}
                                             bookPrice={book.price}
-                                            bookImage={book.image}
+                                            bookImage={book.images[0]}
+                                            bookPostedDate={book.postedDate}
                                         />
                                     </Link>
                                 </SwiperSlide>
@@ -752,13 +531,13 @@ export default function HomePage({ data }) {
                 </div>
 
                 {/* Carousel 3 : Buy a Book */}
-                <div className="relative h-[384px] bg-red-400 flex flex-col lg:flex-row items-center">
+                <div className="relative h-[384px] flex flex-col lg:flex-row items-center">
                     {/* Full-Width Banner Image */}
                     <Image src="/icons/tikii-banner-3.png" fill alt="Banner" className="w-full h-full" />
 
 
                     {/* Overlay Text Box */}
-                    <div className="bg-red-100 h-full justify-center bg-opacity-20 absolute right-0 lg:w-[1120px] w-full px-12 lg:px-20 py-6 lg:py-12 flex flex-col items-center text-[#4A2C23]">
+                    <div className=" h-full justify-center bg-opacity-20 absolute right-0 lg:w-[1120px] w-full px-12 lg:px-20 py-6 lg:py-12 flex flex-col items-center text-[#4A2C23]">
                         {/* Main Heading */}
                         <h1 className="text-2xl lg:text-4xl font-bold mt-1 mb-3">
                             Own Your Next Great Read for Less!
@@ -855,7 +634,8 @@ export default function HomePage({ data }) {
                                             bookTitle={book.bookTitle}
                                             bookAuthor={book.author}
                                             bookPrice={book.price}
-                                            bookImage={book.image}
+                                            bookImage={book.images[0]}
+                                            bookPostedDate={book.postedDate}
                                         />
                                     </Link>
                                 </SwiperSlide>
@@ -934,7 +714,8 @@ export default function HomePage({ data }) {
                                             bookTitle={book.bookTitle}
                                             bookAuthor={book.author}
                                             bookPrice={book.price}
-                                            bookImage={book.image}
+                                            bookImage={book.images[0]}
+                                            bookPostedDate={book.postedDate}
                                         />
                                     </Link>
                                 </SwiperSlide>
@@ -983,13 +764,13 @@ export default function HomePage({ data }) {
                 </div>
 
                 {/* Carousel 4 : Join Our Community */}
-                <div className="relative h-[384px] bg-red-400 flex flex-col lg:flex-row items-center">
+                <div className="relative h-[384px] flex flex-col lg:flex-row items-center">
                     {/* Full-Width Banner Image */}
                     <Image src="/icons/tikii-banner-2.png" fill alt="Banner" className="w-full h-full" />
 
 
                     {/* Overlay Text Box */}
-                    <div className="bg-red-100 h-full justify-center bg-opacity-20 absolute right-0 lg:w-[1120px] w-full px-12 lg:px-20 py-6 lg:py-12 flex flex-col items-center text-[#4A2C23]">
+                    <div className="h-full justify-center bg-opacity-20 absolute right-0 lg:w-[1120px] w-full px-12 lg:px-20 py-6 lg:py-12 flex flex-col items-center text-[#4A2C23]">
                         {/* Main Heading */}
                         <h1 className="text-2xl lg:text-4xl font-bold mt-1 mb-3">
                             Join Our Community of Readers!
@@ -1003,7 +784,9 @@ export default function HomePage({ data }) {
                         </p>
 
                         {/* Button */}
-                        <button className="bg-[#2A230F] w-[330px] h-[44px] text-white py-3 px-6 rounded-md hover:bg-[#3A3118]">
+                        <button
+                            onClick={() => window.open("https://chat.whatsapp.com/J6QIhUqIlHT1ELmtT8FFKb", "_blank")}
+                            className="bg-[#2A230F] w-[330px] h-[44px] text-white py-3 px-6 rounded-md hover:bg-[#3A3118]">
                             Join Now
                         </button>
                     </div>
@@ -1026,7 +809,7 @@ export default function HomePage({ data }) {
 
                     {/* Cards */}
                     <div className='h-[620px] mt-12 flex w-full justify-center gap-8'>
-                        {byondTikii.map((info, index) => (
+                        {beyondTikii.map((info, index) => (
                             <CardsBeyond
                                 key={index}
                                 title={info.title}
@@ -1040,7 +823,7 @@ export default function HomePage({ data }) {
                 </div>
 
                 {/* Carousel 5 : Donate */}
-                <div className="mt-40 relative h-[384px] bg-red-400 flex flex-col lg:flex-row items-center">
+                <div className="mt-40 relative h-[384px] flex flex-col lg:flex-row items-center">
                     {/* Full-Width Banner Image */}
                     <Image src="/icons/tikii-banner-4.png" fill alt="Banner" className="w-full h-full" />
 
@@ -1061,7 +844,9 @@ export default function HomePage({ data }) {
                         </p>
 
                         {/* Button */}
-                        <button className="bg-[#2A230F] w-[330px] h-[44px] text-white py-3 px-6 rounded-md hover:bg-[#3A3118]">
+                        <button
+                            onClick={() => window.open("https://bit.ly/DonasiTIKII", "_blank")}
+                            className="bg-[#2A230F] w-[330px] h-[44px] text-white py-3 px-6 rounded-md hover:bg-[#3A3118]">
                             Donate Now
                         </button>
                     </div>
