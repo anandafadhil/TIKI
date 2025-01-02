@@ -72,7 +72,7 @@ export default function Article({ data, currentPage: initialPage, itp, totalPage
     const handlePageChange = (newPage) => {
         setCurrentPage(newPage); // Update the current page
     };
-    
+
     return (
         <div className='flex flex-row min-h-screen bg-[#EFE8DA]'>
             <div className='w-full'>
@@ -80,9 +80,10 @@ export default function Article({ data, currentPage: initialPage, itp, totalPage
                 {/* Navbar */}
                 <Navbar />
 
-                {/* Heading Text */}
                 <div className='bg-[#EFE8DA] items-center justify-center flex'>
                     <div className='w-full mx-16 mt-16 mb-10'>
+                    
+                        {/* Heading Text */}
                         <div className=' w-full league-spartan-bold text-[#4A2C23] text-[48px]'>
                             Our Latest News
                         </div>
