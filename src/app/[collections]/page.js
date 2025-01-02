@@ -6,6 +6,9 @@ export default async function GenrePage({ params, searchParams }) {
     const currentPage = 1;
     const ITEMS_PER_PAGE = 24;
 
+    const isNon = collections.includes("-non");
+    const genreNon = collections.replace('-non', '')
+
     const filteredBooks = () => {
         if (collections === 'all') {
             return WholeBook;
@@ -35,6 +38,15 @@ export default async function GenrePage({ params, searchParams }) {
             });
         }
 
+        if (isNon) {
+            console.log(genreNon);
+            return WholeBook.filter((book) => {
+                return book.genre.some((genre) => {
+                    return genre && genre.name && genre.name.toLowerCase() === genreNon.toLowerCase();
+                });
+            });
+        }
+
         // Handle genre filtering
         return WholeBook.filter((book) => {
             if (!book.genre || !Array.isArray(book.genre)) {
@@ -48,7 +60,7 @@ export default async function GenrePage({ params, searchParams }) {
     };
     const totalPages = Math.ceil(filteredBooks().length / ITEMS_PER_PAGE);
     const initialPage = 1;
-    
+
     return (
         <>
             <Collections

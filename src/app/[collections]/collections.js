@@ -29,7 +29,7 @@ export default function Collections({ data, currentPage: initialPage, itemsPerPa
     const [isNonFiction, setIsNonFiction] = useState(false);
     const [isAll, setIsAll] = useState(false);
     const [isOther, setIsOther] = useState(false);
-
+    const [isOtherNon, setIsOtherNon] = useState(false);
     // Pagination
     const itemPerPage = itemsPerPage;
     const startIndex = (currentPage - 1) * itemPerPage;
@@ -38,6 +38,27 @@ export default function Collections({ data, currentPage: initialPage, itemsPerPa
 
     const handlePageChange = (newPage) => {
         setCurrentPage(newPage); // Update the current page
+    };
+
+    const isNon = collectionsType.includes("-non");
+    const genreNon = collectionsType.replace('-non', '')
+    const formatText = (text) => {
+        const words = text.split('-').map(word => {
+            return `${word.charAt(0).toUpperCase()}${word.slice(1).toLowerCase()}`;
+        });
+
+        let result;
+        if (words.length > 2 && words[1] != 'And') {
+            result = `${words.slice(0, -1).join(', ')}, and ${words[words.length - 1]}`;
+        } else if (words.length === 3) {
+            result = `${words[0]} and ${words[2]}`;
+        } else if (words.length === 2) {
+            result = `${words[0]}-${words[1]}`
+        }
+        else {
+            result = `${text.charAt(0).toUpperCase()}${text.slice(1)}`
+        }
+        return result;
     };
 
     useEffect(() => {
@@ -56,6 +77,9 @@ export default function Collections({ data, currentPage: initialPage, itemsPerPa
         } else if (collectionsType === 'fiction') {
             setGenreSelected('Fiction');
             setIsFiction(true);
+        } else if (isNon) {
+            setGenreSelected(formatText(genreNon))
+            setIsOtherNon(true);
         } else {
             setGenreSelected(`${collectionsType.charAt(0).toUpperCase()}${collectionsType.slice(1)}`);
             setIsOther(true);
@@ -75,20 +99,16 @@ export default function Collections({ data, currentPage: initialPage, itemsPerPa
         .sort((a, b) => new Date(b.postedDate) - new Date(a.postedDate))
         .slice(0, top)
 
-    // Other Function
-    // const otherGenres = data.filter((item) =>
-    //     item.category.genre.some((genre) => genre.name === genreSelected)
-    // );
     const otherGenres = data;
     if (!otherGenres) {
         return console.log("Book Not Found");
     }
 
-    // Classic Function
-    // const classicBooks = data.filter((item) => item.category.genre.includes(genreSelected));
-    // if (!classicBooks) {
-    //     return console.log("Book Not Found");
-    // }
+    // Other Genre with Non Function
+    const otherGenresNon = data;
+    if (!otherGenresNon) {
+        return console.log("Book Not Found");
+    }
 
     // Budget Function
     const budgetBooks = data.filter((item) => {
@@ -133,7 +153,9 @@ export default function Collections({ data, currentPage: initialPage, itemsPerPa
                             ? allBooks
                             : isOther && otherGenres.length > 0
                                 ? otherGenres
-                                : [];
+                                : isOtherNon && otherGenresNon.length > 0
+                                    ? otherGenresNon
+                                    : [];
 
     const paginatedData = mapping.slice(startIndex, endIndex);
     // Search Functionality
@@ -200,6 +222,10 @@ export default function Collections({ data, currentPage: initialPage, itemsPerPa
     const handleSearchClick = () => {
         if (inputValue.length >= 3) {
             ruter.push(`/search?query=${inputValue}`);
+
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
         } else {
             console.error("Please type at least 3 characters to search.");
         }
@@ -257,7 +283,7 @@ export default function Collections({ data, currentPage: initialPage, itemsPerPa
     ];
 
     const alwaysVisibleGenresNon = [
-        { name: 'Art', path: '/art/' },
+        { name: 'Art', path: '/art-non/' },
         { name: 'Biography', path: '/biography-non/' },
         { name: 'Business, Finance, & Economics', path: '/business-finance-economics-non/' },
         { name: 'Culinary', path: '/culinary-non/' },
@@ -287,17 +313,36 @@ export default function Collections({ data, currentPage: initialPage, itemsPerPa
                 {/* Heading Text */}
                 <div className='bg-[#EFE8DA] items-center justify-center flex'>
                     <div className='w-full mx-16 mt-16 mb-10'>
-                        <div className=' w-full league-spartan-bold text-[#4A2C23] text-[48px]'>
-                            {`${genreSelected} Books`}
-                        </div>
+                        {isAll ? (
+                            <div className=' w-full league-spartan-bold text-[#4A2C23] text-[48px]'>
+                                Explore All Genres
+                            </div>
+
+                        ) : (
+                            <div className=' w-full league-spartan-bold text-[#4A2C23] text-[48px]'>
+                                {`${genreSelected} Books`}
+                            </div>
+                        )}
 
                         <div className=' w-full text-[18px] mt-2 text-black'>
-                            Step into worlds where imagination knows no bounds, and every
-                            page invites you to dream, wonder, and explore. Our Fiction Collection
-                            is a treasure trove of gripping tales, unforgettable characters, and
-                            boundless creativity. Whether you crave heart-racing adventures,
-                            soul-stirring dramas, or magical realms beyond your wildest dreams,
-                            we’ve got the stories that will keep you turning pages late into the night.
+                            {isFiction ? (
+                                <>
+                                    Step into worlds where imagination knows no bounds, and every
+                                    page invites you to dream, wonder, and explore. Our Fiction Collection
+                                    is a treasure trove of gripping tales, unforgettable characters, and
+                                    boundless creativity. Whether you crave heart-racing adventures,
+                                    soul-stirring dramas, or magical realms beyond your wildest dreams,
+                                    we’ve got the stories that will keep you turning pages late into the night.
+                                </>
+                            ) : isNonFiction ? (
+                                <>
+                                    Dive into a world of knowledge and inspiration with our curated collection
+                                    of preloved non-fiction books. From insightful biographies to powerful
+                                    self-help guides and groundbreaking business strategies, these books are
+                                    packed with wisdom at a fraction of the price. Shop now and turn every page
+                                    into a step toward growth!
+                                </>
+                            ) : null}
                         </div>
                     </div>
                 </div>
@@ -367,7 +412,21 @@ export default function Collections({ data, currentPage: initialPage, itemsPerPa
                     <div className='w-[12%]'>
                         <div className='px-2 flex flex-col justify-start gap-2'>
                             <div className='font-bold text-[18px] text-black'>Genres</div>
-                            {!isNonFiction ? (
+                            {isAll ? (
+                                [
+                                    ...alwaysVisibleGenres,
+                                    ...alwaysVisibleGenresNon
+                                ].map((genre) => (
+                                    <Link key={genre.path} href={genre.path}>
+                                        <div
+                                            className={`text-[18px] underline ${pathname === genre.name.toLowerCase() ? 'font-bold text-black' : 'text-gray-400'
+                                                }`}
+                                        >
+                                            {genre.name}
+                                        </div>
+                                    </Link>
+                                ))
+                            ) : !isNonFiction && !isNon ? (
                                 [
                                     ...alwaysVisibleGenres.filter(genre => pathname === genre.name.toLowerCase()),
                                     ...additionalGenres.filter(genre => pathname === genre.name.toLowerCase()),
@@ -375,7 +434,8 @@ export default function Collections({ data, currentPage: initialPage, itemsPerPa
                                 ].map((genre) => (
                                     <Link key={genre.path} href={genre.path}>
                                         <div
-                                            className={`text-[18px] underline ${pathname === genre.name.toLowerCase() ? 'font-bold text-black' : 'text-gray-400'}`}
+                                            className={`text-[18px] underline ${pathname === genre.name.toLowerCase() ? 'font-bold text-black' : 'text-gray-400'
+                                                }`}
                                         >
                                             {genre.name}
                                         </div>
@@ -389,7 +449,8 @@ export default function Collections({ data, currentPage: initialPage, itemsPerPa
                                 ].map((genre) => (
                                     <Link key={genre.path} href={genre.path}>
                                         <div
-                                            className={`text-[18px] underline ${pathname === genre.name.toLowerCase() ? 'font-bold text-black' : 'text-gray-400'}`}
+                                            className={`text-[18px] underline ${pathname === genre.name.toLowerCase() ? 'font-bold text-black' : 'text-gray-400'
+                                                }`}
                                         >
                                             {genre.name}
                                         </div>
@@ -400,12 +461,18 @@ export default function Collections({ data, currentPage: initialPage, itemsPerPa
                             {/* Additional Genres */}
                             {isShowMore && (
                                 <div className="flex flex-col gap-2">
-                                    {(isNonFiction ? additionalGenresNon : additionalGenres)
-                                        .filter(genre => pathname !== genre.name.toLowerCase())
+                                    {(isAll
+                                        ? [...additionalGenres, ...additionalGenresNon]
+                                        : isNonFiction && isNon
+                                            ? additionalGenresNon
+                                            : additionalGenres
+                                    )
+                                        .filter(genre => pathname !== genre.name.toLowerCase()) // Exclude the current genre
                                         .map((genre) => (
                                             <Link key={genre.path} href={genre.path}>
                                                 <div
-                                                    className={`text-[18px] underline ${pathname === genre.name.toLowerCase() ? 'font-bold text-black' : 'text-gray-400'}`}
+                                                    className={`text-[18px] underline ${pathname === genre.name.toLowerCase() ? 'font-bold text-black' : 'text-gray-400'
+                                                        }`}
                                                 >
                                                     {genre.name}
                                                 </div>
@@ -414,11 +481,9 @@ export default function Collections({ data, currentPage: initialPage, itemsPerPa
                                 </div>
                             )}
 
-
-                            {/* Additional Genre */}
+                            {/* Show More/Less */}
                             {!isShowMore ? (
                                 <div>
-                                    {/* Show More */}
                                     <div
                                         className="flex flex-row items-center cursor-pointer"
                                         onClick={handleShowMore}
@@ -431,7 +496,6 @@ export default function Collections({ data, currentPage: initialPage, itemsPerPa
                                 </div>
                             ) : (
                                 <div>
-                                    {/* Show Less */}
                                     <div
                                         className="flex flex-row items-center cursor-pointer"
                                         onClick={closeShowMore}
@@ -443,7 +507,6 @@ export default function Collections({ data, currentPage: initialPage, itemsPerPa
                                     </div>
                                 </div>
                             )}
-
                         </div>
                     </div>
 

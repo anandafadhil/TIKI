@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import Image from "next/image";
 import { useState } from 'react';
 
@@ -17,7 +17,7 @@ export default function CardsCollection({ bookTitle, bookAuthor, bookPrice, book
 
     const formattedDate = formatDate(bookPostedDate);
     const formatPrice = bookPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    
+
     return (
         <>
             <div
@@ -34,12 +34,12 @@ export default function CardsCollection({ bookTitle, bookAuthor, bookPrice, book
                         height={360}
                     />
                 </figure>
-                <div className="flex flex-col bg-[#F2EEE5] rounded-b-xl h-[200px] justify-between">
+                <div className="flex flex-col bg-[#F2EEE5] rounded-b-xl h-[210px] justify-between">
                     <div>
                         <div className="w-full pl-4 mt-3 text-[#5B5959] text-[16px]">
                             {formattedDate}
                         </div>
-                        <div className="max-w-[340px] text-[20px] mt-1 pl-4 font-bold leading-6 line-clamp-2 overflow-hidden text-ellipsis">
+                        <div className={`max-w-[340px] text-[20px] mt-1 pl-4 font-bold leading-6 line-clamp-2 overflow-hidden text-ellipsis ${isOnHover ? 'underline' : ''}`}>
                             {bookTitle}
                         </div>
                     </div>

@@ -106,7 +106,7 @@ export default function Search({ data, query, currentPage: initialPage, itemsPer
             
             setTimeout(() => {
                 window.location.reload();
-            }, 100);
+            }, 1000);
         } else {
             console.error("Please type at least 3 characters to search.");
         }

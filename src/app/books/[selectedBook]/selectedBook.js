@@ -14,35 +14,12 @@ import 'swiper/css/navigation';
 import "../../globals.css";
 import Image from "next/image";
 import ModalPayment from '@/components/modalPayment';
+import Link from 'next/link';
 
-export default function SelectedBook({ data }) {
+export default function SelectedBook({ data, booksFiction }) {
     const [isModalBuyOpen, setIsModalBuyOpen] = useState(false);
     const [isModalPaymentOpen, setIsModalPaymentOpen] = useState(false);
-
-    const booksFiction = [{
-        bookTitle: "Dune",
-        author: "Frank Herbert",
-        price: "Rp 120.000",
-        image: "/images/cards_picture_13.png"
-    },
-    {
-        bookTitle: "Norwegian Wood",
-        author: "Murakami",
-        price: "Rp 145.000",
-        image: "/images/cards_picture_14.png"
-    },
-    {
-        bookTitle: "Crazy Rich Asians",
-        author: "Kevin Kwan",
-        price: "Rp 72.000",
-        image: "/images/cards_picture_15.png"
-    },
-    {
-        bookTitle: "The Song of Achilles",
-        author: "Madeline Miller",
-        price: "Rp 125.000",
-        image: "/images/cards_picture_16.png"
-    }];
+    console.log(booksFiction);
 
     const router = usePathname();
     const id = router.replace('/books/', '');
@@ -62,8 +39,6 @@ export default function SelectedBook({ data }) {
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
-
-        // Get the day, month, and year from the Date object
         const day = String(date.getDate()).padStart(2, '0');
         const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
         const year = date.getFullYear();
@@ -71,6 +46,7 @@ export default function SelectedBook({ data }) {
         return `${day}/${month}/${year}`;
     }
     const formattedDate = formatDate(data.postedDate);
+    const formatPrice = data.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 
 
     const [mainImage, setMainImage] = useState(data.images[0]);
@@ -93,6 +69,7 @@ export default function SelectedBook({ data }) {
 
     const [sliderState, setSliderState] = useState({
         SmallImage: { isBeginning: true, isLast: false },
+        Fiction: { isBeginning: true, isLast: false },
     });
 
     const handleSlideChange = (category) => (swiper) => {
@@ -166,7 +143,7 @@ export default function SelectedBook({ data }) {
                                         </div>
                                     </div>
                                     <div className='mt-1 text-[24px] '>
-                                        {data.price}
+                                        Rp {formatPrice}
                                     </div>
                                 </div>
                             </div>
@@ -463,22 +440,73 @@ export default function SelectedBook({ data }) {
                     <div className='flex'>
                         <div className='justify-start w-full text-[#4A2c23] league-spartan-bold font-bold text-[48px]'>Fiction Book You Might Also Like</div>
                         <div className='flex underline items-center font-[18px] text-[#0F172A] underline-offset-4 justify-end w-1/2 pr-4'>
-                            View all
+                            <Link href='/fiction/'>
+                                View all
+                            </Link>
                         </div>
                     </div>
 
                     {/* Cards */}
-                    <div className='h-[570px] mt-12 flex w-full justify-center gap-24 text-black'>
-                        {booksFiction.map((book, index) => (
-                            <Cards
-                                key={index}
-                                bookTitle={book.bookTitle}
-                                bookAuthor={book.author}
-                                bookPrice={book.price}
-                                bookImage={book.image}
-                                bookPostedDate={book.postedDate}
-                            />
-                        ))}
+                    <div className='h-[570px] mt-12 relative flex items-center'>
+                        {/* Custom Navigation Buttons */}
+                        <button
+                            className={`custom-button-prev ${sliderState.Fiction.isBeginning ? "opacity-0 pointer-events-none" : ""}`}
+                            id="custom-prev-4"
+                            disabled={sliderState.Fiction.isBeginning}
+                        >
+                            <Image src="/icons/chevron-left.svg" alt="arrow-right" width={60} height={60} />
+                        </button>
+                        <button
+                            className={`custom-button-next ${sliderState.Fiction.isLast ? "opacity-0 pointer-events-none" : ""}`}
+                            id="custom-next-4"
+                            disabled={sliderState.Fiction.isLast}
+                        >
+                            <Image src="/icons/chevron-right.svg" alt="arrow-right" width={60} height={60} />
+                        </button>
+                        <Swiper
+                            modules={[Navigation]}
+                            slidesPerView={6}
+                            spaceBetween={20}
+                            freeMode={true}
+                            centeredSlides={false}
+                            preventClicks={false} // Allow click events
+                            preventClicksPropagation={false} // Allow event propagation
+                            navigation={{
+                                nextEl: "#custom-next-4",
+                                prevEl: "#custom-prev-4",
+                            }}
+                            // onSwiper={(swiper) => setIsBeginning(swiper.isBeginning)}
+                            onSlideChange={handleSlideChange('Fiction')}
+                            // breakpoints={{
+                            //     992: {
+                            //         slidesPerView: 2, // 3 slides per view for screens larger than 992px
+                            //     },
+                            //     768: {
+                            //         slidesPerView: 2, // 2 slides per view for screens larger than 768px
+                            //     },
+                            //     480: {
+                            //         slidesPerView: 1, // 1 slide per view for screens smaller than 480px
+                            //     },
+                            // }}
+                            // navigation={true} // Optional navigation arrows
+                            loop={false} // Optional loop
+                            className="swiper-container"
+                        >
+                            {booksFiction.map((book, index) => (
+                                <SwiperSlide key={index} className="flex justify-center text-black">
+                                    <Link key={book.id} className="" href={`/books/${book.id}`}>
+                                        <Cards
+                                            key={index}
+                                            bookTitle={book.bookTitle}
+                                            bookAuthor={book.author}
+                                            bookPrice={book.price}
+                                            bookImage={book.images[0]}
+                                            bookPostedDate={book.postedDate}
+                                        />
+                                    </Link>
+                                </SwiperSlide>
+                            ))}
+                        </Swiper>
                     </div>
 
                     {/* Pages */}

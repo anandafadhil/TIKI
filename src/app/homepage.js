@@ -352,20 +352,19 @@ export default function HomePage({
                             loop={false} // Optional loop
                             className="swiper-container"
                         >
-                            {
-                                booksNew.map((book, index) => (
-                                    <SwiperSlide key={index} className="flex justify-center">
-                                        <Link key={book.id} className="" href={`/books/${book.id}`}>
-                                            <Cards
-                                                bookTitle={book.bookTitle}
-                                                bookAuthor={book.author}
-                                                bookPrice={book.price}
-                                                bookImage={book.images[0]}
-                                                bookPostedDate={book.postedDate}
-                                            />
-                                        </Link>
-                                    </SwiperSlide>
-                                ))
+                            {booksNew.map((book, index) => (
+                                <SwiperSlide key={index} className="flex justify-center">
+                                    <Link key={book.id} className="" href={`/books/${book.id}`}>
+                                        <Cards
+                                            bookTitle={book.bookTitle}
+                                            bookAuthor={book.author}
+                                            bookPrice={book.price}
+                                            bookImage={book.images[0]}
+                                            bookPostedDate={book.postedDate}
+                                        />
+                                    </Link>
+                                </SwiperSlide>
+                            ))
                             }
                         </Swiper>
                     </div>
@@ -515,7 +514,7 @@ export default function HomePage({
                         >
                             {booksBudget.map((book, index) => (
                                 <SwiperSlide key={index} className="flex justify-center">
-                                    <Link key={index} className="" href='/books/'>
+                                    <Link key={book.id} className="" href={`/books/${book.id}`}>
                                         <Cards
                                             bookTitle={book.bookTitle}
                                             bookAuthor={book.author}
@@ -627,8 +626,7 @@ export default function HomePage({
                         >
                             {booksFiction.map((book, index) => (
                                 <SwiperSlide key={index} className="flex justify-center">
-
-                                    <Link key={index} className='' href='/books/'>
+                                    <Link key={book.id} className="" href={`/books/${book.id}`}>
                                         <Cards
                                             key={index}
                                             bookTitle={book.bookTitle}
@@ -708,7 +706,7 @@ export default function HomePage({
                         >
                             {booksNonFiction.map((book, index) => (
                                 <SwiperSlide key={index} className="flex justify-center">
-                                    <Link key={index} className='' href='/books/'>
+                                    <Link key={book.id} className="" href={`/books/${book.id}`}>
                                         <Cards
                                             key={index}
                                             bookTitle={book.bookTitle}
@@ -743,17 +741,16 @@ export default function HomePage({
 
                     {/* Cards */}
                     <div className='h-[570px] mt-12 flex w-full justify-center gap-[38px]'>
-                        {discoverGenre.map((book, index) => (
+                        {discoverGenre.map((genre, index) => (
                             <Link
                                 key={index}
-                                // href={`/collections/${genre}`}
-                                href='/collections/'
+                                href={`/${genre.name.toLowerCase()}/`}
                                 className="block w-[404px] h-full"
                             >
                                 <CardsGenre
                                     key={index}
-                                    bookTitle={book.bookTitle}
-                                    bookImage={book.image}
+                                    genreTitle={genre.name}
+                                    genreImage={genre.image}
                                 />
                             </Link>
                         ))}
@@ -807,11 +804,13 @@ export default function HomePage({
                         </div>
                     </div>
 
+
                     {/* Cards */}
-                    <div className='h-[620px] mt-12 flex w-full justify-center gap-8'>
+                    <div className='hidden h-[620px] mt-12 flex w-full justify-center gap-8'>
                         {beyondTikii.map((info, index) => (
                             <CardsBeyond
                                 key={index}
+                                id={info.id}
                                 title={info.title}
                                 paragraph={info.paragraph}
                                 image={info.image}
@@ -821,35 +820,9 @@ export default function HomePage({
 
                     {/* Pages */}
                 </div>
+                <div className='mt-20 relative h-[384px] flex flex-col lg:flex-row items-center w-full'>
+                    <Image src="/icons/tikii-banner-coming.png" fill alt="Banner" className="w-full h-full" />
 
-                {/* Carousel 5 : Donate */}
-                <div className="mt-40 relative h-[384px] flex flex-col lg:flex-row items-center">
-                    {/* Full-Width Banner Image */}
-                    <Image src="/icons/tikii-banner-4.png" fill alt="Banner" className="w-full h-full" />
-
-
-                    {/* Overlay Text Box */}
-                    <div className="h-full justify-center bg-opacity-20 absolute right-0 lg:w-[1120px] w-full px-12 lg:px-20 py-6 lg:py-12 flex flex-col items-center text-[#4A2C23]">
-                        {/* Main Heading */}
-                        <h1 className="text-2xl lg:text-4xl font-bold mt-1 mb-3">
-                            Donate to Our Charity!
-                        </h1>
-
-                        {/* Description */}
-                        <p className="text-sm lg:text-lg text-center leading-relaxed mb-9">
-                            Help us spread the joy of reading to underserved communities.
-                            Your  donations enable Tikii to distribute preloved books, build
-                            community libraries, and support readers across Indonesia. Donate
-                            today and create lasting change!
-                        </p>
-
-                        {/* Button */}
-                        <button
-                            onClick={() => window.open("https://bit.ly/DonasiTIKII", "_blank")}
-                            className="bg-[#2A230F] w-[330px] h-[44px] text-white py-3 px-6 rounded-md hover:bg-[#3A3118]">
-                            Donate Now
-                        </button>
-                    </div>
                 </div>
 
                 {/* Text 2 */}
@@ -870,6 +843,43 @@ export default function HomePage({
                     </div>
 
                 </div>
+
+                {/* Carousel 5 : Donate */}
+                <div
+                    className="mt-40 relative h-[384px] flex items-center justify-center bg-cover bg-center"
+                    style={{
+                        backgroundColor: 'rgba(239, 232, 218, 0.4)', // Hex color #EFE8DA with 40% opacity
+                        backgroundBlendMode: 'overlay',
+                        backgroundImage: "url('/icons/tikii-banner-4.png')"
+                    }}
+                >
+
+                    {/* Overlay Text Box */}
+                    <div className="bg-opacity-20 w-full lg:w-[1120px] px-12 lg:px-20 py-6 lg:py-12 flex flex-col items-center text-black">
+                        {/* Main Heading */}
+                        <h1 className="text-2xl lg:text-4xl font-bold mt-1 mb-3 text-center">
+                            Donate to Our Charity!
+                        </h1>
+
+                        {/* Description */}
+                        <p className="text-sm lg:text-lg text-center leading-relaxed mb-9">
+                            Help us spread the joy of reading to underserved communities.
+                            Your donations enable Tikii to distribute preloved books, build
+                            community libraries, and support readers across Indonesia. Donate
+                            today and create lasting change!
+                        </p>
+
+                        {/* Button */}
+                        <button
+                            onClick={() => window.open("https://bit.ly/DonasiTIKII", "_blank")}
+                            className="bg-[#2A230F] w-[330px] h-[44px] text-white py-3 px-6 rounded-md hover:bg-[#3A3118]"
+                        >
+                            Donate Now
+                        </button>
+                    </div>
+                </div>
+
+
 
                 {/* Footer */}
                 <Footer />
