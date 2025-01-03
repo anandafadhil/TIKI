@@ -1,11 +1,25 @@
 import { WholeBook, BooksNew, BooksClassics, BooksBudget, BooksFiction, BooksNonFiction, DiscoverGenre, BeyondTikii } from './data/bookData';
 import HomePage from "./homepage";
-
+import { fetchData } from "./fetch/fetch"
 export default async function Home() {
     // All Books
     const allBookData = WholeBook;
 
-    // New Books
+
+    // const carousel = await fetchData("/books",
+    // );
+
+
+    // useEffect(() => {
+    //     const fetchData = async () => {
+
+    //         await handleFetchData();
+    //     };
+
+    //     fetchData();
+    // }, []);
+    // console.log("abc", carousel);
+
     const days = 10;
     const top = 10
     const currentDate = new Date();

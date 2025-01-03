@@ -1,8 +1,13 @@
 'use client';
 import Image from "next/image";
 import Link from 'next/link';
+import Swal from 'sweetalert2'
+import { usePathname } from "next/navigation";
 
 export default function Footer() {
+    const router = usePathname();
+    const collectionsType = router.replace('/', '');
+    const pathname = collectionsType
     return (
         <>
             <div className="bg-[#847060] h-[452px] text-white mt-44">
@@ -27,13 +32,30 @@ export default function Footer() {
                         <div className='mb-14'>
                             <div className="font-bold text-[24px]">About Tikii</div>
                             <div className="border-t border-[#fff] w-[275px] text-[18px] mt-6" />
-                            <div href="/#mission" className="text-sm hover:underline underline-offset-4 mt-8">
-                                About Us
+                            <div className="text-sm hover:underline underline-offset-4 mt-8">
+                                <a href="/#mission">
+                                    About Us
+                                </a>
                             </div>
                             <div className="text-sm hover:underline underline-offset-4 mt-8">
-                                <Link href="/article/" >
-                                    Our Mission
-                                </Link>
+                                <a
+                                    className={`hover:cursor-pointer ${pathname === 'article'
+                                        ? 'poppins-bold underline underline-offset-2 text-gray-400'
+                                        : ''
+                                        }`}
+                                    // href={pathname === 'article' ? '#' : '/article'}
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        Swal.fire({
+                                            title: 'Coming Soon!',
+                                            text: 'This feature will be available soon.',
+                                            icon: 'info',
+                                            confirmButtonText: 'OK',
+                                        });
+                                    }}
+                                >
+                                    Beyond Tikii
+                                </a>
                             </div>
                         </div>
 
@@ -46,7 +68,7 @@ export default function Footer() {
                             <div className="font-bold text-[24px]">Support</div>
                             <div className="border-t border-[#fff] w-[275px] text-[18px] mt-6" />
                             <div className="text-sm hover:underline underline-offset-4 mt-8">
-                                <a href="https://titip.tikiibookstore.com/titip" target="_blank">
+                                <a href="https://titip.tikiibookstore.com" target="_blank">
                                     Sell Book
                                 </a>
                             </div>

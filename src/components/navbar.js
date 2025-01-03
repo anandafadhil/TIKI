@@ -1,10 +1,14 @@
 "use client";
 import Image from "next/image";
 import Link from 'next/link';
-
 import { useState, useRef, useEffect } from 'react';
+import { usePathname } from "next/navigation";
+import Swal from 'sweetalert2'
 
 export default function Navbar() {
+    const router = usePathname();
+    const collectionsType = router.replace('/', '');
+    const pathname = collectionsType
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [isFictionOpen, setFictionOpen] = useState(false);
     const [isNonFictionOpen, setNonFictionOpen] = useState(false);
@@ -38,8 +42,9 @@ export default function Navbar() {
     }, []);
     return (
         <>
-            <div className="navbar h-[60px] bg-[#F2EEE5] flex justify-center items-center drop-shadow-md rounded-b-lg text-[#0F172A] relative z-[1000]">
-                <div className="hidden lg:flex">
+            {/* <div className="navbar h-[60px] bg-[#F2EEE5] flex justify-center items-center drop-shadow-md rounded-b-lg text-[#0F172A] relative z-[1000]"> */}
+            <div className=" h-[60px] bg-[#F2EEE5] drop-shadow-md rounded-b-lg text-[#0F172A] relative z-[1000]">
+                <div className="md:hidden lg:flex">
                     {/* Dropdown System */}
                     <div className="dropdown">
                         <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -47,14 +52,14 @@ export default function Navbar() {
                     </div>
 
                     {/* Horizontal Menu */}
-                    <div className="gap-20 text-[16px] h-[60px] w-[1600px] flex flex-row items-center justify-center">
+                    <div className="h-[60px] flex flex-row items-center justify-center text-[12px] gap-8 w-full xl:gap-16 xl:text-[16px] 2xl:gap-20 2xl:text-[16px]">
 
                         {/* Logo */}
                         <Link href="/">
                             <Image src="/icons/tikii-logo-1.svg" width={60} height={60} alt="Tikii Logo" />
                         </Link>
-                        <Link className="poppins-bold underline underline-offset-2" href="/">Home</Link>
-                        <Link href="/new">New Arrivals</Link>
+                        <Link className={`${pathname === '' ? 'poppins-bold underline underline-offset-2' : ''}`} href="/">Home</Link>
+                        <Link className={`${pathname === 'new' ? 'poppins-bold underline underline-offset-2' : ''}`} href="/new">New Arrivals</Link>
 
                         {/* Fiction */}
                         <div ref={fictionRef}>
@@ -64,10 +69,10 @@ export default function Navbar() {
                                 className="relative flex flex-row gap-1"
                                 onClick={() => setFictionOpen(!isFictionOpen)}
                             >
-                                <span>Fiction</span>
+                                <span className={`${pathname === 'fiction' ? 'poppins-bold underline underline-offset-2' : ''}`}>Fiction</span>
                                 <Image src="/icons/chevron-down.svg" width={12} alt="" height={12} className={`transform transition-transform duration-200 ${isFictionOpen ? "rotate-180" : ""}`} />
                                 {isFictionOpen && (
-                                    <div className="bg-red-400">
+                                    <div className="">
                                         <div className="px-4 py-8 mt-4 bg-[#F2EEE5] border outline outline-1 outline-gray-300 absolute top-[30px] left-1/2 transform -translate-x-1/2 mt-2 h-[364px] w-[364px] rounded-xl">
                                             <Link className="ml-6 text-[24px] text-black font-semibold" href='/fiction'>Fiction by Genre</Link>
                                             <ul className="justify-start text-[18px] text-black grid grid-cols-2 gap-y-3 mt-6 right-4 w-full ml-6">
@@ -98,7 +103,7 @@ export default function Navbar() {
                                 className="relative flex flex-row gap-1"
                                 onClick={() => setNonFictionOpen(!isNonFictionOpen)}
                             >
-                                <span>Non-Fiction</span>
+                                <span className={`${pathname === 'non-fiction' ? 'poppins-bold underline underline-offset-2' : ''}`}>Non-Fiction</span>
                                 <Image src="/icons/chevron-down.svg" width={12} height={12} alt="" className={`transform transition-transform duration-200 ${isNonFictionOpen ? "rotate-180" : ""}`} />
                                 {isNonFictionOpen && (
                                     <div className="px-4 py-8 mt-4 bg-[#F2EEE5] border outline outline-1 outline-gray-300 absolute top-[30px] left-1/2 transform -translate-x-1/2 mt-2 h-[364px] w-[364px] rounded-xl">
@@ -122,7 +127,27 @@ export default function Navbar() {
                             </div>
                         </div>
 
-                        <Link href='/article'>Beyond Tikii</Link>
+                        {/* Article */}
+                        <a
+                            className={`hover:cursor-pointer ${pathname === 'article'
+                                ? 'poppins-bold underline underline-offset-2 text-gray-400'
+                                : ''
+                                }`}
+                            // href={pathname === 'article' ? '#' : '/article'}
+                            onClick={(e) => {
+                                e.preventDefault();
+                                Swal.fire({
+                                    title: 'Coming Soon!',
+                                    text: 'This feature will be available soon.',
+                                    icon: 'info',
+                                    confirmButtonText: 'OK',
+                                });
+                            }}
+                        >
+                            Beyond Tikii
+                        </a>
+
+                        {/* Sell */}
                         <a href="/#sell">Sell Your Book</a>
                         <Link href="https://chat.whatsapp.com/J6QIhUqIlHT1ELmtT8FFKb" target="_blank">Join Community</Link>
                         <Link href="https://bit.ly/DonasiTIKII" target="_blank">Donate to Charity</Link>
@@ -130,7 +155,7 @@ export default function Navbar() {
                 </div>
 
                 {/* Mobile*/}
-                <div className="px-4 lg:hidden flex items-center justify-between w-full">
+                <div className="px-4 xl:hidden flex items-center justify-between w-full">
                     {/* Mobile Sidebar Toggle Button */}
 
                     <div className="mt-2 lg:hidden">
@@ -143,13 +168,13 @@ export default function Navbar() {
                                 <Image src="/icons/x.svg" width={24} height={24} alt="Menu" />
                             </button>
                         )}
-
                     </div>
-
-                    {/* Logo */}
-                    <Link href="/">
-                        <Image src="/icons/tikii-logo-1.svg" width={60} height={60} alt="Tikii Logo" />
-                    </Link>
+                    <div className="lg:hidden">
+                        {/* Logo */}
+                        <Link href="/">
+                            <Image src="/icons/tikii-logo-1.svg" width={60} height={60} alt="Tikii Logo" />
+                        </Link>
+                    </div>
 
                     {/* Sidebar Menu for Mobile */}
                     {sidebarOpen && (
@@ -177,12 +202,6 @@ export default function Navbar() {
                             </div>
                         </div>
                     )}
-                </div>
-
-
-
-                <div className="navbar-center hidden lg:flex">
-
                 </div>
             </div>
         </>

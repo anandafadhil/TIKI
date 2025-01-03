@@ -19,6 +19,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import './globals.css';
 import { useRouter } from 'next/navigation'
+import Swal from 'sweetalert2'
 
 export default function HomePage({
     allBookData,
@@ -91,6 +92,7 @@ export default function HomePage({
     const [showOptions, setIsSHowOptions] = useState(false)
     const [showDrop, setIsShowDrop] = useState(false);
     const [selectedLabel, setSelectedLabel] = useState();
+    const [showOutline, setShowOutline] = useState(false);
 
     const handleInputChange = (e) => {
         const inputValue = e.target.value;
@@ -129,10 +131,12 @@ export default function HomePage({
 
     const handleInputFocus = () => {
         setIsSHowOptions(true);
+        setShowOutline(true);
     }
 
     const handleInputBlur = () => {
         setIsSHowOptions(false);
+        setShowOutline(false);
         setTimeout(() => {
             if (!dropdownRef.current || !dropdownRef.current.contains(document.activeElement)) {
                 setIsShowDrop(false);
@@ -193,7 +197,7 @@ export default function HomePage({
 
                         {/* Search Bar and Dropdown */}
                         <div>
-                            <div className=" z-0 bg-[#F2EEE5] w-[300px] lg:w-[825px] h-[40px] flex items-center rounded-md outline outline-1 outline-[#B8B094]">
+                            <div className={`z-0 bg-[#F2EEE5] w-[300px] lg:w-[825px] h-[40px] flex items-center rounded-md outline outline-1 outline-[#B8B094] ${showOutline ? 'outline outline-2 outline-black outline-[#847060]':''}`}>
                                 {/* Search Bar */}
                                 <Image src="/icons/search.svg" className="ml-2" width={24} height={24} alt="" />
                                 <input
@@ -204,7 +208,7 @@ export default function HomePage({
                                     onFocus={handleInputFocus}
                                     onBlur={handleInputBlur}
                                     placeholder={selectedLabel || 'Find the title, ISBN, or author of the book'}
-                                    className="text-black w-full p-2 ml-2 bg-[#F2EEE5] rounded-md"
+                                    className="outline-none text-black w-full p-2 ml-2 bg-[#F2EEE5] rounded-md"
                                 />
 
                                 {/* Dropdown Alert */}
@@ -798,9 +802,21 @@ export default function HomePage({
                     <div className='flex'>
                         <div className='w-full justify-start flex items-center text-[18px] ml-2'>See why Tikii stands out as a trusted home for preloved and passionate readers</div>
                         <div className='flex underline items-center font-[18px] text-[#0F172A] underline-offset-4 justify-end w-1/2 pr-2'>
-                            <Link href='/article/'>
+                            <a
+                                className='cursor-pointer text-gray-400'
+                                // href='/article/'
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    Swal.fire({
+                                        title: 'Coming Soon!',
+                                        text: 'This feature will be available soon.',
+                                        icon: 'info',
+                                        confirmButtonText: 'OK',
+                                    });
+                                }}
+                            >
                                 View all
-                            </Link>
+                            </a>
                         </div>
                     </div>
 

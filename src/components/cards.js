@@ -40,7 +40,7 @@ export default function Cards({ bookTitle, bookAuthor, bookPrice, bookImage, boo
                         <div className="w-full pl-4 mt-3 text-[#5B5959] text-[16px]">
                             {formattedDate}
                         </div>
-                        <div className="max-w-[350px] text-[20px] mt-1 pl-4 font-bold leading-6 line-clamp-2 overflow-hidden text-ellipsis">
+                        <div className={`max-w-[350px] text-[20px] mt-1 pl-4 font-bold leading-6 line-clamp-2 overflow-hidden text-ellipsis ${isOnHover?'underline':''}`}>
                             {bookTitle}</div>
                     </div>
                     <div>

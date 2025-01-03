@@ -33,7 +33,7 @@ export default function ModalBuy({ onBuy, onClose }) {
                                     <div className="text-center justify-center items-center flex">
                                         <figure className="h-[877px] w-[877px]">
                                             <Image
-                                                src="/modals/buy-walktrough.png"
+                                                src="/modals/buy-walktrough.jpg"
                                                 alt="buy-walktrough"
                                                 className="object-cover w-full h-full"
                                                 width={877}
