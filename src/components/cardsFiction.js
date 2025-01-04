@@ -24,6 +24,8 @@ export default function CardsFiction({ booksFiction }) {
         }));
     };
 
+    
+
     return (
         <>
             <div className='xs:h-[556px] lg:h-[718px] xs:px-4 lg:px-16 xs:mt-6 lg:mt-36'>

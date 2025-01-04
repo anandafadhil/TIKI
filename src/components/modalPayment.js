@@ -8,15 +8,15 @@ export default function ModalPayment({ onClose }) {
                 <div className="fixed inset-0 bg-gray-500/25 transition-opacity" aria-hidden="true"></div>
 
                 <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
-                    <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                        <div className="relative transform overflow-hidden rounded-lg bg-[#F2EEE5] text-left shadow-xl transition-all sm:my-8 ">
+                    <div className="flex min-h-full xs:items-center lg:items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                        <div className="relative xs:w-[95%] lg:w-[50%] transform overflow-hidden rounded-lg bg-[#F2EEE5] text-left shadow-xl transition-all sm:my-8 ">
 
                             {/* Modal Body */}
-                            <div className="bg-[#F2EEE5] w-[945px]">
+                            <div className="bg-[#F2EEE5] px-4">
                                 <div className="bg-[#F2EEE5]">
 
                                     {/* Close Button */}
-                                    <div className='flex justify-end py-4 px-10'>
+                                    <div className='flex justify-end xs:py-0 lg:py-4 xs:px-0 lg:px-10'>
                                         <button
                                             onClick={onClose}
                                             className="text-black hover:text-gray-400 text-[32px]"
@@ -33,17 +33,17 @@ export default function ModalPayment({ onClose }) {
                                 {/* Payment Info */}
                                 <div className="h-[340px] flex items-center justify-center">
                                     <div>
-                                        <div className="text-black font-semibold text-[24px] mb-12">
+                                        <div className="text-black font-semibold xs:text-[18px] lg:text-[24px] mb-12">
                                             Where would you like to buy?
                                         </div>
-                                        <div className="text-[18px] text-black flex flex-col justify-center items-center gap-12">
-                                            <div className="w-[135px] flex flex-row border border-black rounded-md gap-2 p-1 items-center justify-center font-medium">
+                                        <div className="xs:text-[14px] lg:text-[18px] text-black flex flex-col justify-center items-center gap-12">
+                                            <div className="xs:w-[50%] lg:w-[135px] flex flex-row border border-black rounded-md gap-2 p-1 items-center justify-center font-medium">
                                                 <Image src="icons/shopping-bag.svg" alt="Shopping Bag" width={24} height={24} />
-                                                <a href="https://shopee.co.id/tikii_consign" className="text-lg" target="_blank">Shopee</a>
+                                                <a href="https://shopee.co.id/tikii_consign" target="_blank">Shopee</a>
                                             </div>
-                                            <div className="w-[195px] flex flex-row border border-black rounded-md gap-2 p-1 items-center justify-center font-medium">
+                                            <div className="xs:w-[60%] lg:w-[195px] flex flex-row border border-black rounded-md gap-2 p-1 items-center justify-center font-medium">
                                                 <Image src="icons/instagram-2.svg" alt="Instagram" width={24} height={24} />
-                                                <a href="https://www.instagram.com/tikii_bookstore/" className="text-lg" target="_blank">DM Instagram</a>
+                                                <a href="https://www.instagram.com/tikii_bookstore/" target="_blank">DM Instagram</a>
                                             </div>
                                         </div>
                                     </div>

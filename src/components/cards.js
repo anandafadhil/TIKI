@@ -22,7 +22,7 @@ export default function Cards({ bookTitle, bookAuthor, bookPrice, bookImage, boo
     return (
         <>
             <div
-                className="card bg-[#fff] xs:h-[408px] lg:h-[570px] shadow-xl rounded-3xl"
+                className="text-black card bg-[#fff] xs:h-[408px] lg:h-[570px] shadow-xl rounded-3xl"
                 onMouseEnter={() => setIsOnHover(true)}
                 onMouseLeave={() => setIsOnHover(false)}
             >

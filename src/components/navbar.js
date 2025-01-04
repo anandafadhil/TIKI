@@ -22,19 +22,11 @@ export default function Navbar() {
             if (fictionRef.current && !fictionRef.current.contains(event.target)) {
                 setFictionOpen(false);
             }
-        };
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, []);
-
-    useEffect(() => {
-        const handleClickOutside = (event) => {
             if (nonFicRef.current && !nonFicRef.current.contains(event.target)) {
                 setNonFictionOpen(false);
             }
         };
+
         document.addEventListener("mousedown", handleClickOutside);
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
@@ -181,7 +173,7 @@ export default function Navbar() {
 
                     {/* Sidebar Menu for Mobile */}
                     {sidebarOpen && (
-                        <div className="bg-[#F2EEE5] mt-2 absolute w-full top-full left-1/2 transform -translate-x-1/2 h-[430px]">
+                        <div className="bg-[#F2EEE5] mt-2 absolute w-full top-full left-1/2 transform -translate-x-1/2 h-[430px] shadow-xl">
                             <div className="w-full px-4 py-8 font-medium text-[14px]">
                                 <ul>
                                     <li className={`${pathname === '' ? 'poppins-semibold underline underline-offset-2' : ''}`}><Link href="/">Home</Link></li>
@@ -243,8 +235,8 @@ export default function Navbar() {
                     )}
 
                     {isSidebarFictionOpen && (
-                        <div className="bg-[#F2EEE5] mt-2 absolute w-full top-full left-1/2 transform -translate-x-1/2 h-[328px]">
-                            <div className="px-4 py-8 font-medium text-[14px] flex flex-col items-center">
+                        <div className="bg-[#F2EEE5] shadow-lg mt-2 absolute flex justify-end w-full top-full left-1/2 transform -translate-x-1/2 h-[328px]">
+                            <div className="px-4 py-8 font-medium text-[14px] flex flex-col w-[85%]">
                                 <div className="gap-6 flex flex-row w-[80%]">
                                     <button onClick={() => {
                                         setSidebarOpen(true);
@@ -252,7 +244,7 @@ export default function Navbar() {
                                     }} className="text-black">
                                         <Image src="/icons/arrow-right.svg" className='rotate-180' width={24} height={24} alt="Menu" />
                                     </button>
-                                    <Link className="text-[20px] text-black font-semibold" href='/fiction'>Fiction by Genre</Link>
+                                    <Link className="xs:text-[18px] lg:text-[20px] text-black font-semibold" href='/fiction'>Fiction by Genre</Link>
                                 </div>
                                 <ul className="w-[80%] justify-start text-[14px] text-black grid grid-cols-2 gap-y-4 mt-6 right-4 w-full">
                                     <li><Link href='/action/'>Action</Link></li>
@@ -273,8 +265,8 @@ export default function Navbar() {
                     )}
 
                     {isSidebarNonFictionOpen && (
-                        <div className="bg-[#F2EEE5] mt-2 absolute w-full top-full left-1/2 transform -translate-x-1/2 h-[328px]">
-                            <div className="px-4 py-8 font-medium text-[14px] flex flex-col items-center">
+                        <div className="bg-[#F2EEE5] shadow-lg mt-2 absolute flex justify-end w-full top-full left-1/2 transform -translate-x-1/2 h-[328px]">
+                            <div className="py-8 font-medium text-[14px] flex flex-col w-[85%]">
                                 <div className="gap-6 flex flex-row w-[80%]">
                                     <button onClick={() => {
                                         setSidebarOpen(true);
@@ -282,7 +274,7 @@ export default function Navbar() {
                                     }} className="text-black">
                                         <Image src="/icons/arrow-right.svg" className='rotate-180' width={24} height={24} alt="Menu" />
                                     </button>
-                                    <Link className="text-[20px] text-black font-semibold" href='/non-fiction'>Non Fiction by Genre</Link>
+                                    <Link className="xs:text-[18px] lg:text-[20px] text-black font-semibold" href='/non-fiction'>Non Fiction by Genre</Link>
                                 </div>
                                 <ul className="w-[80%] justify-start text-[14px] text-black grid grid-cols-2 gap-y-4 mt-6 right-4 w-full">
                                     <li><Link href='/art-non/'>Art</Link></li>

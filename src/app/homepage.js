@@ -222,9 +222,9 @@ export default function HomePage({
                                         </div>
                                     )}
 
-                                    {/* Dropdown Ttem */}
+                                    {/* Dropdown Item */}
                                     {showDrop && (
-                                        <div ref={dropdownRef} className="bg-[#F2EEE5] flex flex-col absolute top-[50px] border border-gray-300 shadow-lg rounded-md w-full overflow-auto">
+                                        <div ref={dropdownRef} className="bg-[#F2EEE5] flex flex-col absolute top-[50px] border border-gray-300 shadow-lg rounded-md w-full max-h-[300px] overflow-auto">
                                             {filteredOptions.map((book, index) => (
                                                 <button
                                                     key={index}
@@ -360,7 +360,7 @@ export default function HomePage({
                 <div className=' xs:px-4 lg:px-16 xs:mt-10 lg:mt-36'>
                     {/* Title */}
                     <div className='xs:justify-between xs:flex xs:flex-row'>
-                        <div className=' text-[#4A2c23] league-spartan-bold font-bold xs:text-[38px] lg:text-[48px] ml-2 leading-10 line-clamp-2'>Discover Your Favorite Genre</div>
+                        <div className=' text-[#4A2c23] league-spartan-bold font-bold xs:text-[34px] lg:text-[48px] ml-2 leading-10 line-clamp-2'>Discover Your Favorite Genre</div>
                         <div className='xs:flex lg:hidden mb-2 underline w-[40%] items-end font-[18px] text-[#0F172A] underline-offset-4 justify-end pr-2'>
                             <Link href='/all/'>
                                 View all
