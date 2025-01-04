@@ -22,31 +22,29 @@ export default function Cards({ bookTitle, bookAuthor, bookPrice, bookImage, boo
     return (
         <>
             <div
-                className="card bg-[#fff] h-[570px] shadow-xl rounded-3xl"
+                className="card bg-[#fff] xs:h-[408px] lg:h-[570px] shadow-xl rounded-3xl"
                 onMouseEnter={() => setIsOnHover(true)}
                 onMouseLeave={() => setIsOnHover(false)}
             >
-                <figure className="h-[370px]">
-                    <Image
+                <figure className="xs:h-[190px] lg:h-[370px]">
+                    <img
                         src={bookImage}
                         alt={bookTitle}
-                        className="object-cover w-full h-full"
-                        width={370}
-                        height={370}
+                        className="object-cover xs:w-[190px] sm:w[300px] xs:h-[190px] lg:w-[370px] lg:h-[370px]"
                     />
                 </figure>
-                <div className="flex flex-col bg-[#F2EEE5] rounded-b-xl h-[200px] justify-between">
+                <div className="flex flex-col bg-[#F2EEE5] rounded-b-xl xs:h-[217px] lg:h-[200px] justify-between">
                     <div>
-                        <div className="w-full pl-4 mt-3 text-[#5B5959] text-[16px]">
+                        <div className="w-full pl-4 mt-3 text-[#5B5959] text-[11px] lg:text-[16px]">
                             {formattedDate}
                         </div>
-                        <div className={`max-w-[350px] text-[20px] mt-1 pl-4 font-bold leading-6 line-clamp-2 overflow-hidden text-ellipsis ${isOnHover?'underline':''}`}>
+                        <div className={`max-w-[350px] text-[18px] lg:text-[20px] mt-1 pl-4 font-bold leading-6 line-clamp-2 overflow-hidden text-ellipsis ${isOnHover?'underline':''}`}>
                             {bookTitle}</div>
                     </div>
                     <div>
-                        <div className="w-full text-[18px] pl-4">{bookAuthor}</div>
+                        <div className="w-full xs:text-[14px] lg:text-[18px] pl-4">{bookAuthor}</div>
                         <div className="border-t border-[#B8B094] w-11/12 my-2 mx-auto" />
-                        <div className="w-full text-[20px] pl-4 mb-4 font-bold">Rp {formatPrice}</div>
+                        <div className="w-full xs:text-[18px] lg:text-[20px] pl-4 mb-4 font-bold">Rp {formatPrice}</div>
                     </div>
                 </div>
             </div>

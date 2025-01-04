@@ -4,7 +4,11 @@ import Select from 'react-select';
 import { useState, useRef } from 'react';
 import Footer from "../components/footer";
 import Navbar from "../components/navbar";
-import Cards from "../components/cards";
+import CardsNonFiction from "../components/cardsNonFiction";
+import CardsClassics from "../components/cardsClassics";
+import CardsBudget from "../components/cardsBugdget";
+import CardsNew from "../components/cardsNew";
+import CardsFiction from "../components/cardsFiction";
 import CardsGenre from "../components/cardsGenre";
 import CardsBeyond from "../components/cardsBeyond";
 import ModalSell from "../components/modalSell";
@@ -19,7 +23,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import './globals.css';
 import { useRouter } from 'next/navigation'
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 
 export default function HomePage({
     allBookData,
@@ -182,64 +186,67 @@ export default function HomePage({
     return (
 
         <div className="flex flex-row min-h-screen bg-[#EFE8DA] text-gray-800">
-
-            {/* <div className="flex-1 p-6">abc</div> */}
             <div className='relative w-full'>
                 {/* Navbar */}
                 <Navbar />
 
                 {/* Search and Logo */}
-                <div className="h-[118px] bg-[#EFE8DA]">
+                <div className="h-[132px] lg:h-[118px] bg-[#EFE8DA]">
 
                     {/* Search and Logo */}
-                    <div className="items-center justify-center flex flex-row h-full gap-4">
-                        <Image src="/icons/tikii-logo-1.svg" className="mr-12" width={113} height={113} alt="" />
+                    <div className="items-center justify-center flex lg:flex-row xs:flex-col h-full lg:gap-4 xs:gap-1">
+                        <img src="/icons/tikii-logo-1.svg" className="xs:w-[60px] md:h-[60px] lg:w-[100px] lg:h-[100px] xl:mr-12 xl:w-[113px] xl:h-[113px]" alt="" />
 
-                        {/* Search Bar and Dropdown */}
-                        <div>
-                            <div className={`z-0 bg-[#F2EEE5] w-[300px] lg:w-[825px] h-[40px] flex items-center rounded-md outline outline-1 outline-[#B8B094] ${showOutline ? 'outline outline-2 outline-black outline-[#847060]':''}`}>
-                                {/* Search Bar */}
-                                <Image src="/icons/search.svg" className="ml-2" width={24} height={24} alt="" />
-                                <input
-                                    ref={inputRef}
-                                    type="text"
-                                    value={inputValue}
-                                    onChange={handleInputChange}
-                                    onFocus={handleInputFocus}
-                                    onBlur={handleInputBlur}
-                                    placeholder={selectedLabel || 'Find the title, ISBN, or author of the book'}
-                                    className="outline-none text-black w-full p-2 ml-2 bg-[#F2EEE5] rounded-md"
-                                />
+                        {/* Search Bar and Button */}
+                        <div className='w-full xs:px-4 sm:w-auto flex flex-row gap-2 xs:mb-4 lg:mb-0'>
+                            {/* Search Bar and Dropdown */}
+                            <div className='w-full'>
+                                <div className={`z-0 bg-[#F2EEE5] relative sm:w-[500px] lg:w-[500px] xl:w-[825px] h-[40px] flex items-center rounded-md outline outline-1 outline-[#B8B094] ${showOutline ? 'outline outline-2 outline-black outline-[#847060]' : ''}`}>
+                                    {/* Search Bar */}
+                                    <Image src="/icons/search.svg" className="ml-2" width={24} height={24} alt="" />
+                                    <input
+                                        ref={inputRef}
+                                        type="search"
+                                        value={inputValue}
+                                        onChange={handleInputChange}
+                                        onFocus={handleInputFocus}
+                                        onBlur={handleInputBlur}
+                                        placeholder={selectedLabel || 'Find the title, ISBN, or author of the book'}
+                                        className="xs:text-[12px] lg:text-[16px] outline-none text-black w-full p-2 ml-2 bg-[#F2EEE5] rounded-md"
+                                    />
 
-                                {/* Dropdown Alert */}
-                                {showOptions && (
-                                    <div className="bg-[#F2EEE5] text-gray-400 h-[50px] items-center flex justify-center absolute top-[150px] border border-gray-300 shadow-lg rounded-md w-[300px] lg:w-[825px] max-h-[200px] overflow-auto">
-                                        Type at least 3 characters to search
-                                    </div>
-                                )}
+                                    {/* Dropdown Alert */}
+                                    {showOptions && (
+                                        <div className="bg-[#F2EEE5] top-[50px] text-gray-400 xs:text-[12px] lg:text-[16px] xs:h-[40px] lg:h-[50px] items-center flex justify-center absolute border border-gray-300 shadow-lg rounded-md w-full max-h-[200px] overflow-auto">
+                                            Type at least 3 characters to search
+                                        </div>
+                                    )}
 
-                                {/* Dropdown Ttem */}
-                                {showDrop && (
-                                    <div ref={dropdownRef} className="bg-[#F2EEE5] flex flex-col absolute top-[150px] border border-gray-300 shadow-lg rounded-md w-[300px] lg:w-[790px] max-h-[300px] overflow-auto">
-                                        {filteredOptions.map((book, index) => (
-                                            <button
-                                                key={index}
-                                                className="text-black text-[18px] px-6 py-2 text-left hover:bg-gray-200 transition-colors"
-                                                onClick={() => handleBookClick(book)}
-                                            >
-                                                {book.label}
-                                            </button>
-                                        ))}
-                                    </div>
-                                )}
+                                    {/* Dropdown Ttem */}
+                                    {showDrop && (
+                                        <div ref={dropdownRef} className="bg-[#F2EEE5] flex flex-col absolute top-[50px] border border-gray-300 shadow-lg rounded-md w-full overflow-auto">
+                                            {filteredOptions.map((book, index) => (
+                                                <button
+                                                    key={index}
+                                                    className="text-black xs:text-[12px] lg:text-[16px]  px-6 py-2 text-left hover:bg-gray-200 transition-colors"
+                                                    onClick={() => handleBookClick(book)}
+                                                >
+                                                    {book.label}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
                             </div>
+
+                            {/* Button */}
+                            <button
+                                onClick={handleSearchClick}
+                                className='bg-black text-white w-[96px] h-[40px] rounded-md'>
+                                Search
+                            </button>
                         </div>
 
-                        <button
-                            onClick={handleSearchClick}
-                            className='bg-black text-white w-[96px] h-[40px] rounded-md'>
-                            Search
-                        </button>
                     </div>
                 </div>
 
@@ -250,12 +257,12 @@ export default function HomePage({
 
                 {/* Text 1 */}
                 <div id="mission" className='bg-[#EFE8DA] items-center justify-center flex'>
-                    <div className="w-full mx-4 mt-20 mb-20 lg:mx-16 lg:mt-44 lg:mb-40">
+                    <div className="w-full mx-4 xs:mt-16 xs:mb-16 lg:mt-20 lg:mb-20 lg:mx-16 lg:mt-44 lg:mb-40">
                         <div className=' w-full font-semibold text-[#4A2C23] text-[20px] lg:text-[30px] text-center'>
                             Rediscover Stories, Relive Adventures
                         </div>
 
-                        <div className=' w-full text-[18px] mt-2 text-center'>
+                        <div className=' w-full xs:text-[14px] lg:text-[18px] mt-2 text-center poppins-medium'>
                             Welcome to Your Next Chapter, where every book has a tale to tell, and every reader finds a story worth cherishing.
                             Unlike traditional bookstores, we believe books are meant to be shared, not shelved. Each preloved book in our collection
                             has traveled its own journey and is ready to spark joy and inspiration in a new home. By rehoming these literary treasures, we’re giving stories a second life and making sustainable reading accessible for everyone.
@@ -265,20 +272,24 @@ export default function HomePage({
                 </div>
 
                 {/* Carousel 2 : Sell Your Book */}
-                <div id="sell" className="relative h-[384px] flex flex-col lg:flex-row items-center">
+                <div id="sell" className="relative h-[562px] lg:h-[384px] flex flex-col lg:flex-row items-center">
                     {/* Full-Width Banner Image */}
-                    <Image src="/icons/tikii-banner-2.png" fill alt="Banner" className="w-full h-full" />
-
+                    {/* <img src="/icons/tikii-banner-2.png" alt="Banner" className="w-full h-full" /> */}
+                    <picture>
+                        <source srcSet="/icons/tikii-banner-2.png" media="(min-width: 1024px)" />
+                        <source srcSet="/icons/tikii-banner-2-1.png" media="(max-width: 768px)" />
+                        <Image src="/icons/tikii-banner-2-1.png" alt="Banner" fill className="w-full h-full" />
+                    </picture>
 
                     {/* Overlay Text Box */}
-                    <div className="h-full justify-center bg-opacity-20 absolute right-0 lg:w-[1120px] w-full px-12 lg:px-20 py-6 lg:py-12 flex flex-col items-center text-[#4A2C23]">
+                    <div className="lg:h-full sm:justify-end lg:justify-center absolute right-0 lg:w-[650px] xl:w-[950px] 2xl:w-[1120px] w-full px-6 xs:bottom-0 xl:px-20 py-4 sm:mb-8 lg:mb-0 lg:py-12 flex flex-col items-center text-[#4A2C23]">
                         {/* Main Heading */}
-                        <h1 className="text-2xl lg:text-4xl font-bold mt-1 mb-3">
+                        <h1 className="text-[24px] lg:[24px] xl:text-[30px] font-semibold mt-1 mb-3">
                             Sell Your Book Now!
                         </h1>
 
                         {/* Description */}
-                        <p className="text-sm lg:text-lg text-center leading-relaxed mb-9">
+                        <p className="text-[14px] lg:text-[12px] xl:text-[18px] text-center font-medium leading-relaxed xs:mb-2 lg:mb-9">
                             Got books gathering dust on your shelves? Its time to give them a second life and share the joy of reading!
                             At Tiiki, we make it easy to sell your preloved books. Whether theyre gripping novels, insightful non-fiction,
                             or cherished classics, your books deserve to be read and loved again.
@@ -296,253 +307,25 @@ export default function HomePage({
                 </div>
 
                 {/* Card: New Items*/}
-                <div className='h-[718px] px-16 mt-36'>
-                    {/* Title */}
-                    <div className='text-[#4A2c23] league-spartan-bold font-bold text-[48px] ml-2'>Just Arrived</div>
-
-                    {/* Desc */}
-                    <div className='flex'>
-                        <div className='w-full justify-start flex items-center text-[18px] ml-2'>Freshly added treasures this batch for our curious readers</div>
-                        <div className='flex underline items-center font-[18px] text-[#0F172A] underline-offset-4 justify-end w-1/2 pr-2'>
-                            <Link href='/new/'>
-                                View all
-                            </Link>
-                        </div>
-                    </div>
-
-                    {/* Cards */}
-                    <div className='h-[570px] mt-12 relative flex items-center'>
-                        {/* Custom Navigation Buttons */}
-                        <button
-                            className={`custom-button-prev ${sliderState.New.isBeginning ? "opacity-0 pointer-events-none" : ""}`}
-                            id="custom-prev-1"
-                            disabled={sliderState.New.isBeginning}
-                        >
-                            <Image src="/icons/chevron-left.svg" alt="arrow-right" width={60} height={60} />
-                        </button>
-                        <button
-                            className={`custom-button-next ${sliderState.New.isLast ? "opacity-0 pointer-events-none" : ""}`}
-                            id="custom-next-1"
-                            disabled={sliderState.New.isLast}
-                        >
-                            <Image src="/icons/chevron-right.svg" alt="arrow-right" width={60} height={60} />
-                        </button>
-
-                        <Swiper
-                            modules={[Navigation]}
-                            slidesPerView={6}
-                            spaceBetween={20}
-                            freeMode={true}
-                            centeredSlides={false}
-                            preventClicks={false} // Allow click events
-                            preventClicksPropagation={false} // Allow event propagation
-                            navigation={{
-                                nextEl: "#custom-next-1",
-                                prevEl: "#custom-prev-1",
-                            }}
-                            onSlideChange={handleSlideChange('New')}
-                            // breakpoints={{
-                            //     992: {
-                            //         slidesPerView: 2, // 3 slides per view for screens larger than 992px
-                            //     },
-                            //     768: {
-                            //         slidesPerView: 2, // 2 slides per view for screens larger than 768px
-                            //     },
-                            //     480: {
-                            //         slidesPerView: 1, // 1 slide per view for screens smaller than 480px
-                            //     },
-                            // }}
-                            // navigation={true} // Optional navigation arrows
-                            loop={false} // Optional loop
-                            className="swiper-container"
-                        >
-                            {booksNew.map((book, index) => (
-                                <SwiperSlide key={index} className="flex justify-center">
-                                    <Link key={book.id} className="" href={`/books/${book.id}`}>
-                                        <Cards
-                                            bookTitle={book.bookTitle}
-                                            bookAuthor={book.author}
-                                            bookPrice={book.price}
-                                            bookImage={book.images[0]}
-                                            bookPostedDate={book.postedDate}
-                                        />
-                                    </Link>
-                                </SwiperSlide>
-                            ))
-                            }
-                        </Swiper>
-                    </div>
-                </div>
+                <CardsNew booksNew={booksNew} />
 
                 {/* Card: Classics*/}
-                <div className=' h-[718px] px-16 mt-36'>
-                    {/* Title */}
-                    <div className='text-[#4A2c23] league-spartan-bold font-bold text-[48px] ml-2'>Classic in Fiction</div>
-
-                    {/* Desc */}
-                    <div className='flex'>
-                        <div className='w-full justify-start flex items-center text-[18px] ml-2'>Timeless tales that never go out of style</div>
-                        <div className='flex underline items-center font-[18px] text-[#0F172A] underline-offset-4 justify-end w-1/2 pr-2'>
-                            <Link href='/classic/'>
-                                View all
-                            </Link>
-                        </div>
-                    </div>
-
-                    {/* Cards */}
-                    <div className='h-[570px] mt-12 relative flex items-center'>
-                        {/* Custom Navigation Buttons */}
-                        <button
-                            className={`custom-button-prev ${sliderState.Classic.isBeginning ? "opacity-0 pointer-events-none" : ""}`}
-                            id="custom-prev-2"
-                            disabled={sliderState.Classic.isBeginning}
-                        >
-                            <Image src="/icons/chevron-left.svg" alt="arrow-right" width={60} height={60} />
-                        </button>
-                        <button
-                            className={`custom-button-next ${sliderState.Classic.isLast ? "opacity-0 pointer-events-none" : ""}`}
-                            id="custom-next-2"
-                            disabled={sliderState.Classic.isLast}
-                        >
-                            <Image src="/icons/chevron-right.svg" alt="arrow-right" width={60} height={60} />
-                        </button>
-                        <Swiper
-                            modules={[Navigation]}
-                            slidesPerView={6}
-                            spaceBetween={20}
-                            freeMode={true}
-                            centeredSlides={false}
-                            preventClicks={false} // Allow click events
-                            preventClicksPropagation={false} // Allow event propagation
-                            navigation={{
-                                nextEl: "#custom-next-2",
-                                prevEl: "#custom-prev-2",
-                            }}
-                            // onSwiper={(swiper) => setIsBeginning(swiper.isBeginning)}
-                            onSlideChange={handleSlideChange('Classic')}
-                            // breakpoints={{
-                            //     992: {
-                            //         slidesPerView: 2, // 3 slides per view for screens larger than 992px
-                            //     },
-                            //     768: {
-                            //         slidesPerView: 2, // 2 slides per view for screens larger than 768px
-                            //     },
-                            //     480: {
-                            //         slidesPerView: 1, // 1 slide per view for screens smaller than 480px
-                            //     },
-                            // }}
-                            // navigation={true} // Optional navigation arrows
-                            loop={false} // Optional loop
-                            className="swiper-container"
-                        >
-                            {booksClassics.map((book, index) => (
-                                <SwiperSlide key={index} className="flex justify-center">
-                                    <Link key={book.id} className="" href={`/books/${book.id}`}>
-                                        <Cards
-                                            bookTitle={book.bookTitle}
-                                            bookAuthor={book.author}
-                                            bookPrice={book.price}
-                                            bookImage={book.images[0]}
-                                            bookPostedDate={book.postedDate}
-                                        />
-                                    </Link>
-                                </SwiperSlide>
-                            ))
-                            }
-                        </Swiper>
-                    </div>
-
-                    {/* Pages */}
-                </div>
+                <CardsClassics booksClassics={booksClassics} />
 
                 {/* Card: Budget Reads*/}
-                <div className=' h-[718px] px-16 mt-36 mb-40 '>
-                    {/* Title */}
-                    <div className='text-[#4A2c23] league-spartan-bold font-bold text-[48px] ml-2'>Budget Reads</div>
-
-                    {/* Desc */}
-                    <div className='flex'>
-                        <div className='w-full justify-start flex items-center text-[18px] ml-2'>Unbeatable prices under Rp50.000</div>
-                        <div className='flex underline items-center font-[18px] text-[#0F172A] underline-offset-4 justify-end w-1/2 pr-2'>
-                            <Link href='/budget'>
-                                View all
-                            </Link>
-                        </div>
-                    </div>
-
-                    {/* Cards */}
-                    <div className='h-[570px] mt-12 relative flex items-center'>
-                        {/* Custom Navigation Buttons */}
-                        <button
-                            className={`custom-button-prev ${sliderState.Budget.isBeginning ? "opacity-0 pointer-events-none" : ""}`}
-                            id="custom-prev-3"
-                            disabled={sliderState.Budget.isBeginning}
-                        >
-                            <Image src="/icons/chevron-left.svg" alt="arrow-right" width={60} height={60} />
-                        </button>
-                        <button
-                            className={`custom-button-next ${sliderState.Budget.isLast ? "opacity-0 pointer-events-none" : ""}`}
-                            id="custom-next-3"
-                            disabled={sliderState.Budget.isLast}
-                        >
-                            <Image src="/icons/chevron-right.svg" alt="arrow-right" width={60} height={60} />
-                        </button>
-                        <Swiper
-                            modules={[Navigation]}
-                            slidesPerView={6}
-                            spaceBetween={20}
-                            freeMode={true}
-                            centeredSlides={false}
-                            preventClicks={false} // Allow click events
-                            preventClicksPropagation={false} // Allow event propagation
-                            navigation={{
-                                nextEl: "#custom-next-3",
-                                prevEl: "#custom-prev-3",
-                            }}
-                            // onSwiper={(swiper) => setIsBeginning(swiper.isBeginning)}
-                            onSlideChange={handleSlideChange('Budget')}
-                            // breakpoints={{
-                            //     992: {
-                            //         slidesPerView: 2, // 3 slides per view for screens larger than 992px
-                            //     },
-                            //     768: {
-                            //         slidesPerView: 2, // 2 slides per view for screens larger than 768px
-                            //     },
-                            //     480: {
-                            //         slidesPerView: 1, // 1 slide per view for screens smaller than 480px
-                            //     },
-                            // }}
-                            // navigation={true} // Optional navigation arrows
-                            loop={false} // Optional loop
-                            className="swiper-container"
-                        >
-                            {booksBudget.map((book, index) => (
-                                <SwiperSlide key={index} className="flex justify-center">
-                                    <Link key={book.id} className="" href={`/books/${book.id}`}>
-                                        <Cards
-                                            bookTitle={book.bookTitle}
-                                            bookAuthor={book.author}
-                                            bookPrice={book.price}
-                                            bookImage={book.images[0]}
-                                            bookPostedDate={book.postedDate}
-                                        />
-                                    </Link>
-                                </SwiperSlide>
-                            ))}
-                        </Swiper>
-                    </div>
-                </div>
+                <CardsBudget booksBudget={booksBudget} />
 
                 {/* Carousel 3 : Buy a Book */}
-                <div className="relative h-[384px] flex flex-col lg:flex-row items-center">
+                <div className="xs:mb-16 xs:mt-16 relative xs:h-[562px] lg:h-[384px] flex flex-col lg:flex-row items-center">
                     {/* Full-Width Banner Image */}
-                    <Image src="/icons/tikii-banner-3.png" fill alt="Banner" className="w-full h-full" />
+                    <Image src="/icons/tikii-banner-3.png" fill alt="Banner" className="xs:hidden lg:flex w-full h-full" />
+                    <img src="/icons/tikii-banner-buy-mobile.png" alt="Banner" className="xs:flex lg:hidden w-full h-[562px]" />
 
 
                     {/* Overlay Text Box */}
-                    <div className=" h-full justify-center bg-opacity-20 absolute right-0 lg:w-[1120px] w-full px-12 lg:px-20 py-6 lg:py-12 flex flex-col items-center text-[#4A2C23]">
+                    <div className="lg:h-full sm:justify-end lg:justify-center absolute right-0 lg:w-[650px] xl:w-[950px] 2xl:w-[1120px] w-full px-6 xs:bottom-0 xl:px-20 py-4 sm:mb-8 lg:mb-0 lg:py-12 flex flex-col items-center text-[#4A2C23]">
                         {/* Main Heading */}
-                        <h1 className="text-2xl lg:text-4xl font-bold mt-1 mb-3">
+                        <h1 className="text-2xl lg:text-4xl text-center font-bold mt-1 mb-3">
                             Own Your Next Great Read for Less!
                         </h1>
 
@@ -568,175 +351,28 @@ export default function HomePage({
                 </div>
 
                 {/* Card: Fiction*/}
-                <div className=' h-[718px] px-16 mt-36'>
-                    {/* Title*/}
-                    <div className='text-[#4A2c23] league-spartan-bold font-bold text-[48px] ml-2'>Fiction Favorites</div>
-
-                    {/* View all */}
-                    <div className='flex'>
-                        <div className='w-full justify-start flex items-center text-[18px] ml-2'>Immerse yourself in captivating stories</div>
-                        <div className='flex underline items-center font-[18px] text-[#0F172A] underline-offset-4 justify-end w-1/2 pr-2'>
-                            <Link href='/fiction/'>
-                                View all
-                            </Link>
-                        </div>
-                    </div>
-
-                    {/* Cards */}
-                    <div className='h-[570px] mt-12 relative flex items-center'>
-                        {/* Custom Navigation Buttons */}
-                        <button
-                            className={`custom-button-prev ${sliderState.Fiction.isBeginning ? "opacity-0 pointer-events-none" : ""}`}
-                            id="custom-prev-4"
-                            disabled={sliderState.Fiction.isBeginning}
-                        >
-                            <Image src="/icons/chevron-left.svg" alt="arrow-right" width={60} height={60} />
-                        </button>
-                        <button
-                            className={`custom-button-next ${sliderState.Fiction.isLast ? "opacity-0 pointer-events-none" : ""}`}
-                            id="custom-next-4"
-                            disabled={sliderState.Fiction.isLast}
-                        >
-                            <Image src="/icons/chevron-right.svg" alt="arrow-right" width={60} height={60} />
-                        </button>
-                        <Swiper
-                            modules={[Navigation]}
-                            slidesPerView={6}
-                            spaceBetween={20}
-                            freeMode={true}
-                            centeredSlides={false}
-                            preventClicks={false} // Allow click events
-                            preventClicksPropagation={false} // Allow event propagation
-                            navigation={{
-                                nextEl: "#custom-next-4",
-                                prevEl: "#custom-prev-4",
-                            }}
-                            // onSwiper={(swiper) => setIsBeginning(swiper.isBeginning)}
-                            onSlideChange={handleSlideChange('Fiction')}
-                            // breakpoints={{
-                            //     992: {
-                            //         slidesPerView: 2, // 3 slides per view for screens larger than 992px
-                            //     },
-                            //     768: {
-                            //         slidesPerView: 2, // 2 slides per view for screens larger than 768px
-                            //     },
-                            //     480: {
-                            //         slidesPerView: 1, // 1 slide per view for screens smaller than 480px
-                            //     },
-                            // }}
-                            // navigation={true} // Optional navigation arrows
-                            loop={false} // Optional loop
-                            className="swiper-container"
-                        >
-                            {booksFiction.map((book, index) => (
-                                <SwiperSlide key={index} className="flex justify-center">
-                                    <Link key={book.id} className="" href={`/books/${book.id}`}>
-                                        <Cards
-                                            key={index}
-                                            bookTitle={book.bookTitle}
-                                            bookAuthor={book.author}
-                                            bookPrice={book.price}
-                                            bookImage={book.images[0]}
-                                            bookPostedDate={book.postedDate}
-                                        />
-                                    </Link>
-                                </SwiperSlide>
-                            ))}
-                        </Swiper>
-                    </div>
-
-                    {/* Pages */}
-                </div>
+                <CardsFiction booksFiction={booksFiction} />
 
                 {/* Card: Non Fiction*/}
-                <div className=' h-[718px] px-16 mt-36'>
-                    {/* Title */}
-                    <div className='text-[#4A2c23] league-spartan-bold font-bold text-[48px] ml-2'>Non-Fiction Shelves</div>
+                <CardsNonFiction booksNonFiction={booksNonFiction} />
 
-                    {/* Desc */}
-                    <div className='flex'>
-                        <div className='w-full justify-start flex items-center text-[18px] ml-2'>Learn, grow, and get inspired</div>
-                        <div className='flex underline items-center font-[18px] text-[#0F172A] underline-offset-4 justify-end w-1/2 pr-2'>
-                            <Link href='/non-fiction/'>
+                {/* Card: Discover*/}
+                <div className=' xs:px-4 lg:px-16 xs:mt-10 lg:mt-36'>
+                    {/* Title */}
+                    <div className='xs:justify-between xs:flex xs:flex-row'>
+                        <div className=' text-[#4A2c23] league-spartan-bold font-bold xs:text-[38px] lg:text-[48px] ml-2 leading-10 line-clamp-2'>Discover Your Favorite Genre</div>
+                        <div className='xs:flex lg:hidden mb-2 underline w-[40%] items-end font-[18px] text-[#0F172A] underline-offset-4 justify-end pr-2'>
+                            <Link href='/all/'>
                                 View all
                             </Link>
                         </div>
                     </div>
 
-                    {/* Cards */}
-                    <div className='h-[570px] mt-12 relative flex items-center'>
-                        {/* Custom Navigation Buttons */}
-                        <button
-                            className={`custom-button-prev ${sliderState.NonFiction.isBeginning ? "opacity-0 pointer-events-none" : ""}`}
-                            id="custom-prev-5"
-                            disabled={sliderState.NonFiction.isBeginning}
-                        >
-                            <Image src="/icons/chevron-left.svg" alt="arrow-right" width={60} height={60} />
-                        </button>
-                        <button
-                            className={`custom-button-next ${sliderState.NonFiction.isLast ? "opacity-0 pointer-events-none" : ""}`}
-                            id="custom-next-5"
-                            disabled={sliderState.NonFiction.isLast}
-                        >
-                            <Image src="/icons/chevron-right.svg" alt="arrow-right" width={60} height={60} />
-                        </button>
-                        <Swiper
-                            modules={[Navigation]}
-                            slidesPerView={6}
-                            spaceBetween={20}
-                            freeMode={true}
-                            centeredSlides={false}
-                            preventClicks={false}
-                            preventClicksPropagation={false}
-                            navigation={{
-                                nextEl: "#custom-next-5",
-                                prevEl: "#custom-prev-5",
-                            }}
-                            onSlideChange={handleSlideChange('NonFiction')}
-                            // breakpoints={{
-                            //     992: {
-                            //         slidesPerView: 2, // 3 slides per view for screens larger than 992px
-                            //     },
-                            //     768: {
-                            //         slidesPerView: 2, // 2 slides per view for screens larger than 768px
-                            //     },
-                            //     480: {
-                            //         slidesPerView: 1, // 1 slide per view for screens smaller than 480px
-                            //     },
-                            // }}
-                            // navigation={true} // Optional navigation arrows
-                            loop={false} // Optional loop
-                            className="swiper-container"
-                        >
-                            {booksNonFiction.map((book, index) => (
-                                <SwiperSlide key={index} className="flex justify-center">
-                                    <Link key={book.id} className="" href={`/books/${book.id}`}>
-                                        <Cards
-                                            key={index}
-                                            bookTitle={book.bookTitle}
-                                            bookAuthor={book.author}
-                                            bookPrice={book.price}
-                                            bookImage={book.images[0]}
-                                            bookPostedDate={book.postedDate}
-                                        />
-                                    </Link>
-                                </SwiperSlide>
-                            ))}
-                        </Swiper>
-                    </div>
-
-                    {/* Pages */}
-                </div>
-
-                {/* Card: Discover*/}
-                <div className='h-[718px] px-16 mt-36'>
-                    {/* Title */}
-                    <div className='text-[#4A2c23] league-spartan-bold font-bold text-[48px] ml-2'>Discover Your Favorite Genre</div>
 
                     {/* Desc */}
                     <div className='flex'>
-                        <div className='w-full justify-start flex items-center text-[18px] ml-2'>Discover books across genres that fit your every mood</div>
-                        <div className='flex underline items-center font-[18px] text-[#0F172A] underline-offset-4 justify-end w-1/2 pr-2'>
+                        <div className='w-full justify-start flex items-center xs:text-[14px] font-medium lg:text-[18px] ml-2'>Discover books across genres that fit your every mood</div>
+                        <div className='xs:hidden lg:flex underline items-center font-[18px] text-[#0F172A] underline-offset-4 justify-end w-1/2 pr-2'>
                             <Link href='/all/'>
                                 View all
                             </Link>
@@ -744,12 +380,12 @@ export default function HomePage({
                     </div>
 
                     {/* Cards */}
-                    <div className='h-[570px] mt-12 flex w-full justify-center gap-[38px]'>
+                    <div className='mt-12 w-full justify-center items-center gap-[38px] grid place-items-center md:grid-cols-2 xs:grid-cols-1 xl:flex xl:flex-row'>
                         {discoverGenre.map((genre, index) => (
                             <Link
                                 key={index}
                                 href={`/${genre.name.toLowerCase()}/`}
-                                className="block w-[404px] h-full"
+                                className="block h-full"
                             >
                                 <CardsGenre
                                     key={index}
@@ -758,6 +394,7 @@ export default function HomePage({
                                 />
                             </Link>
                         ))}
+
                     </div>
 
                     {/* Pages */}
@@ -765,15 +402,16 @@ export default function HomePage({
                 </div>
 
                 {/* Carousel 4 : Join Our Community */}
-                <div className="relative h-[384px] flex flex-col lg:flex-row items-center">
+                <div className="xs:mb-16 xs:mt-16 lg:mt-40 relative xs:h-[562px] lg:h-[384px] flex flex-col lg:flex-row items-center">
                     {/* Full-Width Banner Image */}
-                    <Image src="/icons/tikii-banner-2.png" fill alt="Banner" className="w-full h-full" />
+                    <Image src="/icons/tikii-banner-4.png" fill alt="Banner" className="xs:hidden lg:flex w-full h-full" />
+                    <img src="/icons/tikii-banner-community-mobile.png" alt="Banner" className="xs:flex lg:hidden w-full h-[562px]" />
 
 
                     {/* Overlay Text Box */}
-                    <div className="h-full justify-center bg-opacity-20 absolute right-0 lg:w-[1120px] w-full px-12 lg:px-20 py-6 lg:py-12 flex flex-col items-center text-[#4A2C23]">
+                    <div className="lg:h-full sm:justify-end lg:justify-center absolute right-0 lg:w-[650px] xl:w-[950px] 2xl:w-[1120px] w-full px-6 xs:bottom-0 xl:px-20 py-4 sm:mb-8 lg:mb-0 lg:py-12 flex flex-col items-center text-[#4A2C23]">
                         {/* Main Heading */}
-                        <h1 className="text-2xl lg:text-4xl font-bold mt-1 mb-3">
+                        <h1 className="text-2xl lg:text-4xl text-center font-bold mt-1 mb-3">
                             Join Our Community of Readers!
                         </h1>
 
@@ -794,14 +432,11 @@ export default function HomePage({
                 </div>
 
                 {/* Card: Beyond Tikii*/}
-                <div className='px-16 mt-36'>
+                <div className='w-full xs:px-4 lg:px-16 xs:mt-0 lg:mt-36'>
                     {/* Title */}
-                    <div className='text-[#4A2c23] league-spartan-bold font-bold text-[48px] ml-2'>Beyond Tikii</div>
-
-                    {/* Desc */}
-                    <div className='flex'>
-                        <div className='w-full justify-start flex items-center text-[18px] ml-2'>See why Tikii stands out as a trusted home for preloved and passionate readers</div>
-                        <div className='flex underline items-center font-[18px] text-[#0F172A] underline-offset-4 justify-end w-1/2 pr-2'>
+                    <div className='xs:justify-between xs:flex xs:flex-row'>
+                        <div className=' text-[#4A2c23] league-spartan-bold font-bold xs:text-[40px] lg:text-[48px] ml-2 leading-10 line-clamp-2'>Beyond Tikii</div>
+                        <div className='xs:flex lg:hidden underline items-center font-[18px] text-[#0F172A] underline-offset-4 justify-end pr-2'>
                             <a
                                 className='cursor-pointer text-gray-400'
                                 // href='/article/'
@@ -819,7 +454,29 @@ export default function HomePage({
                             </a>
                         </div>
                     </div>
-
+                    {/* Desc */}
+                    <div className='flex'>
+                        <div className='flex'>
+                            <div className='w-full justify-start flex items-center xs:text-[14px] font-medium lg:text-[18px] ml-2'>See why Tikii stands out as a trusted home for preloved and passionate readers</div>
+                            <div className='xs:hidden lg:flex underline items-center font-[18px] text-[#0F172A] underline-offset-4 justify-end w-1/2 pr-2'>
+                                <a
+                                    className='cursor-pointer text-gray-400'
+                                    // href='/article/'
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        Swal.fire({
+                                            title: 'Coming Soon!',
+                                            text: 'This feature will be available soon.',
+                                            icon: 'info',
+                                            confirmButtonText: 'OK',
+                                        });
+                                    }}
+                                >
+                                    View all
+                                </a>
+                            </div>
+                        </div>
+                    </div>
 
                     {/* Cards */}
                     <div className='hidden h-[620px] mt-12 flex w-full justify-center gap-8'>
@@ -836,19 +493,23 @@ export default function HomePage({
 
                     {/* Pages */}
                 </div>
-                <div className='mt-20 relative h-[384px] flex flex-col lg:flex-row items-center w-full'>
-                    <Image src="/icons/tikii-banner-coming.png" fill alt="Banner" className="w-full h-full" />
 
+                <div className='xs:hidden lg:flex mt-20 relative h-[384px] flex-col lg:flex-row items-center w-full'>
+                    <Image src="/icons/tikii-banner-coming.png" fill alt="Banner" className="w-full h-full" />
+                </div>
+
+                <div className='xs:flex lg:flex mt-4 relative h-[384px] flex-col lg:hidden items-center w-full'>
+                    <Image src="/icons/tikii-banner-coming-2.png" fill alt="Banner" className="w-full h-full" />
                 </div>
 
                 {/* Text 2 */}
                 <div className='bg-[#EFE8DA] items-center justify-center flex'>
-                    <div className='w-full mx-16 mt-40'>
-                        <div className=' w-full font-semibold text-[#4A2C23] text-[30px] text-center'>
+                    <div className='w-full xs:px-4 lg:px-16 xs:mt-10 lg:mt-40'>
+                        <div className=' w-full font-semibold text-[#4A2C23] xs:text-[18px] lg:text-[30px] text-center'>
                             Endless Choices at Unbeatable Prices
                         </div>
 
-                        <div className=' w-full text-[18px] mt-2 text-center'>
+                        <div className=' w-full xs:text-[14px] xs:font-medium lg:text-[18px] mt-2 text-center'>
                             Explore our vast collection today, from page-turning thrillers to heartwarming romance,
                             thought-provoking non-fiction to timeless classics. Whether you’re a devoted bookworm or
                             just looking for your next great read, you’ll find incredible value here. Plus, enjoy
@@ -862,11 +523,11 @@ export default function HomePage({
 
                 {/* Carousel 5 : Donate */}
                 <div
-                    className="mt-40 relative h-[384px] flex items-center justify-center bg-cover bg-center"
+                    className="xs:mt-10 lg:mt-40 relative h-[384px] flex items-center justify-center bg-cover bg-center"
                     style={{
-                        backgroundColor: 'rgba(239, 232, 218, 0.4)', // Hex color #EFE8DA with 40% opacity
+                        backgroundColor: 'rgba(239, 232, 218, 0.8)', // Hex color #EFE8DA with 40% opacity
                         backgroundBlendMode: 'overlay',
-                        backgroundImage: "url('/icons/tikii-banner-4.png')"
+                        backgroundImage: "url('/icons/tikii-banner-5.png')"
                     }}
                 >
 
@@ -894,8 +555,6 @@ export default function HomePage({
                         </button>
                     </div>
                 </div>
-
-
 
                 {/* Footer */}
                 <Footer />
