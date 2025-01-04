@@ -7,7 +7,7 @@ export default function CardsGenre({ genreTitle, genreImage }) {
 
     return (
         <>
-            <div className="card bg-[#fff] w-[402px] h-[344px] shadow-xl rounded-3xl"
+            <div className="card bg-[#fff] lg:h-[344px] shadow-xl rounded-3xl"
                 onMouseEnter={() => setIsOnHover(true)}
                 onMouseLeave={() => setIsOnHover(false)}
             >

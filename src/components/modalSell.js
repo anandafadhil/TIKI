@@ -8,15 +8,15 @@ export default function ModalSell({ onClose }) {
                 <div className="fixed inset-0 bg-gray-500/25 transition-opacity" aria-hidden="true"></div>
 
                 <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
-                    <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                        <div className="relative transform overflow-hidden rounded-lg bg-[#F2EEE5] text-left shadow-xl transition-all sm:my-8 ">
+                    <div className="flex min-h-full xs:items-center lg:items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                        <div className="relative xs:w-[95%] lg:w-[50%] transform overflow-hidden rounded-lg bg-[#F2EEE5] text-left shadow-xl transition-all sm:my-8 ">
 
                             {/* Modal Body */}
-                            <div className="bg-[#F2EEE5] w-[944px]">
+                            <div className="bg-[#F2EEE5]">
                                 <div className="bg-[#F2EEE5]">
 
                                     {/* Close Button */}
-                                    <div className='flex justify-end py-4 px-10'>
+                                    <div className='flex justify-end xs:py-0 lg:py-4 xs:px-4 lg:px-10'>
                                         <button
                                             onClick={onClose}
                                             className="text-black hover:text-gray-400 text-[32px]"
@@ -30,13 +30,11 @@ export default function ModalSell({ onClose }) {
 
                                     {/* Selling Walktrough */}
                                     <div className="text-center justify-center items-center flex">
-                                        <figure className="h-[891px] w-[891px]">
-                                            <Image
+                                        <figure className="h-auto w-auto">
+                                            <img
                                                 src="/modals/selling-walktrough.png"
                                                 alt="selling-walktrough"
                                                 className="object-cover w-full h-full"
-                                                width={891}
-                                                height={891}
                                             />
                                         </figure>
                                     </div>
@@ -47,7 +45,7 @@ export default function ModalSell({ onClose }) {
                             <div className="flex justify-center bg-[#F2EEE5] mt-12 mb-12">
                                 <button
                                     type="button"
-                                    onClick={() => window.open("https://titip.tikiibookstore.com/titip", "_blank")}
+                                    onClick={() => window.open("https://titip.tikiibookstore.com", "_blank")}
                                     className="bg-[#2A230F] w-[160px] h-[44px] text-white py-3 px-6 rounded-md hover:bg-[#3A3118]">
                                     Sell Your Book
                                 </button>

@@ -46,6 +46,7 @@ export default function Search({ data, query, currentPage: initialPage, itemsPer
     const [showOptions, setIsSHowOptions] = useState(false)
     const [showDrop, setIsShowDrop] = useState(false);
     const [selectedLabel, setSelectedLabel] = useState();
+    const [showOutline, setShowOutline] = useState(false);
 
     const handleInputChange = (e) => {
         const inputValue = e.target.value;
@@ -83,10 +84,12 @@ export default function Search({ data, query, currentPage: initialPage, itemsPer
 
     const handleInputFocus = () => {
         setIsSHowOptions(true);
+        setShowOutline(true);
     }
 
     const handleInputBlur = () => {
         setIsSHowOptions(false);
+        setShowOutline(false);
         setTimeout(() => {
             if (!dropdownRef.current || !dropdownRef.current.contains(document.activeElement)) {
                 setIsShowDrop(false);
@@ -106,7 +109,7 @@ export default function Search({ data, query, currentPage: initialPage, itemsPer
             
             setTimeout(() => {
                 window.location.reload();
-            }, 1000);
+            }, 2000);
         } else {
             console.error("Please type at least 3 characters to search.");
         }
@@ -189,8 +192,8 @@ export default function Search({ data, query, currentPage: initialPage, itemsPer
 
                         {/* Search Bar and Dropdown */}
                         <div>
-                            <div className="z-1 bg-[#F2EEE5] w-[300px] lg:w-[825px] h-[40px] flex items-center rounded-md outline outline-1 outline-[#B8B094]">
-                                {/* Search Bar */}
+                        <div className={`z-0 bg-[#F2EEE5] w-[300px] lg:w-[825px] h-[40px] flex items-center rounded-md outline outline-1 outline-[#B8B094] ${showOutline ? 'outline outline-2 outline-black outline-[#847060]' : ''}`}>
+                        {/* Search Bar */}
                                 <Image src="/icons/search.svg" className="ml-2" width={24} height={24} alt="" />
                                 <input
                                     ref={inputRef}
@@ -200,7 +203,7 @@ export default function Search({ data, query, currentPage: initialPage, itemsPer
                                     onFocus={handleInputFocus}
                                     onBlur={handleInputBlur}
                                     placeholder={selectedLabel || 'Find the title, ISBN, or author of the book'}
-                                    className="text-black w-full p-2 ml-2 bg-[#F2EEE5] rounded-md"
+                                    className="outline-none text-black w-full p-2 ml-2 bg-[#F2EEE5] rounded-md"
                                 />
 
                                 {/* Dropdown Alert */}

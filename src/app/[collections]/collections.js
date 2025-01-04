@@ -11,7 +11,7 @@ import { usePathname } from "next/navigation";
 import { WholeBook } from "../data/bookData";
 import Link from 'next/link';
 import { useRouter } from 'next/navigation'
-
+import Filters from '../../components/filters'
 export default function Collections({ data, currentPage: initialPage, itemsPerPage, totalPages }) {
     const [currentPage, setCurrentPage] = useState(initialPage);
     const ruter = useRouter();
@@ -30,6 +30,8 @@ export default function Collections({ data, currentPage: initialPage, itemsPerPa
     const [isAll, setIsAll] = useState(false);
     const [isOther, setIsOther] = useState(false);
     const [isOtherNon, setIsOtherNon] = useState(false);
+    const [isFilterOpen, setFilterOpen] = useState(false);
+
     // Pagination
     const itemPerPage = itemsPerPage;
     const startIndex = (currentPage - 1) * itemPerPage;
@@ -164,6 +166,7 @@ export default function Collections({ data, currentPage: initialPage, itemsPerPa
     const [showOptions, setIsSHowOptions] = useState(false)
     const [showDrop, setIsShowDrop] = useState(false);
     const [selectedLabel, setSelectedLabel] = useState();
+    const [showOutline, setShowOutline] = useState(false);
 
     const handleInputChange = (e) => {
         const inputValue = e.target.value;
@@ -202,10 +205,12 @@ export default function Collections({ data, currentPage: initialPage, itemsPerPa
 
     const handleInputFocus = () => {
         setIsSHowOptions(true);
+        setShowOutline(true);
     }
 
     const handleInputBlur = () => {
         setIsSHowOptions(false);
+        setShowOutline(false);
         setTimeout(() => {
             if (!dropdownRef.current || !dropdownRef.current.contains(document.activeElement)) {
                 setIsShowDrop(false);
@@ -225,7 +230,7 @@ export default function Collections({ data, currentPage: initialPage, itemsPerPa
 
             setTimeout(() => {
                 window.location.reload();
-            }, 1000);
+            }, 2000);
         } else {
             console.error("Please type at least 3 characters to search.");
         }
@@ -238,6 +243,11 @@ export default function Collections({ data, currentPage: initialPage, itemsPerPa
     const closeShowMore = () => {
         setIsShowMore(false);
     }
+
+    const handleFiltersClose = () => {
+        setFilterOpen(false);
+    }
+
 
     // Search Function
     const [selectedBooks, setSelectedBooks] = useState(null);
@@ -311,20 +321,20 @@ export default function Collections({ data, currentPage: initialPage, itemsPerPa
                 <Navbar />
 
                 {/* Heading Text */}
-                <div className='bg-[#EFE8DA] items-center justify-center flex'>
-                    <div className='w-full mx-16 mt-16 mb-10'>
+                <div className='bg-[#EFE8DA] items-center justify-center flex xs:text-center lg:text-left'>
+                    <div className='w-full xs:mx-4 lg:mx-10 xl:mx-16 xs:mt-4 lg:mt-16 xs:mb-4 lg:mb-10 league-spartan-bold text-[#4A2C23] xs:text-[40px] text-[48px]'>
                         {isAll ? (
-                            <div className=' w-full league-spartan-bold text-[#4A2C23] text-[48px]'>
+                            <div className=''>
                                 Explore All Genres
                             </div>
 
                         ) : (
-                            <div className=' w-full league-spartan-bold text-[#4A2C23] text-[48px]'>
+                            <div className=''>
                                 {`${genreSelected} Books`}
                             </div>
                         )}
 
-                        <div className=' w-full text-[18px] mt-2 text-black'>
+                        <div className=' w-full font-medium text-[18px] mt-2 text-black'>
                             {isFiction ? (
                                 <>
                                     Step into worlds where imagination knows no bounds, and every
@@ -353,63 +363,67 @@ export default function Collections({ data, currentPage: initialPage, itemsPerPa
                 </div>
 
                 {/* Search */}
-                <div className='h-[152px] bg-[#EFE8DA]'>
+                <div className='relative z-[900] xs:mb-4 lg:mb-0 lg:mt-0 xs:mt-8 lg:h-[152px] bg-[#EFE8DA]'>
                     {/* Search and Logo */}
                     <div className="items-center justify-center flex flex-row h-full gap-4">
 
-                        {/* Search Bar and Dropdown */}
-                        <div>
-                            <div className=" bg-[#F2EEE5] w-[300px] lg:w-[825px] h-[40px] flex items-center rounded-md outline outline-1 outline-[#B8B094] ">
-                                {/* Search Bar */}
-                                <Image src="/icons/search.svg" className="ml-2" width={24} height={24} alt="" />
-                                <input
-                                    ref={inputRef}
-                                    type="text"
-                                    value={inputValue}
-                                    onChange={handleInputChange}
-                                    onFocus={handleInputFocus}
-                                    onBlur={handleInputBlur}
-                                    placeholder={selectedLabel || 'Find the title, ISBN, or author of the book'}
-                                    className="text-black w-full p-2 ml-2 bg-[#F2EEE5] rounded-md"
-                                />
+                        {/* Search Bar and Button */}
+                        <div className='w-full xs:px-4 sm:w-auto flex flex-row gap-2 xs:mb-4 lg:mb-0'>
+                            {/* Search Bar and Dropdown */}
+                            <div className='w-full '>
+                                <div className={`z-0 bg-[#F2EEE5] relative sm:w-[500px] lg:w-[500px] xl:w-[825px] h-[40px] flex items-center rounded-md outline outline-1 outline-[#B8B094] ${showOutline ? 'outline outline-2 outline-black outline-[#847060]' : ''}`}>
+                                    {/* Search Bar */}
+                                    <Image src="/icons/search.svg" className="ml-2" width={24} height={24} alt="" />
+                                    <input
+                                        ref={inputRef}
+                                        type="text"
+                                        value={inputValue}
+                                        onChange={handleInputChange}
+                                        onFocus={handleInputFocus}
+                                        onBlur={handleInputBlur}
+                                        placeholder={selectedLabel || 'Find the title, ISBN, or author of the book'}
+                                        className="xs:text-[12px] lg:text-[16px] outline-none text-black w-full p-2 ml-2 bg-[#F2EEE5] rounded-md"
+                                    />
 
-                                {/* Dropdown Alert */}
-                                {showOptions && (
-                                    <div className="bg-[#F2EEE5] text-gray-400 h-[50px] items-center flex justify-center absolute top-[430px] border border-gray-300 shadow-lg rounded-md w-[300px] lg:w-[825px] max-h-[200px] overflow-auto">
-                                        Type at least 3 characters to search
-                                    </div>
-                                )}
+                                    {/* Dropdown Alert */}
+                                    {showOptions && (
+                                        <div className="bg-[#F2EEE5] top-[50px] text-gray-400 xs:text-[12px] lg:text-[16px] xs:h-[40px] lg:h-[50px] items-center flex justify-center absolute border border-gray-300 shadow-lg rounded-md w-full max-h-[200px] overflow-auto">
+                                            Type at least 3 characters to search
+                                        </div>
+                                    )}
 
-                                {/* Dropdown Ttem */}
-                                {showDrop && (
-                                    <div ref={dropdownRef} className="z-30 bg-[#F2EEE5] ml-10 flex flex-col absolute top-[430px] border border-gray-300 shadow-lg rounded-md w-[300px] lg:w-[790px] max-h-[300px] overflow-auto">
-                                        {filteredOptions.map((book, index) => (
-                                            <button
-                                                key={index}
-                                                className="text-black text-[18px] px-6 py-2 text-left hover:bg-gray-200 transition-colors"
-                                                onClick={() => handleBookClick(book)}
-                                            >
-                                                {book.label}
-                                            </button>
-                                        ))}
-                                    </div>
-                                )}
+                                    {/* Dropdown Ttem */}
+                                    {showDrop && (
+                                        <div ref={dropdownRef} className="bg-[#F2EEE5] flex flex-col absolute top-[50px] border border-gray-300 shadow-lg rounded-md w-full max-h-[300px] overflow-auto">
+                                            {filteredOptions.map((book, index) => (
+                                                <button
+                                                    key={index}
+                                                    className="text-black xs:text-[12px] lg:text-[16px]  px-6 py-2 text-left hover:bg-gray-200 transition-colors"
+                                                    onClick={() => handleBookClick(book)}
+                                                >
+                                                    {book.label}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
                             </div>
-                        </div>
 
-                        <button
-                            onClick={handleSearchClick}
-                            className='bg-black text-white w-[96px] h-[40px] rounded-md'>
-                            Search
-                        </button>
+                            <button
+                                onClick={handleSearchClick}
+                                className='bg-black text-white w-[96px] h-[40px] rounded-md'>
+                                Search
+                            </button>
+
+                        </div>
                     </div>
                 </div>
 
                 {/* Cards and Genre */}
-                <div className='w-full flex flex-row px-16'>
+                <div className='w-full flex flex-row xs:px-4 lg:px-10 xl:px-16'>
 
                     {/* Genre */}
-                    <div className='w-[12%]'>
+                    <div className='xs:hidden lg:flex lg:w-[18%] xl:w-[12%]'>
                         <div className='px-2 flex flex-col justify-start gap-2'>
                             <div className='font-bold text-[18px] text-black'>Genres</div>
                             {isAll ? (
@@ -463,11 +477,11 @@ export default function Collections({ data, currentPage: initialPage, itemsPerPa
                                 <div className="flex flex-col gap-2">
                                     {(isAll
                                         ? [...additionalGenres, ...additionalGenresNon]
-                                        : isNonFiction && isNon
+                                        : isNonFiction || isNon
                                             ? additionalGenresNon
                                             : additionalGenres
                                     )
-                                        .filter(genre => pathname !== genre.name.toLowerCase()) // Exclude the current genre
+                                        .filter(genre => pathname !== genre.name.toLowerCase())
                                         .map((genre) => (
                                             <Link key={genre.path} href={genre.path}>
                                                 <div
@@ -511,12 +525,29 @@ export default function Collections({ data, currentPage: initialPage, itemsPerPa
                     </div>
 
                     {/* Cards */}
-                    <div className='flex flex-col w-[88%]'>
+                    <div className='flex flex-col xs:w-full lg:w-[82%] xl:w-[88%]'>
                         <div className=''>
-                            <div className='text-black text-[18px] italic'>
-                                {`${isAll ? `Showing results for ${genreSelected} book(s)` : `Showing results for all ${genreSelected} book(s)`}`}
+
+                            {/* Result and Filter */}
+                            <div className='w-full flex flex-row justify-between text-black xs:text-[14px] lg:text-[18px] '>
+
+                                {/* Result */}
+                                <div className='italic'>
+                                    {`${isAll ? `Showing results for ${genreSelected} book(s)` : `Showing results for all ${genreSelected} book(s)`}`}
+                                </div>
+
+                                {/* Filter */}
+                                <button
+                                    onClick={() => setFilterOpen(true)}
+                                    className="xs:flex font-medium underline underline-1 lg:hidden gap-1 items-center"
+                                >
+                                    <Image src="/icons/settings-2.svg" width={24} height={24} alt="Menu" />
+                                    <span>Filter</span>
+                                </button>
                             </div>
-                            <div className='my-8 flex flex-wrap text-black justify-start gap-x-[23px] gap-y-20'>
+
+                            {/* Cards Print */}
+                            <div className='my-8 grid xs:grid-cols-2 2xl:grid-cols-4 lg:grid-cols-3 text-black justify-center gap-x-[23px] gap-y-20'>
                                 {paginatedData.map((book, index) => (
                                     <Link key={book.id} className="" href={`/books/${book.id}`}>
                                         <CardsCollection
@@ -531,9 +562,41 @@ export default function Collections({ data, currentPage: initialPage, itemsPerPa
                                 ))}
                             </div>
 
+                            {/* Genre Filters */}
+                            {isFilterOpen && (
+                                // <div className="bg-[#F2EEE5] mt-2 absolute w-full top-full left-1/2 transform -translate-x-1/2 h-[328px]">
+                                //     <div className="px-4 py-8 font-medium text-[14px] flex flex-col items-center">
+                                //         <div className="gap-6 flex flex-row w-[80%]">
+                                //             <button onClick={() => {
+                                //                 setSidebarOpen(true);
+                                //                 setSidebarNonFictionOpen(false);
+                                //             }} className="text-black">
+                                //                 <Image src="/icons/arrow-right.svg" className='rotate-180' width={24} height={24} alt="Menu" />
+                                //             </button>
+                                //             <Link className="text-[20px] text-black font-semibold" href='/non-fiction'>Non Fiction by Genre</Link>
+                                //         </div>
+                                //         <ul className="w-[80%] justify-start text-[14px] text-black grid grid-cols-2 gap-y-4 mt-6 right-4 w-full">
+                                //             <li><Link href='/art-non/'>Art</Link></li>
+                                //             <li><Link href='/biography-non/'>Biography</Link></li>
+                                //             <li><Link href='/culinary-non/'>Culinary</Link></li>
+                                //             <li><Link href='/education-non/'>Education</Link></li>
+                                //             <li><Link href='/essay-non/'>Essay</Link></li>
+                                //             <li><Link href='/health-and-wellness-non/'>Health & Welness</Link></li>
+                                //             <li><Link href='/history-non/'>History</Link></li>
+                                //             <li><Link href='/parenting-and-family-non/'>Parenting & Family</Link></li>
+                                //             <li><Link href='/philosophy-non/'>Philosophy</Link></li>
+                                //             <li><Link href='/science-non/'>Science</Link></li>
+                                //             <li><Link href='/self-help-non/'>Self-Help</Link></li>
+                                //             <li><Link href='/travel-non/'>Travel</Link></li>
+                                //         </ul>
+                                //     </div>
+                                // </div>
+                                <Filters onClose={handleFiltersClose} pathname={pathname} isAll={isAll} isNon={isNon} isNonFiction={isNonFiction} isFiction={isFiction} alwaysVisibleGenres={alwaysVisibleGenres} additionalGenres={additionalGenres} alwaysVisibleGenresNon={alwaysVisibleGenresNon} additionalGenresNon={additionalGenresNon} />
+                            )}
+
                             {/* Pagination */}
-                            < div className='flex flex-row justify-between items-center' >
-                                <div className='text-black text-[18px]'>
+                            < div className='lg:mt-0 xs:mt-20 flex xs:flex-col lg:flex-row lg:justify-between items-center' >
+                                <div className='text-black xs:text-[14px] lg:text-[18px]'>
                                     Results {(currentPage - 1) * itemPerPage + 1} - {Math.min(currentPage * itemPerPage, mapping.length)} of {mapping.length}
                                 </div>
                                 <div className='text-black text-[18px]'>
@@ -552,6 +615,6 @@ export default function Collections({ data, currentPage: initialPage, itemsPerPa
                 {/* Footer */}
                 <Footer />
             </div>
-        </div>
+        </div >
     )
 }
