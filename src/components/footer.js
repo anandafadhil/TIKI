@@ -84,7 +84,7 @@ export default function Footer() {
                 </div>
 
                 {/* Small Screen */}
-                <div className="xs:flex lg:hidden px-4 flex flex-col text-center gap-10 justify-center items-center h-full">
+                <div className="xs:flex lg:hidden px-4 flex flex-col text-center gap-2 justify-center items-center h-full">
 
                     {/* Logo and Contact Section */}
                     <div className="flex flex-col items-center mb-4">

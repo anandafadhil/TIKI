@@ -35,7 +35,7 @@ export default function Navbar() {
     return (
         <>
             {/* <div className="navbar h-[60px] bg-[#F2EEE5] flex justify-center items-center drop-shadow-md rounded-b-lg text-[#0F172A] relative z-[1000]"> */}
-            <div className=" h-[60px] bg-[#F2EEE5] drop-shadow-md rounded-b-lg text-[#0F172A] relative z-[1000]">
+            <div className="h-[60px] bg-[#F2EEE5] drop-shadow-md rounded-b-lg text-[#0F172A] relative z-[1000]">
                 <div className="xs:hidden lg:flex">
                     {/* Dropdown System */}
                     <div className="dropdown">
@@ -146,10 +146,10 @@ export default function Navbar() {
                 </div>
 
                 {/* Mobile Menu */}
-                <div className="px-4 xl:hidden flex items-center justify-between w-full">
+                <div className="xl:hidden flex items-center justify-between w-full">
                     {/* Mobile Sidebar Toggle Button */}
 
-                    <div className="mt-2 lg:hidden">
+                    <div className="lg:hidden px-4">
                         {!sidebarOpen ? (
                             <button onClick={() => setSidebarOpen(!sidebarOpen)} className="text-black">
                                 <Image src="/icons/align-justify.svg" width={24} height={24} alt="Menu" />
@@ -164,7 +164,7 @@ export default function Navbar() {
                             </button>
                         )}
                     </div>
-                    <div className="lg:hidden">
+                    <div className="lg:hidden px-4">
                         {/* Logo */}
                         <Link href="/">
                             <Image src="/icons/tikii-logo-1.svg" width={60} height={60} alt="Tikii Logo" />

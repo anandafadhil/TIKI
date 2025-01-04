@@ -89,16 +89,14 @@ export default function SelectedBook({ data, booksFiction }) {
                 {/* Navbar */}
                 <Navbar />
                 {/* Brown Box */}
-                <div className='bg-[#847060] h-[282px] flex items-center px-16 mt-8'>
+                <div className='bg-[#847060] h-[282px] flex items-center 2xl:px-16 lg:px-20 mt-8'>
                     <div className='flex items-center space-x-4'>
 
                         {/* Main Image */}
-                        <Image
+                        <img
                             src={mainImage}
                             alt="background"
-                            className="h-full translate-y-32 z-0"
-                            width={478}
-                            height={478}
+                            className="lg:h-auto lg:w-auto 2xl:h-[478px] 2xl:w-[478px] translate-y-32 z-0"
                         />
 
                         {/* Book's Main Info */}
@@ -168,7 +166,7 @@ export default function SelectedBook({ data, booksFiction }) {
                                     Goodreads Rating: {data.sellerReviewNum}/5
                                 </div>
                             </div>
-                            <div>
+                            <div className='text-[14px]'>
                                 {data.sellerReviewText}
                             </div>
                         </div>
@@ -178,7 +176,7 @@ export default function SelectedBook({ data, booksFiction }) {
                 {/* Images and Tags */}
                 <div className='flex flex-row px-16 mt-4'>
                     {/* Small Image */}
-                    <div className='relative flex w-[478px] justify-center'>
+                    <div className='relative flex lg:w-[390px] 2xl:w-[478px] justify-center'>
                         <div className='w-[300px]'>
                             <Swiper
                                 modules={[Navigation]}
@@ -226,7 +224,7 @@ export default function SelectedBook({ data, booksFiction }) {
                     </div>
 
                     {/* Tags */}
-                    <div className='flex flex-row items-start justify-center text-black text-[16px] text-medium gap-4 px-16 p-3'>
+                    <div className='flex flex-row items-start justify-center text-black text-[16px] text-medium gap-4 lg:px-12 2xl:px-16 p-3'>
 
                         {/* Real API */}
                         {/* {book.submission.category.map((genre, index) => (
@@ -255,7 +253,7 @@ export default function SelectedBook({ data, booksFiction }) {
                     <div className='w-[478]'>
                         <button
                             onClick={handleModalBuyOpen}
-                            className="bg-[#2A230F] w-[478px] h-[44px] text-white py-3 px-6 rounded-md hover:bg-[#3A3118]">
+                            className="bg-[#2A230F] lg:w-[390px] 2xl:w-[478px] h-[44px] text-white py-3 px-6 rounded-md hover:bg-[#3A3118]">
                             Buy This Book
                         </button>
                     </div>
@@ -266,7 +264,7 @@ export default function SelectedBook({ data, booksFiction }) {
                     {isModalPaymentOpen && <ModalPayment onClose={handleModalPaymentClose} />}
 
                     {/* Additional Info */}
-                    <div className='h-[792px] w-full flex flex-row px-16'>
+                    <div className='h-[792px] w-full flex flex-row lg:px-12 2xl:px-16'>
                         <div className='flex flex-col w-full'>
                             {/* Title */}
                             <div className='text-black text-[24px] font-semibold mb-8'>
@@ -513,7 +511,7 @@ export default function SelectedBook({ data, booksFiction }) {
                 </div>
 
                 {/* Images and Tags */}
-                <div className='flex flex-row mt-4 mb-2'>
+                <div className='flex flex-row mt-4 mb-2 w-full justify-center'>
                     {/* Small Image */}
                     <div className='relative flex w-[478px] justify-center'>
                         <div className='w-[300px]'>
