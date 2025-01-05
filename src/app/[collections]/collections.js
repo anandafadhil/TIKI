@@ -564,33 +564,6 @@ export default function Collections({ data, currentPage: initialPage, itemsPerPa
 
                             {/* Genre Filters */}
                             {isFilterOpen && (
-                                // <div className="bg-[#F2EEE5] mt-2 absolute w-full top-full left-1/2 transform -translate-x-1/2 h-[328px]">
-                                //     <div className="px-4 py-8 font-medium text-[14px] flex flex-col items-center">
-                                //         <div className="gap-6 flex flex-row w-[80%]">
-                                //             <button onClick={() => {
-                                //                 setSidebarOpen(true);
-                                //                 setSidebarNonFictionOpen(false);
-                                //             }} className="text-black">
-                                //                 <Image src="/icons/arrow-right.svg" className='rotate-180' width={24} height={24} alt="Menu" />
-                                //             </button>
-                                //             <Link className="text-[20px] text-black font-semibold" href='/non-fiction'>Non Fiction by Genre</Link>
-                                //         </div>
-                                //         <ul className="w-[80%] justify-start text-[14px] text-black grid grid-cols-2 gap-y-4 mt-6 right-4 w-full">
-                                //             <li><Link href='/art-non/'>Art</Link></li>
-                                //             <li><Link href='/biography-non/'>Biography</Link></li>
-                                //             <li><Link href='/culinary-non/'>Culinary</Link></li>
-                                //             <li><Link href='/education-non/'>Education</Link></li>
-                                //             <li><Link href='/essay-non/'>Essay</Link></li>
-                                //             <li><Link href='/health-and-wellness-non/'>Health & Welness</Link></li>
-                                //             <li><Link href='/history-non/'>History</Link></li>
-                                //             <li><Link href='/parenting-and-family-non/'>Parenting & Family</Link></li>
-                                //             <li><Link href='/philosophy-non/'>Philosophy</Link></li>
-                                //             <li><Link href='/science-non/'>Science</Link></li>
-                                //             <li><Link href='/self-help-non/'>Self-Help</Link></li>
-                                //             <li><Link href='/travel-non/'>Travel</Link></li>
-                                //         </ul>
-                                //     </div>
-                                // </div>
                                 <Filters onClose={handleFiltersClose} pathname={pathname} isAll={isAll} isNon={isNon} isNonFiction={isNonFiction} isFiction={isFiction} alwaysVisibleGenres={alwaysVisibleGenres} additionalGenres={additionalGenres} alwaysVisibleGenresNon={alwaysVisibleGenresNon} additionalGenresNon={additionalGenresNon} />
                             )}
 
