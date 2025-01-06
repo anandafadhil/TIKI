@@ -8,7 +8,6 @@ import Pagination from "../../components/pagination";
 import Image from "next/image";
 import "../globals.css"
 import { usePathname } from "next/navigation";
-import { WholeBook } from "../data/bookData";
 import Link from 'next/link';
 import { useRouter } from 'next/navigation'
 import Filters from '../../components/filters'
