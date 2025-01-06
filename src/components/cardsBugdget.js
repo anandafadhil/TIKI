@@ -40,7 +40,7 @@ export default function CardsBudget({ booksBudget }) {
 
                 {/* Desc */}
                 <div className='flex'>
-                    <div className='w-full justify-start flex items-center xs:text-[14px] font-medium lg:text-[18px] ml-2'>Unbeatable prices under Rp50.000</div>
+                    <div className='w-full justify-start flex items-center xs:text-[14px] font-medium lg:text-[18px] ml-2'>Unbeatable prices under Rp60.000</div>
                     <div className='xs:hidden lg:flex underline items-center font-[18px] text-[#0F172A] underline-offset-4 justify-end w-1/2 pr-2'>
                         <Link href='/budget/'>
                             View all
