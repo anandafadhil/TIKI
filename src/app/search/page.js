@@ -1,40 +1,40 @@
-import { WholeBook } from '../data/bookData';
 import Search from "./search";
-
+import { fetchDataCollections, fetchAllData } from '../fetch/fetch';
 export default async function SearchPage({ searchParams }) {
     const query = searchParams?.query || '';
-    const filteredBooks = WholeBook.filter((book) => {
-        const lowerCaseInput = query.toLowerCase();
-        return (
-            book.bookTitle.toLowerCase().includes(lowerCaseInput) ||
-            book.id.toLowerCase().includes(lowerCaseInput) ||
-            book.author.toLowerCase().includes(lowerCaseInput)
-        );
-    }).map((book) => ({
-        value: book.id,
-        label: `${book.bookTitle} by ${book.author}`,
-    }));
 
-    const dataPrint = WholeBook.filter((book) => {
-        const lowerCaseQuery = query.toLowerCase();
+    const dataCollections = await fetchDataCollections({
+        endpoint: "/books",
+        pageSize: 24,
+        pageNumber: 1,
+        search: `${query}`,
+    }
+    );
 
-        return (
-            book.bookTitle.toLowerCase().includes(lowerCaseQuery) ||
-            book.id.toLowerCase().includes(lowerCaseQuery) ||
-            book.author.toLowerCase().includes(lowerCaseQuery)
-        );
+    const allBookData = await fetchAllData({
+        endpoint: "/books",
+        pageSize: "all",
+        pageNumber: 1,
+        search: "",
     });
 
-
+    let totalPages = 1;
     const currentPage = 1;
     const initialPage = 1;
     const ITEMS_PER_PAGE = 24;
-    const totalPages = Math.ceil(filteredBooks.length / ITEMS_PER_PAGE);
+    
+    if (dataCollections.length === 0 || dataCollections.length == undefined) {        
+        totalPages = 1
+    } else {
+        totalPages = Math.ceil(dataCollections.totalRecords / ITEMS_PER_PAGE);
 
+    }    
+    
     return (
         <>
             <Search
-                data={dataPrint}
+                allBookData={allBookData}
+                data={dataCollections}
                 query={query}
                 currentPage={currentPage}
                 initialPage={initialPage}

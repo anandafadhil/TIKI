@@ -7,28 +7,19 @@ import CardsCollection from "../../components/cardsCollection";
 import Pagination from "../../components/pagination";
 import Image from "next/image";
 import "../globals.css"
-import { usePathname } from "next/navigation";
-import { WholeBook } from "../data/bookData";
 import Link from 'next/link';
 import { useRouter } from 'next/navigation'
-import { useSearchParams } from 'next/navigation';
 import FiltersSearch from '../../components/filtersSearch'
 
-export default function Search({ data, query, currentPage: initialPage, itemsPerPage, totalPages }) {
+export default function Search({ allBookData, data, query, currentPage: initialPage, itemsPerPage, totalPages }) {
     const ruter = useRouter();
     const dropdownRef = useRef(null);
     const inputRef = useRef(null);
 
     const { pathname } = ruter;
-    const router = usePathname();
-
-    // const searchParams = useSearchParams();
-    // const query = searchParams.get('query');
-    const collectionsType = router.replace('/', '');
     const [currentPage, setCurrentPage] = useState(initialPage);
     const [isShowMore, setIsShowMore] = useState(false);
     const [isFilterOpen, setFilterOpen] = useState(false);
-
 
     // Pagination
     const itemPerPage = itemsPerPage;
@@ -39,8 +30,8 @@ export default function Search({ data, query, currentPage: initialPage, itemsPer
         setCurrentPage(newPage); // Update the current page
     };
 
+    const paginatedData = data.data.slice(startIndex, endIndex);
 
-    const paginatedData = data.slice(startIndex, endIndex);
 
     // Search Functionality
     const [inputValue, setInputValue] = useState('');
@@ -49,6 +40,8 @@ export default function Search({ data, query, currentPage: initialPage, itemsPer
     const [showDrop, setIsShowDrop] = useState(false);
     const [selectedLabel, setSelectedLabel] = useState();
     const [showOutline, setShowOutline] = useState(false);
+    const [isEmpty, setIsEmpty] = useState(true);
+    const [errorMessage, setErrorMessage] = useState('')
 
     const handleInputChange = (e) => {
         const inputValue = e.target.value;
@@ -59,15 +52,17 @@ export default function Search({ data, query, currentPage: initialPage, itemsPer
             setIsShowDrop(true);
 
             const uniqueLabels = new Set();
-            const filteredBooks = WholeBook.filter((book) => {
+            const filteredBooks = allBookData.data.filter((book) => {
                 const lowerCaseInput = inputValue.toLowerCase();
+
                 return (
-                    book.bookTitle.toLowerCase().includes(lowerCaseInput) ||
-                    book.id.toLowerCase().includes(lowerCaseInput) ||
-                    book.author.toLowerCase().includes(lowerCaseInput)
+                    book.submission.title.toLowerCase().includes(lowerCaseInput) ||
+                    book.submission.isbn.includes(lowerCaseInput) ||
+                    book.submission.author.toLowerCase().includes(lowerCaseInput)
                 );
             }).filter((book) => {
-                const label = `${book.bookTitle} by ${book.author}`;
+
+                const label = `${book.submission.title} by ${book.submission.author}`;
                 if (!uniqueLabels.has(label)) {
                     uniqueLabels.add(label);
                     return true;
@@ -75,7 +70,7 @@ export default function Search({ data, query, currentPage: initialPage, itemsPer
                 return false;
             }).map((book) => ({
                 value: book.id,
-                label: `${book.bookTitle} by ${book.author}`,
+                label: `${book.submission.title} by ${book.submission.author}`,
             }));
             setFilteredOptions(filteredBooks);
 
@@ -128,28 +123,6 @@ export default function Search({ data, query, currentPage: initialPage, itemsPer
     const handleFiltersClose = () => {
         setFilterOpen(false);
     }
-
-
-    // Real API
-    // const optionsBooks = data.map((book) => ({
-    //     value: book.id,
-    //     label: book.submission.title
-    // }));
-
-    // const handleSearchBooks = async (event) => {
-    //     console.log("masuk", event.target.value)
-    //     const selectedBookId = parseInt(event.target.value);
-    //     const selectedBook = data.find((book) => book.id === selectedBookId);
-    //     setSelectedBooks(selectedBook);
-    // };
-
-    // const handleSearchClick = async () => {
-    //     if (selectedBooks) {
-    //         ruter.push(`/books/${selectedBooks.id}`);
-    //     } else {
-    //         console.error('No book selected');
-    //     }
-    // }
 
     // Genre 
     const alwaysVisibleGenres = [
@@ -364,19 +337,30 @@ export default function Search({ data, query, currentPage: initialPage, itemsPer
                             </div>
 
                             {/* Cards Print */}
-                            <div className='my-8 grid xs:grid-cols-2 2xl:grid-cols-4 lg:grid-cols-3 text-black justify-center gap-x-[23px] gap-y-20'>
-                                {paginatedData.map((book, index) => (
-                                    <Link key={book.id} className="" href={`/books/${book.id}`}>
-                                        <CardsCollection
-                                            key={index}
-                                            bookTitle={book.bookTitle}
-                                            bookAuthor={book.author}
-                                            bookPrice={book.price}
-                                            bookImage={book.images[0]}
-                                            bookPostedDate={book.postedDate}
-                                        />
-                                    </Link>
-                                ))}
+                            <div>
+                                {isEmpty ? (
+                                    <div className="flex flex-col items-center justify-center min-h-[50vh]">
+                                        <h2 className="text-[40px] font-semibold text-black">
+                                            {data.message || "No results found"}
+                                        </h2>
+                                        <p className="text-black">Try searching for a different term.</p>
+                                    </div>
+                                ) : (
+                                    <div className="my-8 grid xs:grid-cols-2 2xl:grid-cols-4 lg:grid-cols-3 text-black justify-center gap-x-[23px] gap-y-20">
+                                        {paginatedData.map((book, index) => (
+                                            <Link key={book.id} href={`/books/${book.id}`}>
+                                                <CardsCollection
+                                                    key={index}
+                                                    bookTitle={book.submission.title}
+                                                    bookAuthor={book.submission.author}
+                                                    bookPrice={book.book.finalPrice}
+                                                    bookImage={book.submission.images[0]}
+                                                    bookPostedDate={book.book.createdAt}
+                                                />
+                                            </Link>
+                                        ))}
+                                    </div>
+                                )}
                             </div>
 
                             {/* Genre Filters */}
@@ -386,18 +370,24 @@ export default function Search({ data, query, currentPage: initialPage, itemsPer
 
 
                             {/* Pagination */}
-                            < div className='lg:mt-0 xs:mt-20 flex xs:flex-col lg:flex-row lg:justify-between items-center' >
-                                <div className='text-black xs:text-[14px] lg:text-[18px]'>
-                                    Results {(currentPage - 1) * itemPerPage + 1} - {Math.min(currentPage * itemPerPage, data.length)} of {data.length}
+                            {data?.totalRecords > 0 ? (
+                                <div className='lg:mt-0 xs:mt-20 flex xs:flex-col lg:flex-row lg:justify-between items-center'>
+                                    <div className='text-black xs:text-[14px] lg:text-[18px]'>
+                                        Results {(currentPage - 1) * itemPerPage + 1} - {Math.min(currentPage * itemPerPage, data.totalRecords)} of {data.totalRecords}
+                                    </div>
+                                    <div className='text-black text-[18px]'>
+                                        <Pagination
+                                            currPage={currentPage}
+                                            totPage={totalPages}
+                                            onPageChange={handlePageChange}
+                                        />
+                                    </div>
                                 </div>
-                                <div className='text-black text-[18px]'>
-                                    <Pagination
-                                        currPage={currentPage}
-                                        totPage={totalPages}
-                                        onPageChange={handlePageChange}
-                                    />
+                            ) : (
+                                <div className='text-black xs:text-center lg:text-left my-8'>
+                                    No results to display.
                                 </div>
-                            </div>
+                            )}
                         </div>
 
                     </div>

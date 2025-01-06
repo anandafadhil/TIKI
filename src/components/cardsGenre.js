@@ -12,8 +12,8 @@ export default function CardsGenre({ genreTitle, genreImage }) {
                 onMouseLeave={() => setIsOnHover(false)}
             >
                 <figure className="h-[272px]">
-                    <Image
-                        src={genreImage}
+                    <img
+                        src={genreImage || null}
                         alt={genreTitle}
                         className="object-cover w-full h-full"
                         width={272}

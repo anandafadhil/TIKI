@@ -27,6 +27,7 @@ import Swal from 'sweetalert2';
 
 export default function HomePage({
     allBookData,
+    dataHomePage,
     booksNew,
     booksClassics,
     booksBudget,
@@ -107,16 +108,17 @@ export default function HomePage({
             setIsShowDrop(true);
 
             const uniqueLabels = new Set();
-            const filteredBooks = allBookData.filter((book) => {
+            const filteredBooks = allBookData.data.filter((book) => {
                 const lowerCaseInput = inputValue.toLowerCase();
+
                 return (
-                    book.bookTitle.toLowerCase().includes(lowerCaseInput) ||
-                    book.id.toLowerCase().includes(lowerCaseInput) ||
-                    book.author.toLowerCase().includes(lowerCaseInput)
+                    book.submission.title.toLowerCase().includes(lowerCaseInput) ||
+                    book.submission.isbn.includes(lowerCaseInput) ||
+                    book.submission.author.toLowerCase().includes(lowerCaseInput)
                 );
             }).filter((book) => {
-                const label = `${book.bookTitle} by ${book.author}`;
-                // Only add the book if the label is not already in the set
+
+                const label = `${book.submission.title} by ${book.submission.author}`;
                 if (!uniqueLabels.has(label)) {
                     uniqueLabels.add(label);
                     return true;
@@ -124,7 +126,7 @@ export default function HomePage({
                 return false;
             }).map((book) => ({
                 value: book.id,
-                label: `${book.bookTitle} by ${book.author}`,
+                label: `${book.submission.title} by ${book.submission.author}`,
             }));
             setFilteredOptions(filteredBooks);
 
@@ -154,35 +156,18 @@ export default function HomePage({
         setIsShowDrop(false);
     }
 
-    const handleSearchClick = () => {
+    const handleSearchClick = async () => {
         if (inputValue.length >= 3) {
             router.push(`/search?query=${inputValue}`);
+
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000);
         } else {
             console.error("Please type at least 3 characters to search.");
         }
     }
 
-    // Real API
-    // const optionsBooks = data.map((book) => ({
-    //     value: book.id,
-    //     label: book.submission.title
-    // }));
-
-    // const handleSearchBooks = async (event) => {
-    //     console.log("masuk", event.target.value)
-    //     const selectedBookId = parseInt(event.target.value);
-    //     const selectedBook = data.find((book) => book.id === selectedBookId);
-    //     setSelectedBooks(selectedBook);
-    // };
-
-    // const handleSearchClick = async () => {
-    //     if (selectedBooks) {
-    //         router.push(`/books/${selectedBooks.id}`);
-    //     } else {
-    //         console.error('No book selected');
-    //     }
-    // }
-    // const [isMobile, setIsMobile] = useState(true)
     return (
 
         <div className="flex flex-row min-h-screen bg-[#EFE8DA] text-gray-800">
@@ -203,7 +188,7 @@ export default function HomePage({
                             <div className='w-full'>
                                 <div className={`z-0 bg-[#F2EEE5] relative sm:w-[500px] lg:w-[500px] xl:w-[825px] h-[40px] flex items-center rounded-md outline outline-1 outline-[#B8B094] ${showOutline ? 'outline outline-2 outline-black outline-[#847060]' : ''}`}>
                                     {/* Search Bar */}
-                                    <Image src="/icons/search.svg" className="ml-2" width={24} height={24} alt="" />
+                                    <img src="/icons/search.svg" className="ml-2" width={24} height={24} alt="" />
                                     <input
                                         ref={inputRef}
                                         type="search"
@@ -273,13 +258,11 @@ export default function HomePage({
 
                 {/* Carousel 2 : Sell Your Book */}
                 <div id="sell" className="relative h-[562px] lg:h-[384px] flex flex-col lg:flex-row items-center">
+                    
                     {/* Full-Width Banner Image */}
-                    {/* <img src="/icons/tikii-banner-2.png" alt="Banner" className="w-full h-full" /> */}
-                    <picture>
-                        <source srcSet="/icons/tikii-banner-2.png" media="(min-width: 1024px)" />
-                        <source srcSet="/icons/tikii-banner-2-1.png" media="(max-width: 768px)" />
-                        <Image src="/icons/tikii-banner-2-1.png" alt="Banner" fill className="w-full h-full" />
-                    </picture>
+                    <img src="/icons/tikii-banner-2.png" alt="Banner" className="xs:hidden lg:flex w-full h-full" />
+                    <img src="/icons/tikii-banner-2-1.png" alt="Banner" className="xs:flex lg:hidden w-full h-[562px]" />
+
 
                     {/* Overlay Text Box */}
                     <div className="lg:h-full sm:justify-end lg:justify-center absolute right-0 lg:w-[650px] xl:w-[950px] 2xl:w-[1120px] w-full px-6 xs:bottom-0 xl:px-20 py-4 sm:mb-8 lg:mb-0 lg:py-12 flex flex-col items-center text-[#4A2C23]">
@@ -318,7 +301,7 @@ export default function HomePage({
                 {/* Carousel 3 : Buy a Book */}
                 <div className="xs:mb-16 xs:mt-16 relative xs:h-[562px] lg:h-[384px] flex flex-col lg:flex-row items-center">
                     {/* Full-Width Banner Image */}
-                    <Image src="/icons/tikii-banner-3.png" fill alt="Banner" className="xs:hidden lg:flex w-full h-full" />
+                    <img src="/icons/tikii-banner-3.png" alt="Banner" className="xs:hidden lg:flex w-full h-full" />
                     <img src="/icons/tikii-banner-buy-mobile.png" alt="Banner" className="xs:flex lg:hidden w-full h-[562px]" />
 
 
@@ -384,7 +367,7 @@ export default function HomePage({
                         {discoverGenre.map((genre, index) => (
                             <Link
                                 key={index}
-                                href={`/${genre.name.toLowerCase()}/`}
+                                href={`/${genre.slug.toLowerCase()}/`}
                                 className="block h-full"
                             >
                                 <CardsGenre
@@ -404,7 +387,7 @@ export default function HomePage({
                 {/* Carousel 4 : Join Our Community */}
                 <div className="xs:mb-16 xs:mt-16 lg:mt-40 relative xs:h-[562px] lg:h-[384px] flex flex-col lg:flex-row items-center">
                     {/* Full-Width Banner Image */}
-                    <Image src="/icons/tikii-banner-4.png" fill alt="Banner" className="xs:hidden lg:flex w-full h-full" />
+                    <img src="/icons/tikii-banner-4.png" alt="Banner" className="xs:hidden lg:flex w-full h-full" />
                     <img src="/icons/tikii-banner-community-mobile.png" alt="Banner" className="xs:flex lg:hidden w-full h-[562px]" />
 
 
@@ -436,7 +419,7 @@ export default function HomePage({
                     {/* Title */}
                     <div className='xs:justify-between xs:flex xs:flex-row'>
                         <div className=' text-[#4A2c23] league-spartan-bold font-bold xs:text-[40px] lg:text-[48px] ml-2 leading-10 line-clamp-2'>Beyond Tikii</div>
-                        <div className='xs:flex lg:hidden underline items-center font-[18px] text-[#0F172A] underline-offset-4 justify-end pr-2'>
+                        <div className='lg:flex xs:hidden underline items-center font-[18px] text-[#0F172A] underline-offset-4 justify-end pr-2'>
                             <a
                                 className='cursor-pointer text-gray-400'
                                 // href='/article/'
@@ -456,25 +439,23 @@ export default function HomePage({
                     </div>
                     {/* Desc */}
                     <div className='flex'>
-                        <div className='flex'>
-                            <div className='w-full justify-start flex items-center xs:text-[14px] font-medium lg:text-[18px] ml-2'>See why Tikii stands out as a trusted home for preloved and passionate readers</div>
-                            <div className='xs:hidden lg:flex underline items-center font-[18px] text-[#0F172A] underline-offset-4 justify-end w-1/2 pr-2'>
-                                <a
-                                    className='cursor-pointer text-gray-400'
-                                    // href='/article/'
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        Swal.fire({
-                                            title: 'Coming Soon!',
-                                            text: 'This feature will be available soon.',
-                                            icon: 'info',
-                                            confirmButtonText: 'OK',
-                                        });
-                                    }}
-                                >
-                                    View all
-                                </a>
-                            </div>
+                        <div className='w-full justify-start flex items-center xs:text-[14px] font-medium lg:text-[18px] ml-2'>See why Tikii stands out as a trusted home for preloved and passionate readers</div>
+                        <div className='xs:flex lg:hidden mb-2 underline w-[40%] items-end font-[18px] text-[#0F172A] underline-offset-4 justify-end pr-2'>
+                            <a
+                                className='cursor-pointer text-gray-400'
+                                // href='/article/'
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    Swal.fire({
+                                        title: 'Coming Soon!',
+                                        text: 'This feature will be available soon.',
+                                        icon: 'info',
+                                        confirmButtonText: 'OK',
+                                    });
+                                }}
+                            >
+                                View all
+                            </a>
                         </div>
                     </div>
 
@@ -495,11 +476,11 @@ export default function HomePage({
                 </div>
 
                 <div className='xs:hidden lg:flex mt-20 relative h-[384px] flex-col lg:flex-row items-center w-full'>
-                    <Image src="/icons/tikii-banner-coming.png" fill alt="Banner" className="w-full h-full" />
+                    <img src="/icons/tikii-banner-coming.png" alt="Banner" className="w-full h-full" />
                 </div>
 
                 <div className='xs:flex lg:flex mt-4 relative h-[384px] flex-col lg:hidden items-center w-full'>
-                    <Image src="/icons/tikii-banner-coming-2.png" fill alt="Banner" className="w-full h-full" />
+                    <img src="/icons/tikii-banner-coming-2.png" alt="Banner" className="w-full h-full" />
                 </div>
 
                 {/* Text 2 */}

@@ -32,7 +32,7 @@ export default function ModalSell({ onClose }) {
                                     <div className="text-center justify-center items-center flex">
                                         <figure className="h-auto w-auto">
                                             <img
-                                                src="/modals/selling-walktrough.png"
+                                                src="/modals/selling-walktrough.jpg"
                                                 alt="selling-walktrough"
                                                 className="object-cover w-full h-full"
                                             />

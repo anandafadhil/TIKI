@@ -89,6 +89,10 @@ body {
   /* transform: translateX(-20%); */
 }
 
+.break-words {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
 
 .custom-button-next {
   right: -20px;
