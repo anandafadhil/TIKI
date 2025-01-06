@@ -1,4 +1,3 @@
-import { WholeBook, BooksNew, BooksClassics, BooksBudget, BooksFiction, BooksNonFiction, DiscoverGenre, BeyondTikii } from './data/bookData';
 import HomePage from "./homepage";
 import { fetchAllData, fetchDataCollections, fetchDataHomePage } from "./fetch/fetch"
 export default async function Home() {
@@ -61,10 +60,9 @@ export default async function Home() {
             }, new Map())
             .values()
     );
-    const beyondTikii = BeyondTikii;
     return (
         <>
-            <HomePage allBookData={allBookData} dataHomePage={dataHomePage} booksNew={booksNew} booksClassics={booksClassics} booksBudget={booksBudget} booksFiction={booksFiction} booksNonFiction={booksNonFiction} discoverGenre={discoverGenre} beyondTikii={beyondTikii} />
+            <HomePage allBookData={allBookData} dataHomePage={dataHomePage} booksNew={booksNew} booksClassics={booksClassics} booksBudget={booksBudget} booksFiction={booksFiction} booksNonFiction={booksNonFiction} discoverGenre={discoverGenre} />
         </>
     );
 }

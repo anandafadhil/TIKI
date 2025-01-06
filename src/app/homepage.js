@@ -34,7 +34,6 @@ export default function HomePage({
     booksFiction,
     booksNonFiction,
     discoverGenre,
-    beyondTikii
 }) {
     const router = useRouter();
     const dropdownRef = useRef(null);
@@ -457,19 +456,6 @@ export default function HomePage({
                                 View all
                             </a>
                         </div>
-                    </div>
-
-                    {/* Cards */}
-                    <div className='hidden h-[620px] mt-12 flex w-full justify-center gap-8'>
-                        {beyondTikii.map((info, index) => (
-                            <CardsBeyond
-                                key={index}
-                                id={info.id}
-                                title={info.title}
-                                paragraph={info.paragraph}
-                                image={info.image}
-                            />
-                        ))}
                     </div>
 
                     {/* Pages */}

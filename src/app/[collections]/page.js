@@ -1,4 +1,3 @@
-import { WholeBook } from '../data/bookData';
 import Collections from "./collections";
 import { fetchDataCollections, fetchAllData, fetchDataCategory } from '../fetch/fetch';
 export default async function GenrePage({ params, searchParams }) {
