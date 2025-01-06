@@ -14,27 +14,11 @@ import 'swiper/css/navigation';
 import "../../globals.css";
 import Image from "next/image";
 import ModalPayment from '@/components/modalPayment';
-import Link from 'next/link';
-
+import SeeMore from '../../../components/seeMore'
 export default function SelectedBook({ data, booksFiction }) {
     const [isModalBuyOpen, setIsModalBuyOpen] = useState(false);
     const [isModalPaymentOpen, setIsModalPaymentOpen] = useState(false);
-
-    const router = usePathname();
-    const id = router.replace('/books/', '');
-
-    // Real API
-    // const book = data.find((item) => {
-    //     return item.id === parseInt(id);
-    // });
-
-    // const [mainImage, setMainImage] = useState(book.submission.coverUrl);
-
-
-    // const book = data.find((item) => item.id === id)
-    // if (!book) {
-    //     console.log("Book Not Found");
-    // }
+    console.log("dat", data.submission.title);
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -44,11 +28,11 @@ export default function SelectedBook({ data, booksFiction }) {
 
         return `${day}/${month}/${year}`;
     }
-    const formattedDate = formatDate(data.postedDate);
-    const formatPrice = data.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    const formattedDate = formatDate(data.book.createdAt);
+    const formatPrice = data.book.finalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 
 
-    const [mainImage, setMainImage] = useState(data.images[0]);
+    const [mainImage, setMainImage] = useState(data.submission.images[0]);
 
     const handleModalPaymentOpen = () => {
         setIsModalBuyOpen(false);
@@ -102,38 +86,15 @@ export default function SelectedBook({ data, booksFiction }) {
                         {/* Book's Main Info */}
                         <div className='flex flex-col'>
                             <div className='flex items-center mx-12'>
-
-                                {/* Real API */}
-                                {/* <div className='flex flex-col gap-2 text-[#F2EEE5] text-[18px]'>
-                                    <div className='text-[48px] league-spartan-bold mb-2'>
-                                        {book.submission.title}
-                                    </div>
-                                    <div className=''>
-                                        Author: {book.submission.author}
-                                    </div>
-                                    <div className=''>
-                                        Condition: {book.submission.condition}
-                                    </div>
-                                    <div className='flex flex-row gap-2'>
-                                        <Image src="/icons/circle-red.svg" alt="Instagram Logo" width={12} height={12} />
-                                        <div>
-                                            1 in stock
-                                        </div>
-                                    </div>
-                                    <div className='mt-1 text-[24px] '>
-                                        {book.finalPrice}
-                                    </div>
-                                </div> */}
-
                                 <div className='flex flex-col gap-2 text-[#F2EEE5] text-[18px]'>
                                     <div className='text-[48px] league-spartan-bold mb-2'>
-                                        {data.bookTitle}
+                                        {data.submission.title}
                                     </div>
                                     <div className=''>
-                                        Author: {data.author}
+                                        Author: {data.submission.author}
                                     </div>
                                     <div className=''>
-                                        Condition: {data.condition}
+                                        Condition: {data.submission.condition}
                                     </div>
                                     <div className='flex flex-row gap-2'>
                                         <Image src="/icons/circle-red.svg" alt="Instagram Logo" width={12} height={12} />
@@ -163,11 +124,11 @@ export default function SelectedBook({ data, booksFiction }) {
                                 <Image src="/icons/star.svg" alt="Instagram Logo" width={24} height={24} />
 
                                 <div>
-                                    Goodreads Rating: {data.sellerReviewNum}/5
+                                    Goodreads Rating: {data.submission.rating}/5
                                 </div>
                             </div>
                             <div className='text-[14px]'>
-                                {data.sellerReviewText}
+                                {data.submission.review}
                             </div>
                         </div>
                     </div>
@@ -193,7 +154,7 @@ export default function SelectedBook({ data, booksFiction }) {
                             >
                                 {/* Real API */}
                                 {/* {book.submission.images.map((image, index) => ( */}
-                                {data.images.map((image, index) => (
+                                {data.submission.images.map((image, index) => (
                                     <SwiperSlide key={index}>
                                         <button onClick={() => setMainImage(image)}>
                                             <img
@@ -225,19 +186,7 @@ export default function SelectedBook({ data, booksFiction }) {
 
                     {/* Tags */}
                     <div className='flex flex-row items-start justify-center text-black text-[16px] text-medium gap-4 lg:px-12 2xl:px-16 p-3'>
-
-                        {/* Real API */}
-                        {/* {book.submission.category.map((genre, index) => (
-                            <div key={index} className='border border-[#B8B094] rounded-md px-2 py-1'>
-                                {genre}
-                            </div>
-                        ))} */}
-
-                        {/* <div className='border border-[#B8B094] rounded-md px-2 py-1'>
-                            {book.submission.category}
-                        </div> */}
-
-                        {data.genre.map((genre, index) => (
+                        {data.submission.genre.map((genre, index) => (
                             <div key={index} className='border border-[#B8B094] rounded-md px-2 py-1'>
                                 {genre.name}
                             </div>
@@ -264,7 +213,7 @@ export default function SelectedBook({ data, booksFiction }) {
                     {isModalPaymentOpen && <ModalPayment onClose={handleModalPaymentClose} />}
 
                     {/* Additional Info */}
-                    <div className='h-[792px] w-full flex flex-row lg:px-12 2xl:px-16'>
+                    <div className='h-[820px] w-full flex flex-row lg:px-12 2xl:px-16'>
                         <div className='flex flex-col w-full'>
                             {/* Title */}
                             <div className='text-black text-[24px] font-semibold mb-8'>
@@ -277,10 +226,10 @@ export default function SelectedBook({ data, booksFiction }) {
                                 {/* Date Posted */}
                                 <div>
                                     <div className='-100 flex flex-row  text-black text-[18px]'>
-                                        <div className='w-[184px] font-semibold'>
+                                        <div className='w-[23%] font-semibold'>
                                             Date Posted
                                         </div>
-                                        <div>
+                                        <div className='w-[77%] ml-4'>
                                             {formattedDate}
                                         </div>
                                     </div>
@@ -291,11 +240,11 @@ export default function SelectedBook({ data, booksFiction }) {
                                 {/* Seller Domicile */}
                                 <div>
                                     <div className='-100 flex flex-row text-black text-[18px]'>
-                                        <div className='w-[184px] font-semibold'>
+                                        <div className='w-[23%] font-semibold'>
                                             Seller Domicile
                                         </div>
-                                        <div>
-                                            {data.sellerDomicile}
+                                        <div className='w-[77%] ml-4'>
+                                            {data.submission.user.domicile}
                                         </div>
                                     </div>
                                     {/* Border */}
@@ -305,11 +254,11 @@ export default function SelectedBook({ data, booksFiction }) {
                                 {/* ISBN */}
                                 <div>
                                     <div className='-100 flex flex-row  text-black text-[18px]'>
-                                        <div className='w-[184px] font-semibold'>
+                                        <div className='w-[23%] font-semibold'>
                                             ISBN
                                         </div>
-                                        <div>
-                                            {data.id}
+                                        <div className='w-[77%] ml-4'>
+                                            {data.submission.isbn}
                                         </div>
                                     </div>
                                     {/* Border */}
@@ -319,11 +268,11 @@ export default function SelectedBook({ data, booksFiction }) {
                                 {/* Title */}
                                 <div>
                                     <div className='-100 flex flex-row  text-black text-[18px]'>
-                                        <div className='w-[184px] font-semibold'>
+                                        <div className='w-[23%] font-semibold'>
                                             Title
                                         </div>
-                                        <div>
-                                            {data.bookTitle}
+                                        <div className='w-[77%] ml-4'>
+                                            {data.submission.title}
                                         </div>
                                     </div>
                                     {/* Border */}
@@ -333,11 +282,11 @@ export default function SelectedBook({ data, booksFiction }) {
                                 {/* Author */}
                                 <div>
                                     <div className='-100 flex flex-row  text-black text-[18px]'>
-                                        <div className='w-[184px] font-semibold'>
+                                        <div className='w-[23%] font-semibold'>
                                             Author
                                         </div>
-                                        <div>
-                                            {data.author}
+                                        <div className='w-[77%] ml-4'>
+                                            {data.submission.author}
                                         </div>
                                     </div>
                                     {/* Border */}
@@ -346,12 +295,12 @@ export default function SelectedBook({ data, booksFiction }) {
 
                                 {/* Condition */}
                                 <div>
-                                    <div className='-100 flex flex-row  text-black text-[18px]'>
-                                        <div className='w-[184px] font-semibold'>
+                                    <div className='flex flex-row  text-black text-[18px]'>
+                                        <div className='w-[23%] font-semibold'>
                                             Condition
                                         </div>
-                                        <div>
-                                            {data.condition}
+                                        <div className='w-[77%] ml-4'>
+                                            <SeeMore title={data.submission.condition} />
                                         </div>
                                     </div>
                                     {/* Border */}
@@ -360,12 +309,12 @@ export default function SelectedBook({ data, booksFiction }) {
 
                                 {/* Language */}
                                 <div>
-                                    <div className='-100 flex flex-row  text-black text-[18px]'>
-                                        <div className='w-[184px] font-semibold'>
+                                    <div className='flex flex-row  text-black text-[18px]'>
+                                        <div className='w-[23%] font-semibold'>
                                             Language
                                         </div>
-                                        <div>
-                                            {data.language}
+                                        <div className='w-[77%] ml-4'>
+                                            {data.submission.language}
                                         </div>
                                     </div>
                                     {/* Border */}
@@ -375,11 +324,11 @@ export default function SelectedBook({ data, booksFiction }) {
                                 {/* Binding */}
                                 <div>
                                     <div className='-100 flex flex-row  text-black text-[18px]'>
-                                        <div className='w-[184px] font-semibold'>
+                                        <div className='w-[23%] font-semibold'>
                                             Binding Type
                                         </div>
-                                        <div>
-                                            {data.bindingType}
+                                        <div className='w-[77%] ml-4'>
+                                            {data.submission.bindingType}
                                         </div>
                                     </div>
                                     {/* Border */}
@@ -389,11 +338,11 @@ export default function SelectedBook({ data, booksFiction }) {
                                 {/* Publisher */}
                                 <div>
                                     <div className='-100 flex flex-row  text-black text-[18px]'>
-                                        <div className='w-[184px] font-semibold'>
+                                        <div className='w-[23%] font-semibold'>
                                             Publisher
                                         </div>
-                                        <div>
-                                            {data.publisher}
+                                        <div className='w-[77%] ml-4'>
+                                            {data.submission.publisher}
                                         </div>
                                     </div>
                                     {/* Border */}
@@ -403,11 +352,11 @@ export default function SelectedBook({ data, booksFiction }) {
                                 {/* Year Publish */}
                                 <div>
                                     <div className='-100 flex flex-row  text-black text-[18px]'>
-                                        <div className='w-[184px] font-semibold'>
+                                        <div className='w-[23%] font-semibold'>
                                             Year Published
                                         </div>
-                                        <div>
-                                            {data.yearPublished}
+                                        <div className='w-[77%] ml-4'>
+                                            {data.submission.yearPublished}
                                         </div>
                                     </div>
                                     {/* Border */}
@@ -417,10 +366,10 @@ export default function SelectedBook({ data, booksFiction }) {
                                 {/* Page Num */}
                                 <div>
                                     <div className='-100 flex flex-row  text-black text-[18px]'>
-                                        <div className='w-[184px] font-semibold'>
+                                        <div className='w-[23%] font-semibold'>
                                             Number of Pages
                                         </div>
-                                        <div>
+                                        <div className='w-[77%] ml-4'>
                                             {data.numberOfPage}
                                         </div>
                                     </div>
@@ -454,38 +403,15 @@ export default function SelectedBook({ data, booksFiction }) {
                         {/* Book's Main Info */}
                         <div className='flex flex-col bg-[#847060] w-full h-[300px]'>
                             <div className='flex items-center justify-center'>
-
-                                {/* Real API */}
-                                {/* <div className='flex flex-col gap-2 text-[#F2EEE5] text-[18px]'>
-                                    <div className='text-[48px] league-spartan-bold mb-2'>
-                                        {book.submission.title}
-                                    </div>
-                                    <div className=''>
-                                        Author: {book.submission.author}
-                                    </div>
-                                    <div className=''>
-                                        Condition: {book.submission.condition}
-                                    </div>
-                                    <div className='flex flex-row gap-2'>
-                                        <Image src="/icons/circle-red.svg" alt="Instagram Logo" width={12} height={12} />
-                                        <div>
-                                            1 in stock
-                                        </div>
-                                    </div>
-                                    <div className='mt-1 text-[24px] '>
-                                        {book.finalPrice}
-                                    </div>
-                                </div> */}
-
                                 <div className='flex flex-col gap-4 text-[#F2EEE5] text-[14px] py-4'>
                                     <div className='text-[40px] league-spartan-bold mb-2'>
-                                        {data.bookTitle}
+                                        {data.submission.title}
                                     </div>
                                     <div className=''>
-                                        Author: {data.author}
+                                        Author: {data.submission.author}
                                     </div>
                                     <div className=''>
-                                        Condition: {data.condition}
+                                        Condition: {data.submission.condition}
                                     </div>
                                     <div className='flex flex-row justify-center gap-2'>
                                         <Image src="/icons/circle-red.svg" alt="Instagram Logo" width={12} height={12} />
@@ -497,10 +423,10 @@ export default function SelectedBook({ data, booksFiction }) {
                                         Rp {formatPrice}
                                     </div>
                                     {/* Main Image */}
-                                    <Image
+                                    <img
                                         src={mainImage}
                                         alt="background"
-                                        className="h-full translate-y-2 z-0"
+                                        className="h-full translate-y-2 z-0 w-[271px] h-[400px]"
                                         width={271}
                                         height={400}
                                     />
@@ -529,8 +455,7 @@ export default function SelectedBook({ data, booksFiction }) {
                                 className='swiper-container'
                             >
                                 {/* Real API */}
-                                {/* {book.submission.images.map((image, index) => ( */}
-                                {data.images.map((image, index) => (
+                                {data.submission.images.map((image, index) => (
                                     <SwiperSlide key={index}>
                                         <button onClick={() => setMainImage(image)}>
                                             <img
@@ -569,6 +494,7 @@ export default function SelectedBook({ data, booksFiction }) {
                         Buy This Book
                     </button>
                 </div>
+
                 {/* Review Section */}
                 <div className='text-center flex mt-12 justify-center px-4'>
                     <div className='w-full'>
@@ -580,11 +506,11 @@ export default function SelectedBook({ data, booksFiction }) {
                                 <Image src="/icons/star.svg" alt="Instagram Logo" width={24} height={24} />
 
                                 <div>
-                                    Goodreads Rating: {data.sellerReviewNum}/5
+                                    Goodreads Rating: {data.submission.rating}/5
                                 </div>
                             </div>
                             <div>
-                                {data.sellerReviewText}
+                                {data.submission.review}
                             </div>
                         </div>
                     </div>
@@ -592,33 +518,19 @@ export default function SelectedBook({ data, booksFiction }) {
 
                 {/* Images and Tags */}
                 <div className='flex flex-row mt-4 w-full justify-center'>
+
                     {/* Tags */}
                     <div className='flex flex-row items-center justify-center text-black text-[16px] text-medium gap-4'>
-
-                        {/* Real API */}
-                        {/* {book.submission.category.map((genre, index) => (
-                            <div key={index} className='border border-[#B8B094] rounded-md px-2 py-1'>
-                                {genre}
-                            </div>
-                        ))} */}
-
-                        {/* <div className='border border-[#B8B094] rounded-md px-2 py-1'>
-                            {book.submission.category}
-                        </div> */}
-
-                        {data.genre.map((genre, index) => (
+                        {data.submission.genre.map((genre, index) => (
                             <div key={index} className='border border-[#B8B094] rounded-md px-2 py-1'>
                                 {genre.name}
                             </div>
                         ))}
                     </div>
-
-
-
                 </div>
 
                 {/* Additional Info */}
-                <div className='flex flex-row mt-16 text-center'>
+                <div className='flex flex-row mt-16 text-left'>
 
                     {/* Modal */}
                     {isModalBuyOpen && <ModalBuy onBuy={handleModalPaymentOpen} onClose={handleModalBuyClose} />}
@@ -626,7 +538,7 @@ export default function SelectedBook({ data, booksFiction }) {
                     {isModalPaymentOpen && <ModalPayment onClose={handleModalPaymentClose} />}
 
                     {/* Additional Info */}
-                    <div className='h-[792px] w-full flex flex-row px-4'>
+                    <div className='h-[860px] w-full flex flex-row px-4'>
                         <div className='flex flex-col w-full'>
                             {/* Title */}
                             <div className='text-black text-[24px] font-semibold mb-8'>
@@ -639,10 +551,10 @@ export default function SelectedBook({ data, booksFiction }) {
                                 {/* Date Posted */}
                                 <div className='w-full'>
                                     <div className='flex flex-row text-black text-[14px]'>
-                                        <div className='text-left w-[160px] font-semibold'>
+                                        <div className='text-left w-[20%] font-semibold'>
                                             Date Posted
                                         </div>
-                                        <div>
+                                        <div className='w-[80%] ml-4'>
                                             {formattedDate}
                                         </div>
                                     </div>
@@ -653,11 +565,11 @@ export default function SelectedBook({ data, booksFiction }) {
                                 {/* Seller Domicile */}
                                 <div className='w-full'>
                                     <div className='flex flex-row text-black text-[14px]'>
-                                        <div className='text-left w-[160px] font-semibold'>
+                                        <div className='text-left w-[20%] font-semibold'>
                                             Seller Domicile
                                         </div>
-                                        <div>
-                                            {data.sellerDomicile}
+                                        <div className='w-[80%] ml-4'>
+                                            {data.submission.user.domicile}
                                         </div>
                                     </div>
                                     {/* Border */}
@@ -667,11 +579,11 @@ export default function SelectedBook({ data, booksFiction }) {
                                 {/* ISBN */}
                                 <div className='w-full'>
                                     <div className='flex flex-row text-black text-[14px]'>
-                                        <div className='text-left w-[160px] font-semibold'>
+                                        <div className='text-left w-[20%] font-semibold'>
                                             ISBN
                                         </div>
-                                        <div>
-                                            {data.id}
+                                        <div className='w-[80%] ml-4'>
+                                            {data.submission.isbn}
                                         </div>
                                     </div>
                                     {/* Border */}
@@ -681,11 +593,11 @@ export default function SelectedBook({ data, booksFiction }) {
                                 {/* Title */}
                                 <div className='w-full'>
                                     <div className='flex flex-row text-black text-[14px]'>
-                                        <div className='text-left w-[160px] font-semibold'>
+                                        <div className='text-left w-[20%] font-semibold'>
                                             Title
                                         </div>
-                                        <div>
-                                            {data.bookTitle}
+                                        <div className='w-[80%] ml-4'>
+                                            {data.submission.title}
                                         </div>
                                     </div>
                                     {/* Border */}
@@ -695,11 +607,11 @@ export default function SelectedBook({ data, booksFiction }) {
                                 {/* Author */}
                                 <div className='w-full'>
                                     <div className='flex flex-row text-black text-[14px]'>
-                                        <div className='text-left w-[160px] font-semibold'>
+                                        <div className='text-left w-[20%] font-semibold'>
                                             Author
                                         </div>
-                                        <div>
-                                            {data.author}
+                                        <div className='w-[80%] ml-4'>
+                                            {data.submission.author}
                                         </div>
                                     </div>
                                     {/* Border */}
@@ -709,11 +621,11 @@ export default function SelectedBook({ data, booksFiction }) {
                                 {/* Condition */}
                                 <div className='w-full'>
                                     <div className='flex flex-row text-black text-[14px]'>
-                                        <div className='text-left w-[160px] font-semibold'>
+                                        <div className='text-left w-[20%] font-semibold'>
                                             Condition
                                         </div>
-                                        <div>
-                                            {data.condition}
+                                        <div className='w-[80%] ml-4'>
+                                            <SeeMore title={data.submission.condition} />
                                         </div>
                                     </div>
                                     {/* Border */}
@@ -723,11 +635,11 @@ export default function SelectedBook({ data, booksFiction }) {
                                 {/* Language */}
                                 <div className='w-full'>
                                     <div className='flex flex-row text-black text-[14px]'>
-                                        <div className='text-left w-[160px] font-semibold'>
+                                        <div className='text-left w-[20%] font-semibold'>
                                             Language
                                         </div>
-                                        <div>
-                                            {data.language}
+                                        <div className='w-[80%] ml-4'>
+                                            {data.submission.language}
                                         </div>
                                     </div>
                                     {/* Border */}
@@ -737,11 +649,11 @@ export default function SelectedBook({ data, booksFiction }) {
                                 {/* Binding */}
                                 <div className='w-full'>
                                     <div className='flex flex-row text-black text-[14px]'>
-                                        <div className='text-left w-[160px] font-semibold'>
+                                        <div className='text-left w-[20%] font-semibold'>
                                             Binding Type
                                         </div>
-                                        <div>
-                                            {data.bindingType}
+                                        <div className='w-[80%] ml-4'>
+                                            {data.submission.bindingType}
                                         </div>
                                     </div>
                                     {/* Border */}
@@ -751,11 +663,11 @@ export default function SelectedBook({ data, booksFiction }) {
                                 {/* Publisher */}
                                 <div className='w-full'>
                                     <div className='flex flex-row text-black text-[14px]'>
-                                        <div className='text-left w-[160px] font-semibold'>
+                                        <div className='text-left w-[20%] font-semibold'>
                                             Publisher
                                         </div>
-                                        <div>
-                                            {data.publisher}
+                                        <div className='w-[80%] ml-4'>
+                                            {data.submission.publisher}
                                         </div>
                                     </div>
                                     {/* Border */}
@@ -765,11 +677,11 @@ export default function SelectedBook({ data, booksFiction }) {
                                 {/* Year Publish */}
                                 <div className='w-full'>
                                     <div className='flex flex-row text-black text-[14px]'>
-                                        <div className='text-left w-[160px] font-semibold'>
+                                        <div className='text-left w-[20%] font-semibold'>
                                             Year Published
                                         </div>
-                                        <div>
-                                            {data.yearPublished}
+                                        <div className='w-[80%] ml-4'>
+                                            {data.submission.yearPublished}
                                         </div>
                                     </div>
                                     {/* Border */}
@@ -779,11 +691,11 @@ export default function SelectedBook({ data, booksFiction }) {
                                 {/* Page Num */}
                                 <div className='w-full'>
                                     <div className='flex flex-row text-black text-[14px]'>
-                                        <div className='text-left w-[160px] font-semibold'>
+                                        <div className='text-left w-[20%] font-semibold'>
                                             Number of Pages
                                         </div>
-                                        <div>
-                                            {data.numberOfPage}
+                                        <div className='w-[80%] ml-4'>
+                                            {data.submission.numberOfPage}
                                         </div>
                                     </div>
                                     {/* Border */}

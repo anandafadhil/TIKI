@@ -28,7 +28,7 @@ export default function Cards({ bookTitle, bookAuthor, bookPrice, bookImage, boo
             >
                 <figure className="xs:h-[190px] lg:h-[370px]">
                     <img
-                        src={bookImage}
+                        src={bookImage || null}
                         alt={bookTitle}
                         className="object-cover xs:w-[190px] sm:w[300px] xs:h-[190px] lg:w-[370px] lg:h-[370px]"
                     />

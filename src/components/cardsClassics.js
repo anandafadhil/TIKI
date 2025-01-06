@@ -104,11 +104,11 @@ export default function CardsClassics({ booksClassics }) {
                             <SwiperSlide key={index} className="flex justify-center">
                                 <Link key={book.id} className="" href={`/books/${book.id}`}>
                                     <Cards
-                                        bookTitle={book.bookTitle}
-                                        bookAuthor={book.author}
-                                        bookPrice={book.price}
-                                        bookImage={book.images[0]}
-                                        bookPostedDate={book.postedDate}
+                                        bookTitle={book.submission.title}
+                                        bookAuthor={book.submission.author}
+                                        bookPrice={book.book.finalPrice}
+                                        bookImage={book.submission.images[0]}
+                                        bookPostedDate={book.book.createdAt}
                                     />
                                 </Link>
                             </SwiperSlide>

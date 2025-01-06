@@ -1,70 +1,95 @@
 import { WholeBook } from '../data/bookData';
 import Collections from "./collections";
-
+import { fetchDataCollections, fetchAllData, fetchDataCategory } from '../fetch/fetch';
 export default async function GenrePage({ params, searchParams }) {
     const { collections } = await params;
     const currentPage = 1;
     const ITEMS_PER_PAGE = 24;
-
     const isNon = collections.includes("-non");
     const genreNon = collections.replace('-non', '')
 
-    const filteredBooks = () => {
-        if (collections === 'all') {
-            return WholeBook;
-        }
+    const allBookData = await fetchAllData({
+        endpoint: "/books",
+        pageSize: "all",
+        pageNumber: 1,
+        search: "",
+    });
 
-        if (collections === 'new') {
-            const days = 10;
-            const top = 10
-            const currentDate = new Date();
-            return WholeBook.filter((book) => {
-                const bookDate = new Date(book.postedDate);
+    const fictionBooks = await fetchDataCategory({
+        endpoint: "/books",
+        pageSize: "all",
+        pageNumber: 1,
+        category: "fiction"
+    })
+
+    const nonFictionBooks = await fetchDataCategory({
+        endpoint: "/books",
+        pageSize: "all",
+        pageNumber: 1,
+        category: "non-fiction"
+    })
+
+    let filteredBooks = [];
+    let totalRecords = 0;
+
+    if (collections === 'all') {
+        filteredBooks = allBookData.data;
+        totalRecords = allBookData.data.length;
+    } else if (collections === 'new') {
+        const days = 10;
+        const top = 10;
+        const currentDate = new Date();
+        filteredBooks = allBookData.data
+            .filter((book) => {
+                const bookDate = new Date(book.book.createdAt);
                 return (currentDate - bookDate) <= days * 24 * 60 * 60 * 1000;
             })
-                .sort((a, b) => new Date(b.postedDate) - new Date(a.postedDate))
-                .slice(0, top);
-        }
-
-        if (collections === 'budget') {
-            return WholeBook.filter((item) => {
-                return item.price < 50000;
-            });
-        }
-
-        if (collections === 'fiction' || collections === 'non-fiction') {
-            return WholeBook.filter((book) => {
-                return book.category && book.category.name && book.category.name.toLowerCase() === collections.toLowerCase();
-            });
-        }
-
-        if (isNon) {
-            console.log(genreNon);
-            return WholeBook.filter((book) => {
-                return book.genre.some((genre) => {
-                    return genre && genre.name && genre.name.toLowerCase() === genreNon.toLowerCase();
-                });
-            });
-        }
-
-        // Handle genre filtering
-        return WholeBook.filter((book) => {
-            if (!book.genre || !Array.isArray(book.genre)) {
+            .sort((a, b) => new Date(b.postedDate) - new Date(a.postedDate))
+            .slice(0, top);
+        totalRecords = filteredBooks.length;
+    } else if (collections === 'budget') {
+        filteredBooks = allBookData.data.filter((item) => item.book.finalPrice <= 60000);
+        totalRecords = filteredBooks.length;
+    } else if (collections === 'fiction') {
+        filteredBooks = fictionBooks.data;
+        totalRecords = fictionBooks.totalRecords;
+    } else if (collections === 'non-fiction') {
+        filteredBooks = nonFictionBooks.data;
+        totalRecords = nonFictionBooks.totalRecords;
+    } else if (isNon) {
+        filteredBooks = allBookData.data.filter((book) => {
+            return book.submission.genre.some((genre) =>
+                genre.slug.toLowerCase() === genreNon.toLowerCase()
+            );
+        });
+        totalRecords = filteredBooks.length;
+    } else {
+        filteredBooks = allBookData.data.filter((item) => {
+            if (!item.submission || !Array.isArray(item.submission.genre)) {
                 return false;
             }
-
-            return book.genre.some((genre) => {
-                return genre && genre.name && genre.name.toLowerCase() === collections.toLowerCase();
-            });
+            return item.submission.genre.some((genre) =>
+                genre.slug.toLowerCase() === collections.toLowerCase()
+            );
         });
-    };
-    const totalPages = Math.ceil(filteredBooks().length / ITEMS_PER_PAGE);
+        totalRecords = filteredBooks.length;
+    }
+
+    let totalPages = 1;
+    if (filteredBooks.length === 0 || filteredBooks.length == undefined) {        
+        totalPages = 1
+    } else {
+        totalPages = Math.ceil(filteredBooks.totalRecords / ITEMS_PER_PAGE);
+
+    }    
+
     const initialPage = 1;
 
     return (
         <>
             <Collections
-                data={filteredBooks()}
+                allBookData={allBookData}
+                data={filteredBooks}
                 currentPage={currentPage}
                 initialPage={initialPage}
                 itemsPerPage={ITEMS_PER_PAGE}

@@ -12,7 +12,7 @@ import { WholeBook } from "../data/bookData";
 import Link from 'next/link';
 import { useRouter } from 'next/navigation'
 import Filters from '../../components/filters'
-export default function Collections({ data, currentPage: initialPage, itemsPerPage, totalPages }) {
+export default function Collections({ allBookData, data, currentPage: initialPage, itemsPerPage, totalPages }) {
     const [currentPage, setCurrentPage] = useState(initialPage);
     const ruter = useRouter();
     const dropdownRef = useRef(null);
@@ -89,50 +89,6 @@ export default function Collections({ data, currentPage: initialPage, itemsPerPa
 
     }, [collectionsType]);
 
-    // New Book Function
-    const days = 10
-    const top = 10
-    const latestBooks = data
-        .filter((book) => {
-            const bookDate = new Date(book.postedDate);
-            const currentDate = new Date();
-            return (currentDate - bookDate) <= days * 24 * 60 * 60 * 1000;
-        })
-        .sort((a, b) => new Date(b.postedDate) - new Date(a.postedDate))
-        .slice(0, top)
-
-    const otherGenres = data;
-    if (!otherGenres) {
-        return console.log("Book Not Found");
-    }
-
-    // Other Genre with Non Function
-    const otherGenresNon = data;
-    if (!otherGenresNon) {
-        return console.log("Book Not Found");
-    }
-
-    // Budget Function
-    const budgetBooks = data.filter((item) => {
-        return item.price < 50000;
-    });
-
-    if (!budgetBooks) {
-        return console.log("Book Not Found");
-    }
-
-    // Fiction Function
-    const fictionBooks = data.filter((item) => item.category.name === genreSelected);
-    if (!fictionBooks) {
-        return console.log("Book Not Found");
-    }
-
-    // Non-Fiction Function
-    const nonFictionBooks = data.filter((item) => item.category.name === genreSelected);
-    if (!nonFictionBooks) {
-        return console.log("Book Not Found");
-    }
-
     // All Books Function
     const allBooks = data
 
@@ -141,25 +97,25 @@ export default function Collections({ data, currentPage: initialPage, itemsPerPa
     }
 
     // Mapping Function
-    const mapping = isBudget && budgetBooks.length > 0
-        ? budgetBooks
-        : isClassic && classicBooks.length > 0
-            ? classicBooks
-            : isNew && latestBooks.length > 0
-                ? latestBooks
-                : isFiction && fictionBooks.length > 0
-                    ? fictionBooks
-                    : isNonFiction && nonFictionBooks.length > 0
-                        ? nonFictionBooks
-                        : isAll && allBooks.length > 0
-                            ? allBooks
-                            : isOther && otherGenres.length > 0
-                                ? otherGenres
-                                : isOtherNon && otherGenresNon.length > 0
-                                    ? otherGenresNon
-                                    : [];
+    // const mapping = isBudget && budgetBooks.length > 0
+    //     ? budgetBooks
+    //     : isClassic && classicBooks.length > 0
+    //         ? classicBooks
+    //         : isNew && latestBooks.length > 0
+    //             ? latestBooks
+    //             : isFiction && fictionBooks.length > 0
+    //                 ? fictionBooks
+    //                 : isNonFiction && nonFictionBooks.length > 0
+    //                     ? nonFictionBooks
+    //                     : isAll && allBooks.length > 0
+    //                         ? allBooks
+    //                         : isOther && otherGenres.length > 0
+    //                             ? otherGenres
+    //                             : isOtherNon && otherGenresNon.length > 0
+    //                                 ? otherGenresNon
+    //                                 : [];
 
-    const paginatedData = mapping.slice(startIndex, endIndex);
+    const paginatedData = data.slice(startIndex, endIndex);
     // Search Functionality
     const [inputValue, setInputValue] = useState('');
     const [filteredOptions, setFilteredOptions] = useState([]);
@@ -177,16 +133,17 @@ export default function Collections({ data, currentPage: initialPage, itemsPerPa
             setIsShowDrop(true);
 
             const uniqueLabels = new Set();
-            const filteredBooks = WholeBook.filter((book) => {
+            const filteredBooks = allBookData.data.filter((book) => {
                 const lowerCaseInput = inputValue.toLowerCase();
+
                 return (
-                    book.bookTitle.toLowerCase().includes(lowerCaseInput) ||
-                    book.id.toLowerCase().includes(lowerCaseInput) ||
-                    book.author.toLowerCase().includes(lowerCaseInput)
+                    book.submission.title.toLowerCase().includes(lowerCaseInput) ||
+                    book.submission.isbn.includes(lowerCaseInput) ||
+                    book.submission.author.toLowerCase().includes(lowerCaseInput)
                 );
             }).filter((book) => {
-                const label = `${book.bookTitle} by ${book.author}`;
-                // Only add the book if the label is not already in the set
+
+                const label = `${book.submission.title} by ${book.submission.author}`;
                 if (!uniqueLabels.has(label)) {
                     uniqueLabels.add(label);
                     return true;
@@ -194,7 +151,7 @@ export default function Collections({ data, currentPage: initialPage, itemsPerPa
                 return false;
             }).map((book) => ({
                 value: book.id,
-                label: `${book.bookTitle} by ${book.author}`,
+                label: `${book.submission.title} by ${book.submission.author}`,
             }));
             setFilteredOptions(filteredBooks);
 
@@ -247,31 +204,6 @@ export default function Collections({ data, currentPage: initialPage, itemsPerPa
     const handleFiltersClose = () => {
         setFilterOpen(false);
     }
-
-
-    // Search Function
-    const [selectedBooks, setSelectedBooks] = useState(null);
-
-    // Real API
-    // const optionsBooks = data.map((book) => ({
-    //     value: book.id,
-    //     label: book.submission.title
-    // }));
-
-    // const handleSearchBooks = async (event) => {
-    //     console.log("masuk", event.target.value)
-    //     const selectedBookId = parseInt(event.target.value);
-    //     const selectedBook = data.find((book) => book.id === selectedBookId);
-    //     setSelectedBooks(selectedBook);
-    // };
-
-    // const handleSearchClick = async () => {
-    //     if (selectedBooks) {
-    //         router.push(`/books/${selectedBooks.id}`);
-    //     } else {
-    //         console.error('No book selected');
-    //     }
-    // }
 
     // Genre
     const alwaysVisibleGenres = [
@@ -552,11 +484,11 @@ export default function Collections({ data, currentPage: initialPage, itemsPerPa
                                     <Link key={book.id} className="" href={`/books/${book.id}`}>
                                         <CardsCollection
                                             key={index}
-                                            bookTitle={book.bookTitle}
-                                            bookAuthor={book.author}
-                                            bookPrice={book.price}
-                                            bookImage={book.images[0]}
-                                            bookPostedDate={book.postedDate}
+                                            bookTitle={book.submission.title}
+                                            bookAuthor={book.submission.author}
+                                            bookPrice={book.book.finalPrice}
+                                            bookImage={book.submission.images[0]}
+                                            bookPostedDate={book.book.createdAt}
                                         />
                                     </Link>
                                 ))}
@@ -564,49 +496,28 @@ export default function Collections({ data, currentPage: initialPage, itemsPerPa
 
                             {/* Genre Filters */}
                             {isFilterOpen && (
-                                // <div className="bg-[#F2EEE5] mt-2 absolute w-full top-full left-1/2 transform -translate-x-1/2 h-[328px]">
-                                //     <div className="px-4 py-8 font-medium text-[14px] flex flex-col items-center">
-                                //         <div className="gap-6 flex flex-row w-[80%]">
-                                //             <button onClick={() => {
-                                //                 setSidebarOpen(true);
-                                //                 setSidebarNonFictionOpen(false);
-                                //             }} className="text-black">
-                                //                 <Image src="/icons/arrow-right.svg" className='rotate-180' width={24} height={24} alt="Menu" />
-                                //             </button>
-                                //             <Link className="text-[20px] text-black font-semibold" href='/non-fiction'>Non Fiction by Genre</Link>
-                                //         </div>
-                                //         <ul className="w-[80%] justify-start text-[14px] text-black grid grid-cols-2 gap-y-4 mt-6 right-4 w-full">
-                                //             <li><Link href='/art-non/'>Art</Link></li>
-                                //             <li><Link href='/biography-non/'>Biography</Link></li>
-                                //             <li><Link href='/culinary-non/'>Culinary</Link></li>
-                                //             <li><Link href='/education-non/'>Education</Link></li>
-                                //             <li><Link href='/essay-non/'>Essay</Link></li>
-                                //             <li><Link href='/health-and-wellness-non/'>Health & Welness</Link></li>
-                                //             <li><Link href='/history-non/'>History</Link></li>
-                                //             <li><Link href='/parenting-and-family-non/'>Parenting & Family</Link></li>
-                                //             <li><Link href='/philosophy-non/'>Philosophy</Link></li>
-                                //             <li><Link href='/science-non/'>Science</Link></li>
-                                //             <li><Link href='/self-help-non/'>Self-Help</Link></li>
-                                //             <li><Link href='/travel-non/'>Travel</Link></li>
-                                //         </ul>
-                                //     </div>
-                                // </div>
                                 <Filters onClose={handleFiltersClose} pathname={pathname} isAll={isAll} isNon={isNon} isNonFiction={isNonFiction} isFiction={isFiction} alwaysVisibleGenres={alwaysVisibleGenres} additionalGenres={additionalGenres} alwaysVisibleGenresNon={alwaysVisibleGenresNon} additionalGenresNon={additionalGenresNon} />
                             )}
 
                             {/* Pagination */}
-                            < div className='lg:mt-0 xs:mt-20 flex xs:flex-col lg:flex-row lg:justify-between items-center' >
-                                <div className='text-black xs:text-[14px] lg:text-[18px]'>
-                                    Results {(currentPage - 1) * itemPerPage + 1} - {Math.min(currentPage * itemPerPage, mapping.length)} of {mapping.length}
+                            {data?.length > 0 ? (
+                                <div className='lg:mt-0 xs:mt-20 flex xs:flex-col lg:flex-row lg:justify-between items-center'>
+                                    <div className='text-black xs:text-[14px] lg:text-[18px]'>
+                                        Results {(currentPage - 1) * itemPerPage + 1} - {Math.min(currentPage * itemPerPage, data.totalRecords)} of {data.totalRecords}
+                                    </div>
+                                    <div className='text-black text-[18px]'>
+                                        <Pagination
+                                            currPage={currentPage}
+                                            totPage={totalPages}
+                                            onPageChange={handlePageChange}
+                                        />
+                                    </div>
                                 </div>
-                                <div className='text-black text-[18px]'>
-                                    <Pagination
-                                        currPage={currentPage}
-                                        totPage={totalPages}
-                                        onPageChange={handlePageChange}
-                                    />
+                            ) : (
+                                <div className='text-black xs:text-center lg:text-left my-8'>
+                                    No results to display.
                                 </div>
-                            </div>
+                            )}
                         </div>
 
                     </div>

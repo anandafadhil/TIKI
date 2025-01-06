@@ -1,11 +1,26 @@
 import SelectedBook from "./selectedBook";
-import { WholeBook } from "@/app/data/bookData";
+// import { WholeBook } from "@/app/data/bookData";
+import { fetchAllData, fetchDataCategory } from "@/app/fetch/fetch";
+
 export default async function BookPage({ params }) {
     const { selectedBook } = await params;
 
-    const data = WholeBook.filter((book) => book.id === selectedBook)
-    const booksFiction = WholeBook.filter((book) =>
-        book.category.name.toLowerCase() === 'fiction').slice(0, 10);
+    const allBookData = await fetchAllData({
+        endpoint: "/books",
+        pageSize: "all",
+        pageNumber: 1,
+        search: "",
+    });
+
+    const fictionBooks = await fetchDataCategory({
+        endpoint: "/books",
+        pageSize: "all",
+        pageNumber: 1,
+        category: "fiction"
+    })
+    
+    const data = allBookData.data.filter((book) => String(book.id) === selectedBook)
+    const booksFiction = fictionBooks.data.slice(0,10)
 
     return (
         <>

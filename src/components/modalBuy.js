@@ -47,7 +47,7 @@ export default function ModalBuy({ onBuy, onClose }) {
                                 <button
                                     type="button"
                                     onClick={onBuy}
-                                    className="bg-[#2A230F] xs:w-[45%] xs:text-[14px] lg:text-[18px] lg:w-[30%] h-[44px] text-white py-3 px-6 rounded-md hover:bg-[#3A3118]">
+                                    className="bg-[#2A230F] xs:w-[55%] xs:text-[14px] lg:text-[18px] lg:w-[40%] h-[44px] text-white py-3 px-6 rounded-md hover:bg-[#3A3118]">
                                     Continue to Buy
                                 </button>
                             </div>

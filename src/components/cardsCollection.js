@@ -7,9 +7,8 @@ export default function CardsCollection({ bookTitle, bookAuthor, bookPrice, book
     const formatDate = (dateString) => {
         const date = new Date(dateString);
 
-        // Get the day, month, and year from the Date object
         const day = String(date.getDate()).padStart(2, '0');
-        const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+        const month = String(date.getMonth() + 1).padStart(2, '0'); 
         const year = date.getFullYear();
 
         return `${day}/${month}/${year}`;
@@ -25,13 +24,11 @@ export default function CardsCollection({ bookTitle, bookAuthor, bookPrice, book
                 onMouseEnter={() => setIsOnHover(true)}
                 onMouseLeave={() => setIsOnHover(false)}
             >
-                <figure className="h-[360px]">
-                    <Image
+                <figure className="h-[360px] w-auto">
+                    <img
                         src={bookImage}
                         alt={bookTitle}
                         className="object-cover h-full"
-                        width={360}
-                        height={360}
                     />
                 </figure>
                 <div className="flex flex-col bg-[#F2EEE5] rounded-b-xl h-[210px] justify-between">
